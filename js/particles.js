@@ -8,11 +8,11 @@ canvas.height = document.querySelector("#work_area").offsetHeight;
 
 var width = canvas.width,
   height = canvas.height;
-var maxParticles = 10; // Эксперимент! 20 000 обеспечит прекрасную вселенную
-var emissionRate = 10; // количество частиц, излучаемых за кадр
+var maxParticles = 20; // Эксперимент! 20 000 обеспечит прекрасную вселенную
+var emissionRate = 20; // количество частиц, излучаемых за кадр
 var particleSize = 10;
 var particleColor = "#123";
-var velocity = 20;
+var velocity = 30;
 
 var emitters = [];
 
@@ -83,11 +83,13 @@ class Emitter {
     this.velocity = velocity; // Вектор
     this.spread = spread || Math.PI; // Возможный угол = скорость +/- разброс.
     this.drawColor = "#999";
+    this.current_particel_index = 0;
   }
   emitParticle() {
     // Использование случайного угла для формирования потока частиц позволит нам получить своего рода «спрей»
-    var angle = this.velocity.getAngle() + this.spread - (Math.random() * this.spread * 2);
+    var angle = Math.PI*2/maxParticles*this.current_particel_index;
 
+    this.current_particel_index++;
     // Магнитуда скорости излучателя
     var magnitude = this.velocity.getMagnitude();
 
@@ -97,6 +99,7 @@ class Emitter {
     // Обновлённая скорость, полученная из вычисленного угла и магнитуды
     var velocity = Vector.fromAngle(angle, magnitude);
 
+    position.add(velocity.copy().norm().mult_number(particleSize));
     // Возвращает нашу Частицу!
     return new Particle(position, velocity);
   };
@@ -109,7 +112,7 @@ class Particles{
     this.intersections = false;
     setTimeout(() => {
       this.intersections = true;
-    }, 4/velocity*1000);
+    }, 5);
   }
   sort_particles(){
     this.list.sort(function(particle1, particle2){
@@ -126,9 +129,8 @@ class Particles{
       var particle = this.list[i];
       var pos = this.list.position;
       bounds_interection(particle, clip_points);
-      if(this.intersections){
-        // particles_interection(i,this.list);
-      }
+        particles_interection(i,this.list);
+      
       particle.move();
      
       }
@@ -192,14 +194,6 @@ var v1,v2,v3,v4;
 }
 
 function bounds_interection(particle, clip_points) {
-    var direction_vector = particle.position.copy();
-    direction_vector.add(particle.velocity.copy().norm().mult_number(particleSize));
-
-    var x =  direction_vector.x, y = direction_vector.y;
-    var save_i = 0, save_j = 0;
-    var inside = false;
-    var intersection_with_vector = false;
-
   for (var i = 0; i < lines.length;  i++) {
         var line = lines[i];
         var intersection = circle_with_line_intersection(particle.position, line);
@@ -217,25 +211,21 @@ function particles_interection(particle_number, particles){
   var particle = particles[particle_number];
 
   
-  
   for(var i=0;i<particles.length;i++){
     if(i == particle_number){
       continue;
     }
     var next_particle = particles[i];
 
-    if(particle.lastFriend.checkObject(next_particle)){
-      continue;
-    }
     var distance = new Vector(particle.position.x - next_particle.position.x,
                               particle.position.y - next_particle.position.y);
-    if(distance.getMagnitude() <= 1.2*particleSize){
-
-       particle.velocity.redirection();
-    
-       next_particle.velocity.redirection();
-      //  particle.lastFriend.setObject(next_particle);
-      //  next_particle.lastFriend.setObject(particle);
+    if(distance.getMagnitude() <= 1.7*particleSize){
+       var norm = next_particle.position.copy().sub(particle.position);
+       particle.velocity.reflection(norm);
+       norm.mult_number(-1);
+       next_particle.velocity.reflection(norm);
+       particle.move();
+       next_particle.move();
        return;
     }
   }
@@ -329,7 +319,7 @@ function queue() {
 function start(){
   var center = getCentroid(clip_points);
   lines = set_lines(clip_points);
-  emitters = [new Emitter(center, Vector.fromAngle(0, 0.2))];
+  emitters = [new Emitter(center, Vector.fromAngle(0, 0.02))];
   loop();
 }
 
