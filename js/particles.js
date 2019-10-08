@@ -8,13 +8,14 @@ canvas.height = document.querySelector("#work_area").offsetHeight;
 
 var width = canvas.width,
   height = canvas.height;
-var maxParticles = 5; // Эксперимент! 20 000 обеспечит прекрасную вселенную
-var emissionRate = 5; // количество частиц, излучаемых за кадр
+var maxParticles = 10; // Эксперимент! 20 000 обеспечит прекрасную вселенную
+var emissionRate = 10; // количество частиц, излучаемых за кадр
 var particleSize = 10;
 var particleColor = "#123";
-var velocity = 2;
+var velocity = 20;
 
 var emitters = [];
+
 
 function getCentroid(arr) {
     var twoTimesSignedArea = 0;
@@ -121,6 +122,7 @@ class Particles{
 
   moves(){
     for (var i = 0; i < this.list.length; i++) {
+      for(var vel_i = 0; vel_i < velocity;vel_i++){
       var particle = this.list[i];
       var pos = this.list.position;
       bounds_interection(particle, clip_points);
@@ -129,10 +131,50 @@ class Particles{
       }
       particle.move();
      
-      
+      }
       
   }
   }
+}
+
+class Line{
+  constructor(point1,point2){
+        var A = point1.y-point2.y;
+        var B = point2.x-point1.x;
+       this.normal = new Vector(-A, -B);
+       this.point = point1;
+       this.C = -(point1.x*point2.y-point2.x*point1.y);
+        console.log(this);
+  }
+  getA(){
+    return this.normal.x;
+  }
+  getB(){
+    return this.normal.y;
+  }
+  getC(){
+    return this.C;
+  }
+}
+
+function set_lines(clip_points){
+  var lines = [];
+    for(var index = 0;index < clip_points.length;index++){
+    var current_index = index,
+    next_index = index ==  clip_points.length -1 ? 0:index + 1;
+    var point1 = clip_points[current_index],
+        point2 = clip_points[next_index];
+        lines.push(new Line(point1,point2));
+    }
+    return lines;
+}
+
+
+
+function circle_with_line_intersection(center, line){
+  var distance = Math.abs(line.getA()*center.x+line.getB()*center.y+line.C)/line.normal.getMagnitude();
+  if(particleSize >= distance) return true;
+  return false;
 }
 
 function vec_intersection(point1,point2,point3,point4){
@@ -157,54 +199,18 @@ function bounds_interection(particle, clip_points) {
     var save_i = 0, save_j = 0;
     var inside = false;
     var intersection_with_vector = false;
-    for (var i = 0, j = clip_points.length - 1; i < clip_points.length; j = i++) {
-        var xi = clip_points[i].x, yi = clip_points[i].y;
-        var xj = clip_points[j].x, yj = clip_points[j].y;
 
-        var common_intersect = ((yi > y) != (yj > y))
-            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-          
-        if (common_intersect)
-          inside = !inside;
-        if(!intersection_with_vector){
-           intersection_with_vector = vec_intersection(
-             particle.position, direction_vector,
-            new Vector(xi,yi), new Vector(xj,yj));
-
-          if(intersection_with_vector){
-          save_i = i;
-          save_j = j;
+  for (var i = 0; i < lines.length;  i++) {
+        var line = lines[i];
+        var intersection = circle_with_line_intersection(particle.position, line);
+        if(intersection){
+            particle.velocity.reflection(line.normal);
+            return;
         }
-        }
-        
     }
-    if(!inside){
-      //   if(save_i && save_j){
-      //   var xi = clip_points[save_i].x, yi = clip_points[save_i].y;
-      //   var xj = clip_points[save_j].x, yj = clip_points[save_j].y;
+  }
 
-
-      //  var intersection_line_normal = new Vector(1/(xj-xi),-1/(yj-yi));
-      //  var angle = particle.velocity.angleWithVector(intersection_line_normal);
-      //  console.log(angle);
-      //  if(angle)
-      //  particle.velocity.rotate(-2*angle);
-      //   }
-       particle.velocity.redirection();
-       particle.move();
-    }
-};
-
-// function bounds_interection(particle, bounds_funcs){
-//     for(var i=0;i<bounds_funcs.length;i++){
-//       var func = bounds_funcs[i];
-//       if(func(particle.position.x, particle.position.y) <= 0){
-//        console.log("REVVV");
-//        particle.velocity.x *= -1;
-//        particle.velocity.y *= -1;
-//       }
-//     }
-// }
+  
 
 
 function particles_interection(particle_number, particles){
@@ -225,13 +231,11 @@ function particles_interection(particle_number, particles){
                               particle.position.y - next_particle.position.y);
     if(distance.getMagnitude() <= 1.2*particleSize){
 
-       particle.velocity.x *= -1;
-       particle.velocity.y *= -1;
+       particle.velocity.redirection();
     
-       next_particle.velocity.x *= -1;
-       next_particle.velocity.y *= -1;
-       particle.lastFriend.setObject(next_particle);
-       next_particle.lastFriend.setObject(particle);
+       next_particle.velocity.redirection();
+      //  particle.lastFriend.setObject(next_particle);
+      //  next_particle.lastFriend.setObject(particle);
        return;
     }
   }
@@ -239,7 +243,7 @@ function particles_interection(particle_number, particles){
 }
 
 var particles = new Particles([]);
-
+var lines = [];
 // Добавим один излучатель с координатами `100, 230` от начала координат (верхний левый угол)
 // Начнём излучать на скорости `2` в правую сторону (угол `0`)
 
@@ -270,13 +274,7 @@ function addNewParticles() {
 
 
 function plotParticles(boundsX, boundsY) {
-  // Новый массив для частиц внутри холста
-
-
   particles.moves();
-  
-
-  // Замена глобального массива частиц на массив без вылетевших за пределы холста частиц
 }
 
 
@@ -293,6 +291,20 @@ function draw() {
     ctx.closePath();
     ctx.fillStyle = particleColor;
     ctx.fill();
+  }
+    for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    // Рисуем квадрат определенных размеров с заданными координатами
+    var point1 = line.point,
+        point2 = line.normal.copy().add(point1);
+
+    ctx.beginPath();
+    ctx.moveTo(point1.x, point1.y);
+
+    ctx.lineTo(point2.x,point2.y);
+    ctx.lineWidth = '2';
+    ctx.strokeStyle = '#000';
+    ctx.stroke();
   }
   draw_lines();
 }
@@ -316,7 +328,8 @@ function queue() {
 
 function start(){
   var center = getCentroid(clip_points);
-  emitters = [new Emitter(center, Vector.fromAngle(0, velocity))];
+  lines = set_lines(clip_points);
+  emitters = [new Emitter(center, Vector.fromAngle(0, 0.2))];
   loop();
 }
 

@@ -51,6 +51,14 @@ class Vector {
     this.y *= -1;
     return this;
   }
+  reflection(norm){
+    var angle = this.angleWithVector(norm);
+
+    if(angle > Math.PI/2) angle -= Math.PI/2;
+    console.log(angle);
+    this.rotate(2*angle);
+    this.redirection();
+  }
   scalar(vector2){
     return this.x*vector2.x+this.y*vector2.y;
   }
