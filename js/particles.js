@@ -145,7 +145,8 @@ class Line{
         var B = point2.x-point1.x;
        this.normal = new Vector(-A, -B);
        var norma = this.normal.getMagnitude();
-       this.point = point1;
+       this.point1 = point1;
+       this.point2 = point2;
        this.C = -(point1.x*point2.y-point2.x*point1.y);
         console.log(this);
   }
@@ -175,8 +176,23 @@ function set_lines(clip_points){
 
 
 function circle_with_line_intersection(center, line){
-  var distance = Math.abs(line.getA()*center.x+line.getB()*center.y+line.C)/line.normal.getMagnitude();
-  if(particleSize >= distance) return true;
+
+        var distance = Math.abs(line.getA()*center.x+line.getB()*center.y+line.C)/line.normal.getMagnitude();
+
+        var y = (line.getA()*line.getA()*center.y-line.getA()*line.getB()*center.x-line.getB()*line.getC())/
+          (line.getA()*line.getA()+line.getB()*line.getB())
+        ;
+        var x = -(line.getC()+y*line.getB())/line.getA();
+
+        x = typeof x == 'undefined' ? center.x : x;
+        y = typeof y == 'undefined' ? center.y : y;
+      if(((x >= line.point1.x && x <= line.point2.x)||
+     (x <= line.point1.x && x >= line.point2.x))&&
+    ((y >= line.point1.y && y <= line.point2.y)||
+     (y <= line.point1.y && y >= line.point2.y)))
+        if(particleSize >= distance) return true;
+     
+ 
   return false;
 }
 
@@ -195,14 +211,15 @@ var v1,v2,v3,v4;
 }
 
 function bounds_interection(particle, clip_points) {
-  for (var i = 0; i < lines.length;  i++) {
-        var line = lines[i];
-        var intersection = circle_with_line_intersection(particle.position, line);
-        if(intersection){
-            particle.velocity.reflection(line.normal);
-            return;
-        }
-    }
+    for (var i = 0; i < lines.length;  i++) {
+          var line = lines[i];
+          var intersection = circle_with_line_intersection(particle.position, line);
+
+          if(intersection){
+              particle.velocity.reflection(line.normal);
+              return;
+          }
+      }
   }
 
   
