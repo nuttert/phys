@@ -104,7 +104,7 @@ function draw_lines(){
     ctx.moveTo(point1.x, point1.y);
 
     ctx.lineTo(point2.x,point2.y);
-    ctx.lineWidth = '2';
+    ctx.lineWidth = '4';
     ctx.strokeStyle = lineColor;
     ctx.stroke();
   }
@@ -133,6 +133,8 @@ document.querySelector("#draw_button").addEventListener("mousedown", function(e)
     ctx.stroke();
   }
   ctx.closePath();
+
+  
   start();
 });
 

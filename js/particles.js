@@ -144,6 +144,7 @@ class Line{
         var A = point1.y-point2.y;
         var B = point2.x-point1.x;
        this.normal = new Vector(-A, -B);
+       var norma = this.normal.getMagnitude();
        this.point = point1;
        this.C = -(point1.x*point2.y-point2.x*point1.y);
         console.log(this);
@@ -282,20 +283,20 @@ function draw() {
     ctx.fillStyle = particleColor;
     ctx.fill();
   }
-    for (var i = 0; i < lines.length; i++) {
-    var line = lines[i];
-    // Рисуем квадрат определенных размеров с заданными координатами
-    var point1 = line.point,
-        point2 = line.normal.copy().add(point1);
+  //   for (var i = 0; i < lines.length; i++) {
+  //   var line = lines[i];
+  //   // Рисуем квадрат определенных размеров с заданными координатами
+  //   var point1 = line.point,
+  //       point2 = line.normal.copy().norm().mult_number(10).add(point1);
 
-    ctx.beginPath();
-    ctx.moveTo(point1.x, point1.y);
+  //   ctx.beginPath();
+  //   ctx.moveTo(point1.x, point1.y);
 
-    ctx.lineTo(point2.x,point2.y);
-    ctx.lineWidth = '2';
-    ctx.strokeStyle = '#000';
-    ctx.stroke();
-  }
+  //   ctx.lineTo(point2.x,point2.y);
+  //   ctx.lineWidth = '2';
+  //   ctx.strokeStyle = '#000';
+  //   ctx.stroke();
+  // }
   draw_lines();
 }
 
