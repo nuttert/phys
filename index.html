@@ -13,18 +13,31 @@
     <div id="config_area">
       	<nav>
             <ul class="menu center_flex">
-              <li>
+              <li class="draw_button_li">
                 <div id="draw_button" class="btn center_flex">
                     <span>Draw</span></button>
               </li>
-              <li>
+              <li class="config_button_li">
                 <div id="config_button" class="btn">
                     <span>Config</span></button></button>
               </li>
-              <li>
+              <li class="clear_button_li">
                 <div id="clear_button" class="btn">
                     <span>Clear</span> </button>
               </li>
+              <li class="range_velocity_li ranges_li">
+                  <span>Velocity 30</span> </button>
+                  <input type="range" id="range_velocity" class="ranges" oninput="change_velocity()" min="0", max="300" value="30">
+              </li>
+              <li class="range_amount_li ranges_li">
+                  <span>Amount 20</span> </button>
+                  <input type="range" id="range_amount" class="ranges" oninput="change_amount()" min="0", max="50" value="20">
+              </li>
+              <li class="range_size_li ranges_li">
+                  <span>Size 10</span> </button>
+                  <input type="range" id="range_size" class="ranges" oninput="change_size()" min="1", max="20" value="10">
+              </li>
+              
             </ul>
           </nav>
     </div>

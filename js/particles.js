@@ -8,13 +8,9 @@ canvas.height = document.querySelector("#work_area").offsetHeight;
 
 var width = canvas.width,
   height = canvas.height;
-var maxParticles = 20; // Эксперимент! 20 000 обеспечит прекрасную вселенную
-var emissionRate = 20; // количество частиц, излучаемых за кадр
-var particleSize = 10;
-var particleColor = "#123";
-var velocity = 30;
 
-var emitters = [];
+
+
 
 
 function getCentroid(arr) {
@@ -148,7 +144,6 @@ class Line{
        this.point1 = point1;
        this.point2 = point2;
        this.C = -(point1.x*point2.y-point2.x*point1.y);
-        console.log(this);
   }
   getA(){
     return this.normal.x;
@@ -175,22 +170,28 @@ function set_lines(clip_points){
 
 
 
-function circle_with_line_intersection(center, line){
+function circle_with_line_intersection(center, radius, line){
 
         var distance = Math.abs(line.getA()*center.x+line.getB()*center.y+line.C)/line.normal.getMagnitude();
+        var y,x;
+        const x_sign = Math.sign(line.getA()),
+              y_sign = Math.sign(line.getB());
 
-        var y = (line.getA()*line.getA()*center.y-line.getA()*line.getB()*center.x-line.getB()*line.getC())/
+        if(line.getA() != 0 || line.getB() != 0)
+        y = (line.getA()*line.getA()*center.y-line.getA()*line.getB()*center.x-line.getB()*line.getC())/
           (line.getA()*line.getA()+line.getB()*line.getB())
         ;
-        var x = -(line.getC()+y*line.getB())/line.getA();
+        else y = center.y;
 
-        x = typeof x == 'undefined' ? center.x : x;
-        y = typeof y == 'undefined' ? center.y : y;
+        if(line.getA() != 0)
+        x = -(line.getC()+y*line.getB())/line.getA();
+        else  x = center.x;
+        
       if(((x >= line.point1.x && x <= line.point2.x)||
      (x <= line.point1.x && x >= line.point2.x))&&
     ((y >= line.point1.y && y <= line.point2.y)||
      (y <= line.point1.y && y >= line.point2.y)))
-        if(particleSize >= distance) return true;
+        if(radius >= distance) return true;
      
  
   return false;
@@ -213,7 +214,7 @@ var v1,v2,v3,v4;
 function bounds_interection(particle, clip_points) {
     for (var i = 0; i < lines.length;  i++) {
           var line = lines[i];
-          var intersection = circle_with_line_intersection(particle.position, line);
+          var intersection = circle_with_line_intersection(particle.position, particleSize, line);
 
           if(intersection){
               particle.velocity.reflection(line.normal);
@@ -250,8 +251,6 @@ function particles_interection(particle_number, particles){
 
 }
 
-var particles = new Particles([]);
-var lines = [];
 // Добавим один излучатель с координатами `100, 230` от начала координат (верхний левый угол)
 // Начнём излучать на скорости `2` в правую сторону (угол `0`)
 
@@ -266,8 +265,12 @@ function update() {
 
 function addNewParticles() {
   // прекращаем, если достигнут предел
-  if (particles.list.length > maxParticles) return;
-
+  if (particles.list.length == maxParticles) return;
+  if (particles.list.length > maxParticles){
+   delete particles.list.pop();
+   return;
+  }
+  console.log(maxParticles, particles.list.length );
   // запускаем цикл по каждому излучателю
   for (var i = 0; i < emitters.length; i++) {
 
@@ -319,6 +322,7 @@ function draw() {
 
 
 function loop() {
+  if(stop)return;
   clear();
   update();
   draw();
@@ -335,13 +339,65 @@ function queue() {
 }
 
 function start(){
+  stop = false;
   var center = getCentroid(clip_points);
   lines = set_lines(clip_points);
   emitters = [new Emitter(center, Vector.fromAngle(0, 0.02))];
+  particles = new Particles([]);
   loop();
 }
 
-// loop();
+function line_highlighting(line){
+    var point1 = line.point1,
+    point2 = line.point2;
+
+    ctx.beginPath();
+    ctx.moveTo(point1.x, point1.y);
+
+    ctx.lineTo(point2.x,point2.y);
+    ctx.lineWidth = '10';
+    ctx.strokeStyle = '#05e6ee';
+    ctx.stroke();
+    ctx.closePath();
+  
+}
+
+
+function lineHighliting(e){
+     var mouse = new Vector(0,0);
+   mouse.x = e.pageX - work_area.offsetLeft;
+   mouse.y = e.pageY - work_area.offsetTop;
+   var needHighliting = false;
+   var savedIndex = null;
+    for (var i = 0; i < lines.length;  i++) {
+          var line = lines[i];
+          var intersection = circle_with_line_intersection(mouse,10,line);
+
+          if(intersection){
+              needHighliting = true;
+              savedIndex = i;
+          }
+      }
+    return {'condition':needHighliting,'index':savedIndex};
+}
+
+canvas.addEventListener("mousemove", function(e){ 
+    var result = lineHighliting(e);
+    if(result['condition'])
+    highlitedIndexies.push(result['index']);
+    else{
+      highlitedIndexies = [];
+      }
+});
+canvas.addEventListener("mousedown", function(e){ 
+    var result = lineHighliting(e);
+    if(result['condition'])
+    choosenIndexies.push(result['index']);
+});
+
+
+
+
 
 
 
