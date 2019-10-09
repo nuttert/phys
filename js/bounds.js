@@ -144,6 +144,31 @@ class Vector {
   };
 }
 
+function vec_intersection(point1,point2,point3,point4){
+var ax1 = point1.x, ay1 =point1.y,
+ax2 = point2.x, ay2 = point2.y,
+bx1 = point3.x, by1 = point3.y,
+bx2 = point4.x, by2 = point4.y;
+var v1,v2,v3,v4;
+   v1 =(bx2-bx1)*(ay1-by1)-(by2-by1)*(ax1-bx1);
+   v2 =(bx2-bx1)*(ay2-by1)-(by2-by1)*(ax2-bx1);
+   v3 =(ax2-ax1)*(by1-ay1)-(ay2-ay1)*(bx1-ax1);
+   v4 =(ax2-ax1)*(by2-ay1)-(ay2-ay1)*(bx2-ax1);
+   Intersection =(v1*v2<0) && (v3*v4<0);
+   return Intersection
+}
+
+function check_intersections(lines){
+  // for(var i = 0;index < lines.length;i++){
+  //   for(var j = i+1;index < lines.length;i++){
+    var current_index = index,
+    next_index = index ==  clip_points.length -1 ? 0:index + 1;
+
+    var point1 = clip_points[current_index],
+        point2 = clip_points[next_index];
+  // }
+}
+
 var mouse = new Vector(0,0);
 
 function draw_lines(){

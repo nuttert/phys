@@ -197,19 +197,7 @@ function circle_with_line_intersection(center, radius, line){
   return false;
 }
 
-function vec_intersection(point1,point2,point3,point4){
-var ax1 = point1.x, ay1 =point1.y,
-ax2 = point2.x, ay2 = point2.y,
-bx1 = point3.x, by1 = point3.y,
-bx2 = point4.x, by2 = point4.y;
-var v1,v2,v3,v4;
-   v1 =(bx2-bx1)*(ay1-by1)-(by2-by1)*(ax1-bx1);
-   v2 =(bx2-bx1)*(ay2-by1)-(by2-by1)*(ax2-bx1);
-   v3 =(ax2-ax1)*(by1-ay1)-(ay2-ay1)*(bx1-ax1);
-   v4 =(ax2-ax1)*(by2-ay1)-(ay2-ay1)*(bx2-ax1);
-   Intersection =(v1*v2<0) && (v3*v4<0);
-   return Intersection
-}
+
 
 function bounds_interection(particle, clip_points) {
     for (var i = 0; i < lines.length;  i++) {

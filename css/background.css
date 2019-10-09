@@ -1,0 +1,45 @@
+*{
+	padding: 0;
+	margin:0;
+	box-sizing: border-box;
+}
+
+#background_canvas{
+  width:100%;
+  height:100vh;
+  /* background-color: black; */
+}
+.background{
+  width:100%;
+  height:100vh;
+  /* background-color: black; */
+  position: relative;
+}
+#photos{
+  width:60%;
+  height:40%;
+  right:0;
+  left:0;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+}
+
+.photo_wrapper{
+  width:100%;
+  height:100%;
+  display: inline-block;
+  /* position: relative; */
+}
+
+#photos img{
+	height: 100%;
+	width: auto;
+  /* position: absolute; */
+  border-radius: 40.56px;
+}
+
+#photos .text{
+  /* text-align: center; */
+}
