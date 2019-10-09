@@ -4,6 +4,12 @@
 	box-sizing: border-box;
 }
 
+.center_flex{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 #background_canvas{
   width:100%;
   height:100vh;
@@ -16,14 +22,18 @@
   position: relative;
 }
 #photos{
-  width:60%;
+  width:100%;
   height:40%;
   right:0;
   left:0;
   margin: auto;
+  margin-top: 2%;
   display: flex;
   justify-content: center;
-  position: absolute;
+  align-items: center;
+  position: relative;
+
+  padding-left: 15%;
 }
 
 .photo_wrapper{
@@ -33,13 +43,166 @@
   /* position: relative; */
 }
 
+.photo_wrapper h1{
+  position: relative;
+  width: 55%;
+}
+
 #photos img{
 	height: 100%;
 	width: auto;
   /* position: absolute; */
   border-radius: 40.56px;
+  position: relative;
+  left:0;
+  right:0;
+  margin:auto;
+
 }
 
 #photos .text{
   /* text-align: center; */
 }
+
+.btn{
+	text-transform: uppercase;
+	font-weight: bold;
+	text-align: center;
+	border-radius: 40.56px;
+	color: #fff;
+
+	font-weight: 50;
+	font-size: 100%;
+	text-decoration: none;
+}
+
+
+#enter_button{
+
+  width: 20%;
+  height: 8%;
+  left:0;
+  right:0;
+  margin:auto;
+  margin-top:15%;
+  background-color: aqua;
+  position: relative;
+  box-shadow: 0px 5px 132.24px 10px rgba(5, 145, 238, 1);
+}
+
+#enter_button > span{
+	text-decoration: none;
+  display: inline-block;
+  font-size: 15pt;
+}
+
+#enter_button:hover{
+	box-shadow: 0px 5px 132.24px 19.76px rgba(238, 5, 169, 1);
+}  
+
+#enter_button > a{
+  top:0;
+  right:0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+#left_description_wrapper{
+  position: absolute;
+  width: 20%;
+  height: 20%;
+  left:0;
+  top:55%;
+}
+#right_description_wrapper{
+  position: absolute;
+  width: 15%;
+  height: 20%;
+  right:0;
+  left:0;
+  margin:auto;
+  text-align: center;
+}
+
+#left_description{
+  position: absolute;
+  text-align: center;
+
+  width: 100%;
+  height: 20%;
+
+  left: 10%;
+  top: 50%;
+
+  font-size: 15pt;
+}
+#right_description{
+  position: absolute;
+  text-align: center;
+  top: 15%;
+  width: 100%;
+  height: 20%;
+  left:0;
+  font-size: 20pt;
+}
+
+#blur_effect{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right:0;
+  height: 40%;
+  width: 100%;
+  background: rgba(0,0,0, 0.5);
+  filter: blur(0.5px);
+}
+
+
+.enter_background{
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  top:0;
+  left:0;
+  background: #fff;
+  filter: blur(0.5px);
+}
+
+.enter_background > .enter_background_img{
+  position: relative;
+  height: 80%;
+  width: 100%;
+  top:0;
+  left:0;
+
+}
+
+.enter_background > .description{
+  position: relative;
+  width: 50%;
+  height: 10%;
+  left:0;
+  right:0;
+  top: 10%;
+  margin: auto;
+  text-align: center;
+  font-size: 20pt;
+}
+
+
+
+#cmc_background > .cmc{
+  background: url("../data/cmc.png");
+  background-size: contain; 
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#msu_background > .msu{
+  background: url("../data/msu.png");
+  background-size: contain; 
+  background-repeat: no-repeat;
+  background-position: center;
+}
+

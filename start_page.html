@@ -12,8 +12,17 @@
 <body>
   <div class="background">
       <canvas id=background_canvas>
-      </canvas> 
+      </canvas>
+
+
+      <div id="blur_effect"></div>
+
+      <div id="left_description_wrapper"> 
+          <span id="left_description"></span>
+        </div>
+
       <div id="photos">
+       
         <div id="Anya" class="photo_wrapper"> 
             <img src="data/Anya.jpg">
             <div class="text">
@@ -34,13 +43,36 @@
               </div>
         </div>
 
+    
     </div>
+    
+    <div id="enter_button" class="btn center_flex">
+      <a href="sources/index.html"></a>
 
-
+  
+          <span>Start</span>
+    
+    </div>
+    <div id="right_description_wrapper"> 
+        <span id="right_description"></span>
+      </div>
   </div>
+
+  <div id="cmc_background" class="enter_background">
+      <div class="cmc enter_background_img"> </div>
+      <div class="description"></div>
+  </div>
+
+  <div id="msu_background" class="enter_background">
+    <div class="msu enter_background_img"> </div>
+    <div class="description"></div>
+  </div>
+
+
    
   </body>
   <script src="js/lib/type_it.js"></script>
   <script src="js/background_particles.js"></script>
   <script src="js/type_for_start_page.js"></script>
+  <script src="js/start.js"></script>
   </html>
