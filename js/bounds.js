@@ -1,4 +1,4 @@
-var canvas = document.querySelector("canvas");
+var canvas = document.querySelector("#work_canvas");
 var ctx = canvas.getContext("2d");
 var work_area = document.querySelector("#work_area");
 

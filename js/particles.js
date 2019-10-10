@@ -1,5 +1,5 @@
 
-var canvas = document.querySelector("canvas");
+var canvas = document.querySelector("#work_canvas");
 var ctx = canvas.getContext("2d");
 
 
@@ -10,7 +10,7 @@ var width = canvas.width,
   height = canvas.height;
 
 
-
+hist = new Histogram(20, 0, 5, [d_width, d_height]);
 
 
 function getCentroid(arr) {
@@ -57,6 +57,8 @@ class Particle {
     this.acceleration = acceleration || new Vector(0, 0);
     this.lastFriend = new ObjectHandler();
     this.lastBound = new ObjectHandler();
+    this.lastTimeCollision = new Date().getTime() / 1000;
+    this.diffTimeCollsion = 0.0;
   }
   move() {
     this.position.x + this.velocity.x > width && this.velocity.x > 0 || this.position.x + this.velocity.x < 0 && this.velocity.x < 0 ? this.velocity.x *= -1 : this.velocity.x;
@@ -206,6 +208,9 @@ function bounds_interection(particle, clip_points) {
 
           if(intersection){
               particle.velocity.reflection(line.normal);
+              if ()
+              particle.diffTimeCollsion = new Date().getTime() / 1000 - particle.lastTimeCollision;
+              particle.lastTimeCollision += particle.diffTimeCollsion;
               return;
           }
       }
@@ -279,11 +284,13 @@ function plotParticles(boundsX, boundsY) {
 
 function draw() {
   // Задаём цвет частиц
-  ctx.fillStyle = 'rgb(0,125,255)';
 
+  ctx.fillStyle = 'rgb(0,125,255)';
+  data = []
   // Запускаем цикл, который отображает частицы
   for (var i = 0; i < particles.list.length; i++) {
     var position = particles.list[i].position;
+    data.push(particles.list[i].diffTimeCollsion);
     // Рисуем квадрат определенных размеров с заданными координатами
     ctx.beginPath();
     ctx.arc(position.x, position.y, particleSize, 0, Math.PI * 2);
@@ -306,6 +313,7 @@ function draw() {
   //   ctx.stroke();
   // }
   draw_lines();
+  hist.draw(data);
 }
 
 
