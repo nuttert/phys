@@ -2,8 +2,10 @@ var distribution_canvas = document.querySelector("#distribution_canvas");
 var d_ctx = distribution_canvas.getContext("2d");
 
 
-distribution_canvas.width = document.querySelector("#distribution_area").offsetWidth;
-distribution_canvas.height = document.querySelector("#distribution_area").offsetHeight;
+distribution_canvas.width = document.querySelector("#distribution_canvas").offsetWidth;
+distribution_canvas.height = document.querySelector("#distribution_canvas").offsetHeight;
+
+const deg = 90;
 
 var d_width = distribution_canvas.width,
     d_height = distribution_canvas.height;
@@ -28,7 +30,7 @@ class Histogram{
     this.arrow_size = 10;
 
     this.grid_size = this.bin_width;
-    this.size_mlp = 5;
+    this.size_mlp = 20;
     this.size_multiplayer = this.grid_size / this.size_mlp;
     this.x_ticks = -(this.axes_start[0] - this.x_end[0]) / this.grid_size;
     this.y_ticks = (this.axes_start[1] - this.y_end[1]) / this.grid_size;
@@ -134,7 +136,7 @@ class Histogram{
       d_ctx.lineTo(this.axes_start[0] + i * this.grid_size, this.axes_start[1] + 3);
       d_ctx.stroke();
 
-      d_ctx.font = '9px Arial';
+      d_ctx.font = '9px';
       d_ctx.textAlign = 'center';
       d_ctx.fillText(this.bins[i].toFixed(1), this.axes_start[0] + i * this.grid_size, this.axes_start[1] + 15);
     }
@@ -147,12 +149,12 @@ class Histogram{
       d_ctx.lineTo(this.axes_start[0] +3, this.axes_start[1]  - i * this.grid_size);
       d_ctx.stroke();
 
-      d_ctx.font = '9px Arial';
+      d_ctx.font = '9px';
       d_ctx.textAlign = 'end';
       d_ctx.fillText((this.size_mlp * i).toFixed(1), this.axes_start[0] - 10, this.axes_start[1]  - i * this.grid_size + 3);
     }
     // draw zero
-    d_ctx.font = '10px Arial';
+    d_ctx.font = '10px';
     d_ctx.textAlign = 'end';
     d_ctx.fillText(0, this.axes_start[0] - 10, this.axes_start[1] + 14);
 

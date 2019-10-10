@@ -10,7 +10,7 @@ var width = canvas.width,
   height = canvas.height;
 
 
-hist = new Histogram(20, 0, 5, [d_width, d_height]);
+hist = new Histogram(200, 0, 5, [d_width, d_height]);
 
 
 function getCentroid(arr) {
@@ -58,7 +58,7 @@ class Particle {
     this.lastFriend = new ObjectHandler();
     this.lastBound = new ObjectHandler();
     this.lastTimeCollision = new Date().getTime() / 1000;
-    this.diffTimeCollsion = 0.0;
+    this.diffTimeCollsion = 100;
   }
   move() {
     this.position.x + this.velocity.x > width && this.velocity.x > 0 || this.position.x + this.velocity.x < 0 && this.velocity.x < 0 ? this.velocity.x *= -1 : this.velocity.x;
@@ -208,9 +208,11 @@ function bounds_interection(particle, clip_points) {
 
           if(intersection){
               particle.velocity.reflection(line.normal);
-              if ()
-              particle.diffTimeCollsion = new Date().getTime() / 1000 - particle.lastTimeCollision;
-              particle.lastTimeCollision += particle.diffTimeCollsion;
+              if(choosenIndexies.includes(i)){
+                const current_time = new Date().getTime()/1000;
+                particle.diffTimeCollsion = current_time - particle.lastTimeCollision;
+                particle.lastTimeCollision = current_time;
+              }
               return;
           }
       }
@@ -263,7 +265,6 @@ function addNewParticles() {
    delete particles.list.pop();
    return;
   }
-  console.log(maxParticles, particles.list.length );
   // запускаем цикл по каждому излучателю
   for (var i = 0; i < emitters.length; i++) {
 
