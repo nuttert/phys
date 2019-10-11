@@ -13,6 +13,7 @@ var choosenIndexies = [];
 var draw_button_was_pressed = false;
 var config_button_was_pressed = false;
 var stop = false;
+var stop_design_animation = false;
 var clip_points = [];
 var bounds_funcs = [];
 var emitters = [];
@@ -52,6 +53,18 @@ function restart(){
 
 function dif_text(span, text){
    span.innerHTML = text;
+}
+
+function hide_object(object, time=300){
+    object.animate({opacity: 0}, time, function(){
+    object.css("visibility", "hidden");
+});
+}
+
+function vis_object(object, time=300){
+    object.animate({opacity: 1}, time, function(){
+    object.css("visibility", "visible");
+});
 }
 
 function change_velocity(){
@@ -194,8 +207,15 @@ function draw_lines(){
   ctx.closePath();
 }
 
-canvas.addEventListener("mousedown", function(e){ 
+
+document.querySelector("#work_area").addEventListener("mousedown", function(e){ 
   if(draw_button_was_pressed) return;
+  if(!stop_design_animation){
+    hide_object($('.design_animation_class'),0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stop_design_animation = true;
+  }
+   
   mouse.x = e.pageX - work_area.offsetLeft;
   mouse.y = e.pageY - work_area.offsetTop;
   clip_points.push(new Vector(mouse.x,mouse.y));
@@ -210,6 +230,12 @@ canvas.addEventListener("mousedown", function(e){
 
 document.querySelector("#draw_button").addEventListener("mousedown", function(e){
   if(draw_button_was_pressed) return;
+  if(!stop_design_animation){
+    hide_object($('.design_animation_class'), 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stop_design_animation = true;
+  }
+
   document.querySelector("#draw_button").style.opacity = '0.3';
   draw_button_was_pressed = true;
   for(var index = 0;index < clip_points.length;index++){
@@ -259,6 +285,11 @@ document.querySelector("#clear_button").addEventListener("mousedown", function(e
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   restart();
   stop = true;
+  if(stop_design_animation){
+    vis_object($('.design_animation_class'), 0);
+    stop_design_animation = false;
+    start_design_animation(ctx);
+  }
 });
 
 

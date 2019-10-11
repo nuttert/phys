@@ -225,3 +225,148 @@ body {
   position: absolute;
   margin: 10%;
 }
+
+
+.arrow {
+  height: 10vh;
+  width: 10vh;
+  border-radius: 50%;
+  display: inline-block;
+	position: absolute;
+	background: rgba(238, 236, 233, 0.5);
+	transform: rotate(-90deg);
+  right: 40%;
+}
+
+
+
+.right_arrow{
+  top: 15%;
+}
+ .left_arrow{
+  top: 55%;
+}
+.arrow img{
+	width: 50%;
+	height: auto;
+	right:0;
+	left: 0;
+	top:0;
+	bottom:0;
+	margin: auto;
+	position: absolute;
+	animation: arrow-animation 2s normal infinite;
+}
+
+
+
+.polygon{
+  height: 20vh;
+  width: 20vh;
+  display: inline-block;
+	position: absolute;
+	transform: rotate(-90deg);
+  right: 10%;
+  top: 10%;
+}
+
+.left_poligon{
+  top: 50%;
+}
+.right_poligon{
+  top: 10%;
+}
+.polygon img{
+	width: 50%;
+	height: auto;
+	right:0;
+	left: 0;
+	top:0;
+	bottom:0;
+	margin: auto;
+	position: absolute;
+}
+
+.ball{
+  height: 2vh;
+  width: 2vh;
+  right: 0;
+  left:0;
+  margin: auto;
+  top: 50%;
+  border-radius: 50%;
+  display: inline-block;
+	position: absolute;
+  background: rgba(238, 236, 233, 0.5);
+}
+
+.right_ball{
+  animation: out-ball-animation 2s normal infinite;
+}
+
+.left_ball{
+  animation: in-ball-animation 2s normal infinite;
+}
+
+@keyframes arrow-animation{
+	0% {
+    -webkit-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5)
+  }
+  50% {
+    -webkit-transform: scale(1.0, 1.0);
+    transform: scale(1.0, 1.0);
+  }
+  100% {
+    -webkit-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5);
+  }
+}
+
+@-webkit-keyframes arrow-animation {
+	0% {
+    -webkit-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5)
+  }
+  50% {
+    -webkit-transform: scale(1.0, 1.0);
+    transform: scale(1.0, 1.0);
+  }
+  100% {
+    -webkit-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5);
+  }
+}
+
+
+@keyframes  out-ball-animation{
+  from {
+    top: 40%;
+    animation-timing-function: ease-out;
+  }
+  50%{
+    top: 5%;
+    right: 30%;
+  }
+  to{
+    top: 40%;
+  }
+}
+
+@keyframes  in-ball-animation{
+  from {
+    top: 40%;
+    animation-timing-function: ease-out;
+  }
+  25%{
+    top: 50%;
+    right: 10%;
+  }
+  50%{
+    top: 35%;
+    right: 10%;
+  }
+  to{
+    top: 40%;
+  }
+}
