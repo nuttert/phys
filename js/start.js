@@ -20,3 +20,4 @@ setTimeout(() => {
       rightDescription();
    }, 2500);
 }, 2000);
+
