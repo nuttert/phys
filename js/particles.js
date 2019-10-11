@@ -251,10 +251,7 @@ function particles_interection(particle_number, particles){
 
 
 
-function update() {
-  addNewParticles();
-  plotParticles(canvas.width, canvas.height);
-}
+
 
 
 
@@ -278,7 +275,16 @@ function addNewParticles() {
 
 
 
-function plotParticles(boundsX, boundsY) {
+
+
+function start(){
+  
+function update() {
+  addNewParticles();
+  plotParticles(canvas.width, canvas.height);
+}
+
+  function plotParticles(boundsX, boundsY) {
   particles.moves();
 }
 
@@ -299,26 +305,13 @@ function draw() {
     ctx.fillStyle = particleColor;
     ctx.fill();
   }
-  //   for (var i = 0; i < lines.length; i++) {
-  //   var line = lines[i];
-  //   // Рисуем квадрат определенных размеров с заданными координатами
-  //   var point1 = line.point,
-  //       point2 = line.normal.copy().norm().mult_number(10).add(point1);
-
-  //   ctx.beginPath();
-  //   ctx.moveTo(point1.x, point1.y);
-
-  //   ctx.lineTo(point2.x,point2.y);
-  //   ctx.lineWidth = '2';
-  //   ctx.strokeStyle = '#000';
-  //   ctx.stroke();
-  // }
   draw_lines();
   hist.draw(data);
 }
 
 
 function loop() {
+  console.log("TEST1");
   if(stop)return;
   clear();
   update();
@@ -335,12 +328,12 @@ function queue() {
   window.requestAnimationFrame(loop);
 }
 
-function start(){
   stop = false;
   var center = getCentroid(clip_points);
   lines = set_lines(clip_points);
   emitters = [new Emitter(center, Vector.fromAngle(0, 0.02))];
   particles = new Particles([]);
+   console.log("TEST2");
   loop();
 }
 

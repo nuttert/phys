@@ -6,6 +6,7 @@ function hide_object(object, time=300){
 });
 }
 
+
 setTimeout(() => {
    hide_object($("#msu_background"));
    typeCMC();
