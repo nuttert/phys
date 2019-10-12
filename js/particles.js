@@ -311,7 +311,6 @@ function draw() {
 
 
 function loop() {
-  console.log("TEST1");
   if(stop)return;
   clear();
   update();
@@ -333,7 +332,6 @@ function queue() {
   lines = set_lines(clip_points);
   emitters = [new Emitter(center, Vector.fromAngle(0, 0.02))];
   particles = new Particles([]);
-   console.log("TEST2");
   loop();
 }
 
@@ -373,16 +371,29 @@ function lineHighliting(e){
 
 canvas.addEventListener("mousemove", function(e){ 
     var result = lineHighliting(e);
-    if(result['condition'])
+    if(result['condition'] && !lineHasJustChoosen)
     highlitedIndexies.push(result['index']);
     else{
+      lineHasJustChoosen = false;
       highlitedIndexies = [];
       }
 });
 canvas.addEventListener("mousedown", function(e){ 
     var result = lineHighliting(e);
-    if(result['condition'])
-    choosenIndexies.push(result['index']);
+    if(result['condition']){
+      const element = result['index'];
+      if(choosenIndexies.includes(element)){
+        const index = choosenIndexies.indexOf(element);
+        choosenIndexies.splice(index,1);
+        highlitedIndexies = [];
+        lineHasJustChoosen = true;
+      }
+      else{
+        choosenIndexies.push(element);
+        highlitedIndexies = [];
+        lineHasJustChoosen = true;
+      }
+    }
 });
 
 

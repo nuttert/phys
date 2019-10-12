@@ -10,6 +10,7 @@ var lineColorForChoosenBounds = "#ee05a9";
 var lineColor = "#fff";
 var highlitedIndexies = [];
 var choosenIndexies = [];
+var lineHasJustChoosen = false;
 var draw_button_was_pressed = false;
 var config_button_was_pressed = false;
 var stop = false;
@@ -198,10 +199,11 @@ function draw_lines(){
     ctx.lineTo(point2.x,point2.y);
     ctx.lineWidth = '4';
     ctx.strokeStyle = lineColor;
-    if(highlitedIndexies.includes(index))
-    ctx.strokeStyle = lineColorWithHighliting;
     if(choosenIndexies.includes(index))
     ctx.strokeStyle = lineColorForChoosenBounds;
+    if(highlitedIndexies.includes(index))
+    ctx.strokeStyle = lineColorWithHighliting;
+
     ctx.stroke();
   }
   ctx.closePath();

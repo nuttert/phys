@@ -58,7 +58,6 @@ work_area = document.querySelector("#work_area");
   if(unclockwise_indexies.includes(0))
     unclockwise_indexies = [];
   
-  console.log(clockwise_indexies.length);
 
   unclockwise_indexies.push(coordinats.length-1 - colored_vertices);
   clockwise_indexies.push(colored_vertices);
