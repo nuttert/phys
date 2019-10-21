@@ -80,6 +80,11 @@ body {
   position: absolute;
 }
 
+#time_collision_canvas{
+  width: 100%;
+  position: relative;
+}
+
 #distribution_canvas{
   width: 100%;
   height:70%;
@@ -88,6 +93,7 @@ body {
   transform : rotate('90deg');
   position: absolute;
 }
+
 
 .btn{
   top: 20%;
