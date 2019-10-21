@@ -47,7 +47,7 @@ class TimePlot{
 		this.prev_time = new Date().getTime() / 1000;	
 		this.line_height = 30;
 		this.travel_line_color = '#f18db5';
-		this.text_color = '#05EEA8';
+		this.text_color = '#41daab';
 		this.ticks_number = 6;
 		this.ticks_height = 10;
 		this.tick_width = 2;
@@ -71,10 +71,11 @@ class TimePlot{
 		}
 		this.prev_time = new_time;
 		tc_ctx.fillStyle = this.text_color;
+		tc_ctx.strokeStyle = "blue";
     	tc_ctx.font = '24px Montserrat-Medium';
     	tc_ctx.textAlign = 'right';
-    	tc_ctx.fillText(0, this.axes_start[0] - this.margin_left / 12, this.axes_start[1] + 2 * this.margin_bottom / 3);
-    	tc_ctx.fillText(this.limit_right.toString(), this.axes_end[0], this.axes_start[1]  + 2 * this.margin_bottom / 3);
+    	tc_ctx.fillText(0, Math.trunc(this.axes_start[0] - this.margin_left / 12), Math.trunc(this.axes_start[1] + 2 * this.margin_bottom / 3));
+    	tc_ctx.fillText(this.limit_right.toString(), Math.trunc(this.axes_end[0]), Math.trunc(this.axes_start[1]  + 2 * this.margin_bottom / 3));
 		
 		
 		// draw timeline
