@@ -20,7 +20,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #05eea8; font-size: 100%;">Pavel Shvetc</text>');
+    .tiType('<text style="color: #05eea8; font-size: 100%;">Pavel Shvets</text>');
 }
 
   function typeLeftDescription() {

@@ -12,17 +12,17 @@ $('#console').typeIt({
   .tiType('<text style="color: #05eea8">get</text>')
   .tiType('<text style="color: #000"> started!</text>')
 
-  function typeClear(elem){
-    elem.typeIt().tiEmpty();
-  }
+function typeClear(elem){
+  elem.typeIt().tiEmpty();
+}
 
-  function typeErrorPoligon() {
-  $('#console').typeIt({
-    speed: 50,
-    autoStart: false,
-    html: true
-  })
-    .tiType('<text style="color: #05e6eebd; font-size: 100%;">Poligon should be without intersections!</text>');
+function typeErrorPoligon() {
+$('#console').typeIt({
+  speed: 50,
+  autoStart: false,
+  html: true
+})
+  .tiType('<text style="color: #05e6eebd; font-size: 100%;">Poligon should be without intersections!</text>');
 }
 
 

@@ -1,4 +1,3 @@
-
 var canvas = document.querySelector("#work_canvas");
 var ctx = canvas.getContext("2d");
 
@@ -10,7 +9,30 @@ var width = canvas.width,
   height = canvas.height;
 
 
-hist = new Histogram(200, 0, 5, [d_width, d_height]);
+hist = new Histogram(10, 0, 4, [d_width, d_height], 20);
+
+
+
+function line_intersection(line1, line2) {
+  function area (a, b, c) {
+    return (b.x - a.x) * (c.y- a.y) - (b.y - a.y) * (c.x - a.x);
+  }
+ 
+  function intersect_1 (a, b, c, d) {
+    if (a > b)  [a, b] = [b, a];
+    if (c > d)  [c, d] = [d, c];
+    return Math.max(a,c) <= Math.min(b,d);
+  }
+ 
+  function intersect (a, b, c, d) {
+    return intersect_1(a.x, b.x, c.x, d.x)
+      && intersect_1 (a.y, b.y, c.y, d.y)
+      && area(a,b,c) * area(a,b,d) <= 0
+      && area(c,d,a) * area(c,d,b) <= 0;
+  }
+
+  return intersect(line1.point1, line1.point2, line2.point1, line2.point2);
+};
 
 
 function getCentroid(arr) {
@@ -57,7 +79,7 @@ class Particle {
     this.acceleration = acceleration || new Vector(0, 0);
     this.lastFriend = new ObjectHandler();
     this.lastBound = new ObjectHandler();
-    this.lastTimeCollision = new Date().getTime() / 1000;
+    this.lastTimeCollision = 0;
     this.diffTimeCollsion = 100;
   }
   move() {
@@ -297,7 +319,8 @@ function draw() {
   // Запускаем цикл, который отображает частицы
   for (var i = 0; i < particles.list.length; i++) {
     var position = particles.list[i].position;
-    data.push(particles.list[i].diffTimeCollsion);
+    var nowTime = new Date().getTime() / 1000;
+    data.push(nowTime - particles.list[i].lastTimeCollision);
     // Рисуем квадрат определенных размеров с заданными координатами
     ctx.beginPath();
     ctx.arc(position.x, position.y, particleSize, 0, Math.PI * 2);
@@ -306,6 +329,8 @@ function draw() {
     ctx.fill();
   }
   draw_lines();
+  
+  hist.setMaxParticles(particles.list.length);
   hist.draw(data);
 }
 
@@ -330,6 +355,20 @@ function queue() {
   stop = false;
   var center = getCentroid(clip_points);
   lines = set_lines(clip_points);
+  // var isIntersected = false;
+  // for (var i = 0; i < lines.length && !isIntersected; i++) {
+  //   for (var j = 0; j < lines.length && !isIntersected; j++) {
+  //     if (j != i && (j + 1) % lines.length != i && (j - 1 + lines.length) % lines.length != i) {
+  //       isIntersected = line_intersection(lines[i], lines[j]);
+  //       if (isIntersected) {
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }
+  // if (isIntersected) {
+  //   typeErrorPoligon();
+  // }
   emitters = [new Emitter(center, Vector.fromAngle(0, 0.02))];
   particles = new Particles([]);
   loop();
@@ -395,12 +434,3 @@ canvas.addEventListener("mousedown", function(e){
       }
     }
 });
-
-
-
-
-
-
-
-
-
