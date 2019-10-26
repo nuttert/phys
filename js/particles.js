@@ -269,6 +269,7 @@ function particles_interection(particle_number, particles){
     var next_particle = particles[i];
     var isBounds = next_particle.isBoundParticle + particle.isBoundParticle;
     var bound_part = isBounds ? (next_particle.isBoundParticle ? next_particle:particle) : null;
+    var non_bound_part = isBounds ? (next_particle.isBoundParticle ? particle:next_particle):null;
 
     var distance = new Vector(particle.position.x - next_particle.position.x,
                               particle.position.y - next_particle.position.y);
@@ -288,8 +289,10 @@ function particles_interection(particle_number, particles){
        next_particle.move();
         if(isBounds){
                   bound_patricle_color = get_random_color();
+                 const current_time = new Date().getTime()/1000;
+                 non_bound_part.diffTimeCollsion = current_time - non_bound_part.lastTimeCollision;
+                 non_bound_part.lastTimeCollision = current_time;
         }
-     
         
        return;
     }
@@ -360,7 +363,7 @@ function draw() {
   ctx.fillStyle = 'rgb(0,125,255)';
   data_hist = [];
   data_time = [];
-  var nowTime = new Date().getTime() / 1000;
+
   // Запускаем цикл, который отображает частицы
   for (var i = 0; i < particles.list.length; i++) {
 
