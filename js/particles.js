@@ -366,7 +366,7 @@ function draw() {
 
     var position = particles.list[i].position;
     var nowTime = new Date().getTime() / 1000;
-    data.push(nowTime - particles.list[i].lastTimeCollision);
+
     ctx.fillStyle = particles.list[i].color();
     size =  particles.list[i].isBoundParticle ?  kBoundParticleSize : particleSize;
     
