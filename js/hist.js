@@ -206,7 +206,6 @@ class Histogram{
     		d_ctx.fillStyle = getGradientColor(this.start_color, this.end_color, Math.log(lambda + 1));
     		d_ctx.arc(coord_x - this.hat_margin, coord_y, radius, -Math.PI / 2 - 0.015, Math.PI/2 + 0.015);
     		d_ctx.fill();
-    		console.log(coord_y, coord_x);
     		d_ctx.fillRect(this.axes_start[0], coord_y - radius, coord_x - this.axes_start[0] - this.hat_margin, 2 * radius);
 
     	}

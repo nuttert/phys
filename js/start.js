@@ -9,15 +9,22 @@ function hide_object(object, time=300){
 
 setTimeout(() => {
    hide_object($("#msu_background"));
-   typeCMC();
+        typePHYS();
+  
+
    setTimeout(() => {
-     hide_object($("#cmc_background"));
+      hide_object($("#phys_background"));
+       typeCMC();
+     setTimeout(() => {
+       hide_object($("#cmc_background"));
+      typeNameChich();
       typeNameVlad();
       typeNameAnya();
       typeNamePasha();
 
       typeLeftDescription();
       rightDescription();
+       }, 2500);
    }, 2500);
-}, 2000);
+}, 2500);
 

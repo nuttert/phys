@@ -13,6 +13,8 @@ var choosenIndexies = [];
 var lineHasJustChoosen = false;
 var draw_button_was_pressed = false;
 var config_button_was_pressed = false;
+var config_bounds_button_was_pressed = false;
+var polygon_button_was_pressed = false;
 var stop = false;
 var stop_design_animation = false;
 var clip_points = [];
@@ -25,8 +27,12 @@ var particleColor = "#123";
 var velocity = 30;
 var particles = null;
 var lines = [];
-
-
+var kBoundParticle = false;
+var kBoundParticleSet = false;
+var kBoundParticleSize = 15;
+var boundParticle = null;
+var bound_patricle_color = 'rgb(100,0,100)';
+var center = null;
 
 function restart(){
   pointSize = 5;
@@ -45,11 +51,15 @@ function restart(){
   emitters = [];
 
   particleColor = "#123";
-
+  kBoundParticle = false;
+  kBoundParticleSet = false;
+  bound_patricle_color = 'rgb(100,0,100)';
   particles = null;
   lines = [];
 
   document.querySelector("#draw_button").style.opacity = '1';
+  span = document.querySelector("#set_particle_button > span");
+  dif_text(span, "set particle");
 }
 
 function dif_text(span, text){
@@ -78,15 +88,22 @@ function change_velocity(){
 function change_amount(){
   var rng=document.querySelector('#range_amount');
   var span = document.querySelector('.range_amount_li > span');
-  maxParticles = rng.value;
+  maxParticles = parseInt(rng.value);
   dif_text(span, "Amount "+ maxParticles);
 }
 
 function change_size(){
    var rng=document.querySelector('#range_size');
   var span = document.querySelector('.range_size_li > span');
-  particleSize = rng.value;
+  particleSize = parseInt(rng.value);
   dif_text(span, "Size "+ particleSize);
+}
+
+function change__bound_size(){
+   var rng=document.querySelector('#range_bound_particle_size');
+  var span = document.querySelector('.range_bound_particle_size_li > span');
+  kBoundParticleSize = parseInt(rng.value);
+  dif_text(span, "Size "+ kBoundParticleSize);
 }
 
 class Vector {
@@ -221,6 +238,7 @@ document.querySelector("#work_area").addEventListener("mousedown", function(e){
   mouse.x = e.pageX - work_area.offsetLeft;
   mouse.y = e.pageY - work_area.offsetTop;
   clip_points.push(new Vector(mouse.x,mouse.y));
+  console.log(mouse.x,mouse.y);
   ctx.beginPath();
   ctx.arc(mouse.x, mouse.y, pointSize, 0, Math.PI * 2);
   ctx.closePath();
@@ -268,9 +286,10 @@ function hide_button(button, time=300){
 });
 }
 
-function vis_button(button, time=300){
+function vis_button(button, time=300, static=true){
     button.animate({opacity: 1}, time, function(){
     button.css("visibility", "visible");
+    if(static)
     button.css("position", "static");
 });
 }
@@ -303,19 +322,24 @@ if(!config_button_was_pressed){
 
   hide_button($('.draw_button_li'));
   hide_button($('.clear_button_li'));
-   
+  hide_button($('#bounds_config_li'));
+
    $('.config_button_li').css("position","absolute");
+   $('.menu').css("justify-content","center");
    dif_text(span, "close");
    $('.config_button_li').animate({top: '0%'}, 200, function(){});
 
-   vis_button($('.ranges_li'));
+   vis_button($('.config_part_ranges'));
+  //  vis_button($('#bounds_config_li'));
+
   //  static_position($('.ranges_li'));
   return;
 }
 
-config_button_was_pressed = false;
 
-dif_text(span, "config");
+config_button_was_pressed = false;
+ $('.menu').css("justify-content","center");
+dif_text(span, "particle config");
 $('.config_button_li').animate({top: '40%'}, 300, function(){
    $('.config_button_li').css("position","static");
 });
@@ -323,9 +347,63 @@ $('.config_button_li').animate({top: '40%'}, 300, function(){
 
 vis_button($('.draw_button_li'));
 vis_button($('.clear_button_li'));
+vis_button($('#bounds_config_li'));
 
-hide_button($('.ranges_li'));
+hide_button($('.config_part_ranges'));
 // absolute_position($('.ranges_li'));
 
 
 });
+
+
+
+
+document.querySelector("#bounds_config_button").addEventListener("mousedown", function(e){ 
+  span = document.querySelector("#bounds_config_button > span");
+
+if(!config_bounds_button_was_pressed){
+  config_bounds_button_was_pressed = true;
+
+  hide_button($('.draw_button_li'));
+  hide_button($('.clear_button_li'));
+  hide_button($('.config_button_li'));
+
+   $('#bounds_config_li').css("position","absolute");
+   $('.menu').css("justify-content","center");
+   dif_text(span, "close");
+   $('#bounds_config_li').animate({top: '0%'}, 200, function(){});
+
+   vis_button($('#set_particle_li'));
+   vis_button($('.config_bound_ranges'));
+   vis_button($('.bounds_config_class'),time=300,static=false);
+  //  vis_button($('#back_for_config'));
+  //  static_position($('.ranges_li'));
+  return;
+}
+
+config_bounds_button_was_pressed = false;
+ $('.menu').css("justify-content","center");
+dif_text(span, "bounds config");
+$('#bounds_config_li').animate({top: '40%'}, 300, function(){
+   $('#bounds_config_li').css("position","static");
+});
+
+
+vis_button($('.draw_button_li'));
+vis_button($('.clear_button_li'));
+vis_button($('.config_button_li'));
+
+hide_button($('#set_particle_li'));
+hide_button($('.config_bound_ranges'));
+hide_button($('.bounds_config_class'));
+// hide_button($('#back_for_config'));
+// absolute_position($('.ranges_li'));
+
+
+});
+
+
+
+
+
+

@@ -13,6 +13,7 @@
 
 <body>
     <div id="config_area">
+
       	<nav>
             <ul class="menu center_flex">
               <li class="draw_button_li">
@@ -21,27 +22,65 @@
               </li>
               <li class="config_button_li">
                 <div id="config_button" class="btn">
-                    <span>Config</span></button></button>
+                    <span>particle config</span></button></button>
+              </li>
+              <li id="bounds_config_li">
+                <div class="btn" id="bounds_config_button" >
+                    <span>bounds config</span> </button>
               </li>
               <li class="clear_button_li">
                 <div id="clear_button" class="btn">
                     <span>Clear</span> </button>
               </li>
-              <li class="range_velocity_li ranges_li">
+              <li id="set_particle_li" class="bounds_config_class">
+                  <div class="btn" id="set_particle_button" >
+                      <span>set particle</span> </button>
+                </li>
+
+              <li class="range_bound_particle_size_li ranges_li config_bound_ranges">
+                <span>Size 15</span> </button>
+                <input type="range" id="range_bound_particle_size" class="ranges" oninput="change__bound_size()" min="1", max="40" value="15">
+            </li>
+            
+     
+              <li class="range_velocity_li ranges_li config_part_ranges">
                   <span>Velocity 30</span> </button>
                   <input type="range" id="range_velocity" class="ranges" oninput="change_velocity()" min="0", max="400" value="30">
               </li>
-              <li class="range_amount_li ranges_li">
+              <li class="range_amount_li ranges_li config_part_ranges">
                   <span>Amount 20</span> </button>
-                  <input type="range" id="range_amount" class="ranges" oninput="change_amount()" min="0", max="100" value="20">
+                  <input type="range" id="range_amount" class="ranges" oninput="change_amount()" min="1", max="100" value="20">
               </li>
-              <li class="range_size_li ranges_li">
+              <li class="range_size_li ranges_li config_part_ranges">
                   <span>Size 10</span> </button>
                   <input type="range" id="range_size" class="ranges" oninput="change_size()" min="1", max="20" value="10">
               </li>
             </ul>
           </nav>
+          
+          <div id="back_for_config" class="bounds_config_class">
+              <div id="highlighting1" class="highlighting"></div>
+              <div id="polygon_li1" class="bounds_config_class">
+                      <svg  width="140" height="130">
+                          <polygon points="70,5 90,41 136,48 103,80 111,126 70,105 29,126 36,80 5,48 48,41"
+                                   fill="#fff" stroke="#000" stroke-width="5" />
+                      </svg>
+                  </div>
+                
+              <div id="polygon_li2" class="bounds_config_class">
+                      <svg width="120" height="130">
+                          <polygon points=" 30 10, 10 30, 40 60, 10 90, 30 110, 60 80, 90 110, 110 90, 80 60, 110 30, 90 10, 60 40"
+                         
+                                   fill="#fff" stroke="#000" stroke-width="5" />
+                      </svg>
+                </div>
+                <div id="highlighting2" class="highlighting"></div>
+          </div>
+
+
+
     </div>
+    
   <div id="work_area">
     <canvas id="work_canvas">
     </canvas>

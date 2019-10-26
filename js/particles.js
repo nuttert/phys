@@ -1,6 +1,6 @@
 var canvas = document.querySelector("#work_canvas");
 var ctx = canvas.getContext("2d");
-
+var center= null;
 
 canvas.width = document.querySelector("#work_area").offsetWidth;
 canvas.height = document.querySelector("#work_area").offsetHeight;
@@ -11,8 +11,7 @@ var width = canvas.width,
 
 hist = new Histogram(10, 0, 4, [d_width, d_height], 20);
 
-
-
+ 
 function line_intersection(line1, line2) {
   function area (a, b, c) {
     return (b.x - a.x) * (c.y- a.y) - (b.y - a.y) * (c.x - a.x);
@@ -73,7 +72,7 @@ class ObjectHandler{
 class Particle {
   
 
-  constructor(point, velocity, acceleration) {
+  constructor(point, velocity, acceleration=0, color="#123", size=null, isBoundParticle=false) {
     this.position = point || new Vector(0, 0);
     this.velocity = velocity || new Vector(0, 0);
     this.acceleration = acceleration || new Vector(0, 0);
@@ -81,8 +80,17 @@ class Particle {
     this.lastBound = new ObjectHandler();
     this.lastTimeCollision = 0;
     this.diffTimeCollsion = 100;
+    this.size = size;
+    this.isBoundParticle = isBoundParticle;
+
+  }
+  color(){
+    if(this.isBoundParticle)
+    return bound_patricle_color;
+    return particleColor;
   }
   move() {
+    if(this.isBoundParticle) return;
     this.position.x + this.velocity.x > width && this.velocity.x > 0 || this.position.x + this.velocity.x < 0 && this.velocity.x < 0 ? this.velocity.x *= -1 : this.velocity.x;
     this.position.y + this.velocity.y > height && this.velocity.y > 0 || this.position.y + this.velocity.y < 0 && this.velocity.y < 0 ? this.velocity.y *= -1 : this.velocity.y;
     this.position.x += this.velocity.x;
@@ -149,7 +157,7 @@ class Particles{
       var particle = this.list[i];
       var pos = this.list.position;
       bounds_interection(particle, clip_points);
-        particles_interection(i,this.list);
+      particles_interection(i,this.list);
       
       particle.move();
      
@@ -240,7 +248,12 @@ function bounds_interection(particle, clip_points) {
       }
   }
 
-  
+  function get_random_color(){
+    var color = "rgb(#1,#2,#3)";
+    for(var i=1;i<=3;i++)
+      color =color.replace("#"+i.toString(),Math.floor(255*Math.random()).toString());
+    return color;
+  }
 
 
 function particles_interection(particle_number, particles){
@@ -252,19 +265,34 @@ function particles_interection(particle_number, particles){
       continue;
     }
     var next_particle = particles[i];
+    var isBounds = next_particle.isBoundParticle + particle.isBoundParticle;
+    var bound_part = isBounds ? (next_particle.isBoundParticle ? next_particle:particle) : null;
 
     var distance = new Vector(particle.position.x - next_particle.position.x,
                               particle.position.y - next_particle.position.y);
-    if(distance.getMagnitude() <= 1.7*particleSize){
+    let magn = distance.getMagnitude();
+    distance = isBounds ? kBoundParticleSize +particleSize : null;
+    if((!isBounds &&
+       magn <= 1.7*particleSize) ||
+       (isBounds &&
+        magn <= distance )){
+  
+
        var norm = next_particle.position.copy().sub(particle.position);
        particle.velocity.reflection(norm);
        norm.mult_number(-1);
        next_particle.velocity.reflection(norm);
        particle.move();
        next_particle.move();
+        if(isBounds){
+                  bound_patricle_color = get_random_color();
+        }
+     
+        
        return;
     }
   }
+ 
 
 }
 
@@ -279,8 +307,9 @@ function particles_interection(particle_number, particles){
 
 function addNewParticles() {
   // прекращаем, если достигнут предел
-  if (particles.list.length == maxParticles) return;
-  if (particles.list.length > maxParticles){
+  
+  if (particles.list.length == maxParticles+kBoundParticleSet) return;
+  if (particles.list.length > maxParticles + kBoundParticleSet){
    delete particles.list.pop();
    return;
   }
@@ -298,11 +327,23 @@ function addNewParticles() {
 
 
 
+function addBoundParticle(){
+
+  if(kBoundParticleSet) return;
+  kBoundParticleSet = true;
+  var position = center;
+  var velocity = new Vector(0,0);
+  boundParticle = new Particle(position, velocity, 0, color=bound_patricle_color,size=kBoundParticleSize,isBoundParticle=true);
+  particles.list.push(boundParticle);
+}
+
 
 function start(){
   
 function update() {
   addNewParticles();
+  if(kBoundParticle)
+  addBoundParticle();
   plotParticles(canvas.width, canvas.height);
 }
 
@@ -318,14 +359,15 @@ function draw() {
   data = []
   // Запускаем цикл, который отображает частицы
   for (var i = 0; i < particles.list.length; i++) {
+
     var position = particles.list[i].position;
     var nowTime = new Date().getTime() / 1000;
     data.push(nowTime - particles.list[i].lastTimeCollision);
-    // Рисуем квадрат определенных размеров с заданными координатами
+    ctx.fillStyle = particles.list[i].color();
+    size =  particles.list[i].isBoundParticle ?  kBoundParticleSize : particleSize;
     ctx.beginPath();
-    ctx.arc(position.x, position.y, particleSize, 0, Math.PI * 2);
+    ctx.arc(position.x, position.y,size, 0, Math.PI * 2);
     ctx.closePath();
-    ctx.fillStyle = particleColor;
     ctx.fill();
   }
   draw_lines();
@@ -353,7 +395,7 @@ function queue() {
 }
 
   stop = false;
-  var center = getCentroid(clip_points);
+  center = getCentroid(clip_points);
   lines = set_lines(clip_points);
   // var isIntersected = false;
   // for (var i = 0; i < lines.length && !isIntersected; i++) {
@@ -433,4 +475,119 @@ canvas.addEventListener("mousedown", function(e){
         lineHasJustChoosen = true;
       }
     }
+});
+
+
+
+document.querySelector("#set_particle_button").addEventListener("mousedown", function(e){ 
+   span = document.querySelector("#set_particle_button > span");
+  if(!kBoundParticle){
+kBoundParticle = true;
+kBoundParticleSet = false;
+
+  dif_text(span, "unset particle");
+return;
+  }
+  
+
+  dif_text(span, "set particle");
+  kBoundParticle = false;
+  kBoundParticleSet = false;
+  particles.list.splice(particles.list.indexOf(boundParticle),1);
+});
+
+
+document.querySelector("#highlighting1").addEventListener("mousedown", function(e){ 
+  restart();
+  clip_points = [ [70,5], [90,41], [136,48], [103,80], [111,126], [70,105], [29,126], [36,80], [5,48], [48,41]];
+  for(var i=0;i<clip_points.length;i++)
+  clip_points[i] = new Vector(clip_points[i][0],clip_points[i][1]);
+
+  let add_vector = new Vector(
+    canvas.width/2 -70,
+  canvas.height/2-40);
+    let coafficient = canvas.width/140;
+
+    for(var i=0;i<clip_points.length;i++){
+      // clip_points[i] = clip_points[i].add(add_vector);
+      clip_points[i] = clip_points[i].mult_number(coafficient);
+    }
+    ;
+
+   if(draw_button_was_pressed) return;
+  if(!stop_design_animation){
+    hide_object($('.design_animation_class'), 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stop_design_animation = true;
+  }
+
+
+
+  document.querySelector("#draw_button").style.opacity = '0.3';
+  draw_button_was_pressed = true;
+  for(var index = 0;index < clip_points.length;index++){
+    var current_index = index,
+    next_index = index ==  clip_points.length -1 ? 0:index + 1;
+
+    var point1 = clip_points[current_index],
+        point2 = clip_points[next_index];
+
+    ctx.beginPath();
+    ctx.moveTo(point1.x, point1.y);
+
+    ctx.lineTo(point2.x,point2.y);
+    ctx.lineWidth = '4';
+    ctx.strokeStyle = lineColor;
+    ctx.stroke();
+  }
+  ctx.closePath();
+  start();
+});
+
+
+document.querySelector("#highlighting2").addEventListener("mousedown", function(e){ 
+  restart();
+  clip_points = [ [20,0],[0, 20], [30, 50], [0,80],[ 20,100], [50, 70],[80, 100], [100, 80],[ 70,50], [100, 20], [80, 0], [50,30]].reverse();;
+  for(var i=0;i<clip_points.length;i++)
+  clip_points[i] = new Vector(clip_points[i][0],clip_points[i][1]);
+
+  let add_vector = new Vector(
+    canvas.width/35,
+  canvas.height/35);
+    let coafficient = canvas.width/140;
+
+    for(var i=0;i<clip_points.length;i++){
+      clip_points[i] = clip_points[i].add(add_vector);
+      clip_points[i] = clip_points[i].mult_number(coafficient);
+    }
+    ;
+
+   if(draw_button_was_pressed) return;
+  if(!stop_design_animation){
+    hide_object($('.design_animation_class'), 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stop_design_animation = true;
+  }
+
+
+
+  document.querySelector("#draw_button").style.opacity = '0.3';
+  draw_button_was_pressed = true;
+  for(var index = 0;index < clip_points.length;index++){
+    var current_index = index,
+    next_index = index ==  clip_points.length -1 ? 0:index + 1;
+
+    var point1 = clip_points[current_index],
+        point2 = clip_points[next_index];
+
+    ctx.beginPath();
+    ctx.moveTo(point1.x, point1.y);
+
+    ctx.lineTo(point2.x,point2.y);
+    ctx.lineWidth = '4';
+    ctx.strokeStyle = lineColor;
+    ctx.stroke();
+  }
+  ctx.closePath();
+  start();
 });

@@ -22,6 +22,14 @@
   })
     .tiType('<text style="color: #05eea8; font-size: 100%;">Pavel Shvets</text>');
 }
+  function typeNameChich() {
+  $('#Chich .text h1').typeIt({
+    speed: 50,
+    autoStart: false,
+    html: true
+  })
+    .tiType('<text style="color: #430b15; font-size: 100%;">Chichigina O.A.</text>');
+}
 
   function typeLeftDescription() {
   $('#left_description').typeIt({
@@ -65,5 +73,12 @@
     .tiType('<text style="color: #000; font-size: 100%;">Faculty of Computational Mathematics and Cybernetics</text>');
 }
 
-
+  function typePHYS() {
+  $('#phys_background > .description').typeIt({
+    speed: 30,
+    autoStart: false,
+    html: true
+  })
+    .tiType('<text style="color: #000; font-size: 100%;">Faculty of Physics</text>');
+}
 
