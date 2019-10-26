@@ -12,6 +12,8 @@ var width = canvas.width,
 hist = new Histogram(10, 0, 4, [d_width, d_height], 20);
 
  
+time_plot = new TimePlot(0, 5, [tc_width, tc_height]);
+
 function line_intersection(line1, line2) {
   function area (a, b, c) {
     return (b.x - a.x) * (c.y- a.y) - (b.y - a.y) * (c.x - a.x);
@@ -356,7 +358,9 @@ function draw() {
   // Задаём цвет частиц
 
   ctx.fillStyle = 'rgb(0,125,255)';
-  data = []
+  data_hist = [];
+  data_time = [];
+  var nowTime = new Date().getTime() / 1000;
   // Запускаем цикл, который отображает частицы
   for (var i = 0; i < particles.list.length; i++) {
 
@@ -365,6 +369,12 @@ function draw() {
     data.push(nowTime - particles.list[i].lastTimeCollision);
     ctx.fillStyle = particles.list[i].color();
     size =  particles.list[i].isBoundParticle ?  kBoundParticleSize : particleSize;
+    
+    data_hist.push(nowTime - particles.list[i].lastTimeCollision);
+    if (nowTime - particles.list[i].lastTimeCollision < 0.001) {
+      data_time.push(particles.list[i].lastTimeCollision);
+    }
+    // Рисуем квадрат определенных размеров с заданными координатами
     ctx.beginPath();
     ctx.arc(position.x, position.y,size, 0, Math.PI * 2);
     ctx.closePath();
@@ -373,7 +383,8 @@ function draw() {
   draw_lines();
   
   hist.setMaxParticles(particles.list.length);
-  hist.draw(data);
+  hist.draw(data_hist);
+  time_plot.draw(data_time);
 }
 
 
