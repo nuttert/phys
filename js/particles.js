@@ -312,12 +312,13 @@ function particles_interection(particle_number, particles){
 
 function addNewParticles() {
   // прекращаем, если достигнут предел
-  
+  console.log("MAX:",maxParticles, particles.list.length);
   if (particles.list.length == maxParticles+kBoundParticleSet) return;
   if (particles.list.length > maxParticles + kBoundParticleSet){
    delete particles.list.pop();
    return;
   }
+  console.log("NEW:",maxParticles, particles.list.length);
   // запускаем цикл по каждому излучателю
   for (var i = 0; i < emitters.length; i++) {
 
