@@ -115,7 +115,7 @@ function RandomParticles(element, particleCount, color){
     init();
 
 }
-RandomParticles(document.querySelector('.background'),30, '255, 255, 255');
+// RandomParticles(document.querySelector('.background'),30, '255, 255, 255');
 RandomParticles(document.querySelector('.background'),40, '0, 0, 0');
 
 

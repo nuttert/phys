@@ -10,6 +10,10 @@
 	align-items: center;
 }
 
+body{
+  overflow: hidden;
+}
+
 #background_canvas{
   width:100%;
   height:100vh;
@@ -75,7 +79,10 @@
 
 	font-weight: 50;
 	font-size: 2vmin;
-	text-decoration: none;
+  text-decoration: none;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
 }
 
 
@@ -103,6 +110,37 @@
 }  
 
 #enter_button > a{
+  top:0;
+  right:0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+#description_button{
+
+  width: 20%;
+  height: 8%;
+  left:0;
+  right:0;
+  margin:auto;
+  margin-top:2%;
+  background-color:rgba(238, 5, 169, 1);
+  position: relative;
+  box-shadow: 0px 5px 132.24px 10px rgba(238, 5, 169, 1);
+}
+
+#description_button > span{
+	text-decoration: none;
+  display: inline-block;
+  font-size: 2vmin;
+}
+
+#description_button:hover{
+	box-shadow: 0px 5px 132.24px 19.76px aqua;
+}  
+
+#description_button > a{
   top:0;
   right:0;
   width: 100%;
@@ -149,6 +187,11 @@
   font-size: 2vmin;
 }
 
+.blur{
+  background: rgba(0,0,0, 0.5);
+  filter: blur(0.5px);
+}
+
 #blur_effect{
   position: absolute;
   bottom: 0;
@@ -156,8 +199,6 @@
   right:0;
   height: 40%;
   width: 100%;
-  background: rgba(0,0,0, 0.5);
-  filter: blur(0.5px);
 }
 
 
@@ -192,6 +233,165 @@
   font-size: 2vmin;
 }
 
+#description_view{
+  visibility: hidden;
+  position: absolute;
+  width:100%;
+  height:100%;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  margin:auto;
+  /* background: white; */
+}
+
+
+#description_view > .blur{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right:0;
+  height: 100%;
+  width: 100%;
+}
+
+#description_view > #description{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right:0;
+  margin:auto;
+  height: 100%;
+  width: 80%;
+  border-radius: 20%;
+  background: white;
+}
+
+
+
+#description > .close_button{
+  width: 5vmin;
+  height: 5vmin;
+  border-radius: 100%;
+  right:10%;
+
+  margin-top:2%;
+  border-color: rgba(238, 5, 169, 1);
+  border-style: solid;
+  position: absolute;
+  box-shadow: 0px 1px 132.24px 1px rgba(238, 5, 169, 1);
+  background: rgba(238, 5, 169, 1);
+  color:black;
+}
+
+#description > .next_button{
+  width: 13vmin;
+  height: 13vmin;
+  border-radius: 100%;
+  right:10%;
+  bottom:5%;
+
+  border-style: solid;
+  position: absolute;
+
+  color:black;
+}
+
+#description > .prev_button{
+  width: 13vmin;
+  height: 13vmin;
+  border-radius: 100%;
+  bottom:5%;
+
+  border-style: solid;
+  position: absolute;
+
+  color:black;
+  left:10%;
+}
+
+.arrow {
+  display: inline-block;
+	background: rgba(238, 236, 233, 0.8);
+  transform: rotate(-90deg);
+  box-shadow: 0px 1px 132.24px 1px aqua;
+  background: rgba(238, 236, 233, 0.8);
+  border-color: rgba(238, 236, 233, 0.8);
+}
+
+.arrow img{
+	width: 50%;
+	height: auto;
+	right:0;
+	left: 0;
+	top:0;
+	bottom:0;
+	margin: auto;
+	position: absolute;
+	animation: arrow-animation 2s normal infinite;
+}
+#description > .prev_button{
+  transform: rotate(90deg);
+}
+/* #description > .close_button > span{
+	text-decoration: none;
+  display: inline-block;
+  font-size: 1vmin;
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 40%;
+  background: none;
+} */
+
+#description > .close_button:hover{
+	box-shadow: 0px 5px 132.24px 19.76px aqua;
+}  
+#description > .next_button:hover{
+	box-shadow: 0px 5px 132.24px 19.76px rgba(238, 5, 169, 1);
+}  
+#description > .prev_button:hover{
+	box-shadow: 0px 5px 132.24px 19.76px rgba(238, 5, 169, 1);
+}  
+/* 
+#description > .close_button > a{
+  top:0;
+  right:0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: none;
+} */
+
+#description > .field_Description{
+  top:5%;
+  right:0;
+  left:0;
+  margin:auto;
+  width: 60%;
+  height: 100%;
+  position: absolute;
+  font-size: 2vmin;
+}
+
+#description{
+  overflow-y: visible;
+  border-color:aqua;
+  border-style: solid;
+}
+#description::-webkit-scrollbar {
+  width: 0px;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+#description::-webkit-scrollbar-thumb {
+  background: #FF0000;
+}
+
+#field_Description1 ~ *:not(.btn){
+  visibility: hidden;
+}
+
 #phys_background > .phys{
   background: url("../data/phys.png");
   background-size: contain; 
@@ -213,3 +413,20 @@
   background-position: center;
 }
 
+
+
+
+@keyframes arrow-animation{
+	0% {
+    -webkit-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5)
+  }
+  50% {
+    -webkit-transform: scale(1.0, 1.0);
+    transform: scale(1.0, 1.0);
+  }
+  100% {
+    -webkit-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5);
+  }
+}

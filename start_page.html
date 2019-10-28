@@ -6,8 +6,53 @@
 	<title>Phys</title>
   <link rel="stylesheet" href="css/background.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
+  <script id="MathJax-script" async src="js/lib/latex.js"></script>
 </head>
+<script type="text/x-mathjax-config"> 
+  MathJax.Hub.Config({ 
+      "HTML-CSS": { scale: 200, linebreaks: { automatic: true } }, 
+      SVG: { linebreaks: { automatic:true } }, 
+      displayAlign: "right" });
+</script>
+
+<script type="text/x-mathjax-config">    
+  MathJax.Hub.Config({
+    jax: ["input/TeX","output/HTML-CSS","output/NativeMML"],
+    extensions: ["tex2jax.js","MathMenu.js","MathZoom.js"],
+    TeX: {
+      extensions: ["AMSmath.js","AMSsymbols.js"],
+      Macros: {
+        textsf: ['\\mathord{\\sf{\\text{#1}}}', 1], 
+        texttt: ['\\mathord{\\tt{\\text{#1}}}', 1], 
+        vline: ['\\smash{\\large\\lvert}', 0],
+        le: ['\\leqslant', 0],
+        ge: ['\\geqslant', 0],
+        phi: ['\\varphi', 0],
+        EDS: ['\\mathscr{E}', 0],
+        degree: ['^\\circ', 0],
+        celsius: ['\\degree{}C', 0],
+        arctg: ['\\mathop{\\rm arctg}\\nolimits', 0],
+        ch: ['\\mathop{\\rm ch}\\nolimits', 0],
+        ctg: ['\\mathop{\\rm ctg}\\nolimits', 0],
+        sh: ['\\mathop{\\rm sh}\\nolimits', 0],
+        arcctg: ['\\mathop{\\rm arcctg}\\nolimits', 0],
+        cosec: ['\\mathop{\\rm cosec}\\nolimits', 0],
+        cth: ['\\mathop{\\rm cth}\\nolimits', 0],
+        tg: ['\\mathop{\\rm tg}\\nolimits', 0],
+        th: ['\\mathop{\\rm th}\\nolimits', 0]
+      }
+    },
+    tex2jax: {
+        inlineMath: [ ['$$','$$'], ["\\(","\\)"] ],
+        displayMath: [ ["\\[","\\]"] ]
+    },
+    menuSettings: {
+      zoom: "Hover",
+      zscale: "200%"
+    },
+    showMathMenu: false 
+  });
+</script>
 
 <body>
   <div class="background">
@@ -15,7 +60,7 @@
       </canvas>
 
 
-      <div id="blur_effect"></div>
+      <div id="blur_effect" class="blur"></div>
 
       <div id="left_description_wrapper"> 
           <span id="left_description"></span>
@@ -60,12 +105,77 @@
           <span>Start</span>
     
     </div>
+
+    <div id="description_button" class="btn center_flex">
+          <span>Description</span>
+    
+    </div>
+
+
+
     <div id="right_description_wrapper"> 
         <span id="right_description"></span>
       </div>
   </div>
 
+  <div id="description_view">
+      <!-- <div class="blur"></div> -->
+   <div id="description">
 
+      <div id="field_Description1" class="field_Description">
+          <p>
+              
+\[
+\begin{split} 
+               \bbox[yellow]
+{
+Пуассоновский\ процесс,
+}
+\text{случайный процесс, описывающий моменты наступления} \ 0\ <\ t_1\ <...<\ t_n\ <...<...\\
+\text{каких-либо случайных событий,в котором число событий, происходящих в течение}\\
+\text{любого фиксированного интервала времени, имеет распределение Пуассона и независимы}\\
+\text{числа событий, происходящих в непересекающиеся промежутки времени.}
+\end{split} 
+\]
+
+            \[\mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix}
+          \mathbf{i} & \mathbf{j} & \mathbf{k} \\
+          \frac{\partial X}{\partial u} & \frac{\partial Y}{\partial u} & 0 \\
+          \frac{\partial X}{\partial v} & \frac{\partial Y}{\partial v} & 0
+          \end{vmatrix} \]
+          \[\mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix}
+          \mathbf{i} & \mathbf{j} & \mathbf{k} \\
+          \frac{\partial X}{\partial u} & \frac{\partial Y}{\partial u} & 0 \\
+          \frac{\partial X}{\partial v} & \frac{\partial Y}{\partial v} & 0
+          \end{vmatrix} \]
+          \[\mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix}
+          \mathbf{i} & \mathbf{j} & \mathbf{k} \\
+          \frac{\partial X}{\partial u} & \frac{\partial Y}{\partial u} & 0 \\
+          \frac{\partial X}{\partial v} & \frac{\partial Y}{\partial v} & 0
+          \end{vmatrix} \]</p>
+        </div>
+        
+      <div id="field_Description2" class="field_Description">
+          <p>\[\mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix}
+          \mathbf{i} & \mathbf{j} & \mathbf{k} \\
+          \frac{\partial X}{\partial u} & \frac{\partial Y}{\partial u} & 0 \\
+          \frac{\partial X}{\partial v} & \frac{\partial Y}{\partial v} & 0
+          \end{vmatrix} \]</p>
+        </div>
+
+        <div class="close_button btn"></div>
+
+        <div class="next_button btn arrow">
+          <img src="data/arrow2.png">
+        </div>
+
+        <div class="prev_button btn arrow">
+            <img src="data/arrow2.png">
+        </div>
+
+        
+   </div>
+  </div>
 
   <div id="cmc_background" class="enter_background">
       <div class="cmc enter_background_img"> </div>

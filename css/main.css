@@ -218,6 +218,9 @@ body {
   padding-top: 10%;
 }
 
+#set_particle_button > span:hover{
+  box-shadow: none;
+}
 #set_particle_button:hover{
 	box-shadow: 0px 5px 132.24px 19.76px #3ee6dc;
 }  

@@ -1,0 +1,43 @@
+*{
+	padding: 0;
+	margin:0;
+	box-sizing: border-box;
+}
+
+.center_flex{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.background{
+  position: absolute;
+  width:100%;
+  height:100%;
+}
+
+#background_canvas{
+  width:100%;
+  height:100%;
+  position: absolute;
+}
+#description{
+  overflow: visible;;
+  position: absolute;
+  width:100%;
+  height:100%
+}
+
+.blur{
+  background: rgba(0,0,0, 0.5);
+  filter: blur(0.5px);
+}
+
+#blur_effect{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right:0;
+  height: 200%;
+  width: 100%;
+}
