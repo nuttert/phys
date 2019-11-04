@@ -31,9 +31,16 @@ var gradient = d_ctx.createLinearGradient(10, 0, 500, 0);
 // gradient.addColorStop(5 / 6, 'indigo');
 // gradient.addColorStop(1, 'violet');
 
-gradient.addColorStop(0, 'green');
-gradient.addColorStop(3 / 6, 'yellow');
-gradient.addColorStop(1, 'red');
+// gradient.addColorStop(0, 'green');
+// gradient.addColorStop(3 / 6, 'yellow');
+// gradient.addColorStop(1, 'red');
+
+// gradient.addColorStop(0, 'red');
+gradient.addColorStop(0, 'rgb(230,208,62)');
+gradient.addColorStop(1 / 2, 'rgb(5,230,238)');
+gradient.addColorStop(1, 'rgb(5,238,168)');
+
+
 var coeff  = 0.002;
 var gradient_x = 0, gradient_y = d_height * (1 - coeff);
 var gradient_width = d_width, gradient_height = coeff * d_height;
@@ -131,7 +138,7 @@ class Histogram{
 		this.hat_margin = 10;
 		this.thresh = 30;
 		this.grid_on = grid_on;
-		this.curve_color = 'rgb(0,0,247)';
+		this.curve_color = 'rgb(252,95,163)';
 		this.title = 'Particle collision histogram';
 		this.title_x = 'number of particles';
 		this.title_y = 'time between collisions, s';

@@ -49,7 +49,7 @@ function restart(){
   clip_points = [];
   bounds_funcs = [];
   emitters = [];
-
+  data_hist.splice(0, data_hist.length);
   particleColor = "#123";
   kBoundParticle = false;
   kBoundParticleSet = false;

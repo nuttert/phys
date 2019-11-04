@@ -9,11 +9,18 @@ var width = canvas.width,
   height = canvas.height;
 
 
-hist = new Histogram(10, 0, 5, [d_width, d_height], 20, true);
+stat_max_paticles = 1000;
+collison_limit_right = 500;
+time_limit_right = 10;
+bins_number = 20;
+use_grid = true;
+hist = new Histogram(bins_number, 0, time_limit_right, [d_width, d_height], collison_limit_right, use_grid);
 time_plot = new TimePlot(0, 5, [tc_width, tc_height]);
+data_hist = [];
 data_time = [];
-curr_time = new Date().getTime()/1000;
 data_difftime = [];
+curr_time = new Date().getTime()/1000;
+
 
 function line_intersection(line1, line2) {
   function area (a, b, c) {
@@ -241,11 +248,14 @@ function bounds_interection(particle, clip_points) {
 
           if(intersection){
               particle.velocity.reflection(line.normal);
-              if(choosenIndexies.includes(i)){
-                const current_time = new Date().getTime()/1000;
-                data_time.push(current_time);
-                particle.diffTimeCollsion = current_time - particle.lastTimeCollision;
-                particle.lastTimeCollision = current_time;
+              if(choosenIndexies.includes(i)) {
+                const current_time = new Date().getTime() / 1000;
+                if (current_time - particle.lastTimeCollision > 0.01) {
+                  data_time.push(current_time);
+                  particle.diffTimeCollsion = current_time - particle.lastTimeCollision;
+                  data_hist.push(particle.diffTimeCollsion);
+                  particle.lastTimeCollision = current_time;
+                }
               }
               return;
           }
@@ -292,8 +302,10 @@ function particles_interection(particle_number, particles){
         if(isBounds){
                   bound_patricle_color = get_random_color();
                  const current_time = new Date().getTime()/1000;
+                 data_time.push(current_time);
                  non_bound_part.diffTimeCollsion = current_time - non_bound_part.lastTimeCollision;
                  non_bound_part.lastTimeCollision = current_time;
+                 data_hist.push(non_bound_part.diffTimeCollsion);
         }
         
        return;
@@ -366,7 +378,7 @@ function draw() {
   // Задаём цвет частиц
 
   ctx.fillStyle = 'rgb(0,125,255)';
-  data_hist = [];
+
   curr_time = new Date().getTime()/1000;
   var delTo = 0;
   for (var i = 0; i < data_time.length; ++i) {
@@ -377,6 +389,9 @@ function draw() {
   }
   data_time.splice(0, delTo);
   data_difftime = data_time.slice();
+  if (data_hist.length > stat_max_paticles) {
+    data_hist.splice(0, data_hist.length - stat_max_paticles);
+  }
   for (var i = 0; i < data_difftime.length; ++i) {
     data_difftime[i] = curr_time - data_difftime[i];
   }
@@ -388,8 +403,7 @@ function draw() {
 
     ctx.fillStyle = particles.list[i].color();
     size =  particles.list[i].isBoundParticle ?  kBoundParticleSize : particleSize;
-    data_hist.push(particles.list[i].diffTimeCollsion);
-
+    // data_hist.push(particles.list[i].diffTimeCollsion);
     // data_hist.push(nowTime - particles.list[i].lastTimeCollision);
     // if (nowTime - particles.list[i].lastTimeCollision < 0.0001 / Math.log2(30 * velocity + 2)) {
     //   data_time.push(particles.list[i].lastTimeCollision);
@@ -404,7 +418,8 @@ function draw() {
 
 
 
-  hist.setMaxParticles(particles.list.length);
+  // hist.setMaxParticles(particles.list.length - kBoundParticleSet);
+  hist.setMaxParticles(collison_limit_right);
   hist.draw(data_hist);
   time_plot.draw(data_difftime);
 }
