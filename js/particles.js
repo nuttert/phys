@@ -16,6 +16,8 @@ bins_number = 20;
 use_grid = true;
 hist = new Histogram(bins_number, 0, time_limit_right, [d_width, d_height], collison_limit_right, use_grid);
 time_plot = new TimePlot(0, 5, [tc_width, tc_height]);
+stats = new Statstics();
+
 data_hist = [];
 data_time = [];
 data_difftime = [];
@@ -49,7 +51,7 @@ function getCentroid(arr) {
     var cxTimes6SignedArea = 0;
     var cyTimes6SignedArea = 0;
 
-    var length = arr.length
+    var length = arr.length;
 
     var x = function (i) { return arr[i % length].x };
     var y = function (i) { return arr[i % length].y };
@@ -302,10 +304,12 @@ function particles_interection(particle_number, particles){
         if(isBounds){
                   bound_patricle_color = get_random_color();
                  const current_time = new Date().getTime()/1000;
-                 data_time.push(current_time);
-                 non_bound_part.diffTimeCollsion = current_time - non_bound_part.lastTimeCollision;
-                 non_bound_part.lastTimeCollision = current_time;
-                 data_hist.push(non_bound_part.diffTimeCollsion);
+                 if (current_time - particle.lastTimeCollision > 0.01) {
+                   data_time.push(current_time);
+                   non_bound_part.diffTimeCollsion = current_time - non_bound_part.lastTimeCollision;
+                   non_bound_part.lastTimeCollision = current_time;
+                   data_hist.push(non_bound_part.diffTimeCollsion);
+                 }
         }
         
        return;
@@ -422,6 +426,7 @@ function draw() {
   hist.setMaxParticles(collison_limit_right);
   hist.draw(data_hist);
   time_plot.draw(data_difftime);
+  stats.draw(data_hist);
 }
 
 

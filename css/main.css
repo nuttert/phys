@@ -94,7 +94,10 @@ body {
   position: absolute;
 }
 
-
+#statistics{
+  top:5%;
+  position:relative;
+}
 .btn{
   top: 20%;
 	text-transform: uppercase;

@@ -22,7 +22,7 @@ $('#console').typeIt({
   autoStart: false,
   html: true
 })
-  .tiType('<text style="color: #05e6eebd; font-size: 100%;">Poligon should be without intersections!</text>');
+  .tiType('<text style="color: rgba(5,230,238,0.74); font-size: 100%;">Poligon should be without intersections!</text>');
 }
 
 
