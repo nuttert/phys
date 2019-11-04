@@ -27,7 +27,7 @@ class Statstics {
       }
       this.std = Math.sqrt(this.std / data.length);
     }
-    stat_p.style.color = '#000000';
+    stat_p.style.color = this.fontColor;
     stat_p.innerText = 'mean: ' + this.mean.toFixed(3) + ' | std: ' + this.std.toFixed(3) + ' | statistics: ' + this.stat;
   }
 }
