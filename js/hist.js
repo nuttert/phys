@@ -15,6 +15,49 @@ function getHexColor(number){
     return "#"+((number)>>>0).toString(16).slice(-6);
 }
 
+var gradient = d_ctx.createLinearGradient(10, 0, 500, 0);
+// gradient.addColorStop(0, 'violet');
+// gradient.addColorStop(1 / 6, 'indigo');
+// gradient.addColorStop(2 / 6, 'blue');
+// gradient.addColorStop(3 / 6, 'green');
+// gradient.addColorStop(4 / 6, 'yellow');
+// gradient.addColorStop(5 / 6, 'orange');
+// gradient.addColorStop(1, 'red');
+// gradient.addColorStop(0, 'red');
+// gradient.addColorStop(1 / 6, 'orange');
+// gradient.addColorStop(2 / 6, 'yellow');
+// gradient.addColorStop(3 / 6, 'green');
+// gradient.addColorStop(4 / 6, 'blue');
+// gradient.addColorStop(5 / 6, 'indigo');
+// gradient.addColorStop(1, 'violet');
+
+gradient.addColorStop(0, 'green');
+gradient.addColorStop(3 / 6, 'yellow');
+gradient.addColorStop(1, 'red');
+var coeff  = 0.002;
+var gradient_x = 0, gradient_y = d_height * (1 - coeff);
+var gradient_width = d_width, gradient_height = coeff * d_height;
+
+d_ctx.fillStyle = gradient;
+d_ctx.fillRect(gradient_x, gradient_y, gradient_width, gradient_height);
+console.log(gradient_x, gradient_y, gradient_width, gradient_height);
+console.log(d_ctx.getImageData(gradient_x, gradient_y, 1, 1).data);
+
+function rgbToHex(r, g, b){
+  if (r > 255 || g > 255 || b > 255)
+    throw "Invalid color component";
+  return ((r << 16) | (g << 8) | b).toString(16);
+};
+
+getColor = function(lambda) {
+  // console.log(gradient_x, gradient_x + lambda * gradient_width);
+  alpha = Math.min(0.999, Math.max(lambda, 0.001));
+  p = d_ctx.getImageData(gradient_x + alpha * gradient_width, gradient_y + gradient_height / 2, 1, 1).data;
+  console.log(p);
+  var hex = "#" + ("000000" + rgbToHex(p['0'], p['1'], p['2'])).slice(-6);
+  return hex;
+}
+
 getGradientColor = function(start_color, end_color, percent) {
    // strip the leading # if it's there
    start_color = start_color.replace(/^\s*#|\s*$/g, '');
@@ -57,17 +100,17 @@ getGradientColor = function(start_color, end_color, percent) {
 
 
 class Histogram{
-	constructor(bins_number, limit_left, limit_right, draw_area_size, max_particles) {
+	constructor(bins_number, limit_left, limit_right, draw_area_size, max_particles, grid_on) {
 		this.counter = [];
-    	this.draw_area_size = draw_area_size;
-    	this.margin_bottom = 30;
-    	this.margin_top = 30;
-    	this.margin_left = 30;
-    	this.margin_right = 30;
-    	this.axes_start = [this.margin_left, draw_area_size[1] - this.margin_bottom];
-    	this.axes_end = [this.draw_area_size[0] - this.margin_right, this.margin_top];
-    	this.grid_size = 10;
-    	this.bins_number = bins_number;
+    this.draw_area_size = draw_area_size;
+    this.margin_bottom = 30;
+    this.margin_top = 30;
+    this.margin_left = 30;
+    this.margin_right = 30;
+    this.axes_start = [this.margin_left, draw_area_size[1] - this.margin_bottom];
+    this.axes_end = [this.draw_area_size[0] - this.margin_right, this.margin_top];
+    this.grid_size = 10;
+    this.bins_number = bins_number;
 		this.limit_left = limit_left;
 		this.limit_right = limit_right;
 		this.max_particles = max_particles;
@@ -81,11 +124,14 @@ class Histogram{
 		this.grid_shift_y = 10;
 		this.inner_radius = 3;
 		this.outer_radius = 5;
-		this.text_color = '#05EEA8'
-		this.start_color = '#05E6EE';
-		this.end_color = '#F9D423'; //'#EE05A9'
+		this.text_color = '#000000'; //'#05EEA8'
+    this.numbers_color = '#05EEA8';
+		// this.start_color = '#05E6EE';
+		// this.end_color = '#F9D423'; //'#EE05A9'
 		this.hat_margin = 10;
-		this.thresh = 20;
+		this.thresh = 30;
+		this.grid_on = grid_on;
+		this.curve_color = 'rgb(0,0,247)';
 	}
 	setMaxParticles(max_particles) {
 		this.max_particles = max_particles;
@@ -102,7 +148,6 @@ class Histogram{
 
 	draw(data) {
 
-
 		//draw pipe line: grid, rects, whitespace below axes, text, axes
 		this.xticks = Math.trunc(Math.abs(this.axes_start[0] - this.axes_end[0]) / this.grid_size_x);
 		this.yticks = Math.trunc(Math.abs(this.axes_start[1] - this.axes_end[1]) / this.grid_size_y);
@@ -114,30 +159,32 @@ class Histogram{
 		}
 		// console.log(this.xticks, this.yticks, this.counter, this.axes_start, this.axes_end);
 		d_ctx.fillStyle = "white";
-    	d_ctx.fillRect(0, 0, this.draw_area_size[0], this.draw_area_size[1]);
+		d_ctx.fillRect(0, 0, this.draw_area_size[0], this.draw_area_size[1] - gradient_height - 10);
 
     	// draw grid
-    	for (var i = 1; i < this.xticks; i++) {
-		    d_ctx.lineWidth = this.outline_width / 2;
-		    d_ctx.strokeStyle = "#acacac";
-		    d_ctx.fillStyle = "#acacac";
-		    d_ctx.beginPath();
-		    // console.log(this.axes_start[0] + i * this.grid_size_x, this.axes_start[1], this.axes_start[0] + i * this.grid_size_x, this.axes_end[1] + this.grid_shift_y);
-		    d_ctx.moveTo(this.axes_start[0] + i * this.grid_size_x, this.axes_start[1]);
-		    d_ctx.lineTo(this.axes_start[0] + i * this.grid_size_x, this.axes_end[1] + this.grid_shift_y);
-		    d_ctx.stroke();
-    	}
-    	
-    	for (var i = 1; i < this.yticks; i++) {
-		    d_ctx.lineWidth = this.outline_width / 2;
-		    d_ctx.strokeStyle = "#acacac";
-		    d_ctx.fillStyle = "#acacac";
-		    d_ctx.beginPath()
-		    d_ctx.moveTo(this.axes_start[0], this.axes_start[1] - i * this.grid_size_y);
-		    d_ctx.lineTo(this.axes_end[0] - this.grid_shift_x, this.axes_start[1] - i * this.grid_size_y);
-		    d_ctx.stroke();
-    	}
+      if (this.grid_on) {
+        for (var i = 1; i < this.xticks; i++) {
 
+          d_ctx.lineWidth = this.outline_width / 2;
+          d_ctx.strokeStyle = "#acacac";
+          d_ctx.fillStyle = "#acacac";
+          d_ctx.beginPath();
+          // console.log(this.axes_start[0] + i * this.grid_size_x, this.axes_start[1], this.axes_start[0] + i * this.grid_size_x, this.axes_end[1] + this.grid_shift_y);
+          d_ctx.moveTo(this.axes_start[0] + i * this.grid_size_x, this.axes_start[1]);
+          d_ctx.lineTo(this.axes_start[0] + i * this.grid_size_x, this.axes_end[1] + this.grid_shift_y);
+          d_ctx.stroke();
+        }
+
+        for (var i = 1; i < this.yticks; i++) {
+          d_ctx.lineWidth = this.outline_width / 2;
+          d_ctx.strokeStyle = "#acacac";
+          d_ctx.fillStyle = "#acacac";
+          d_ctx.beginPath()
+          d_ctx.moveTo(this.axes_start[0], this.axes_start[1] - i * this.grid_size_y);
+          d_ctx.lineTo(this.axes_end[0] - this.grid_shift_x, this.axes_start[1] - i * this.grid_size_y);
+          d_ctx.stroke();
+        }
+      }
     	// draw rects
     	var prev_coord_x = 0;
     	var prev_coord_y = 0;
@@ -147,7 +194,7 @@ class Histogram{
     		var coord_y = this.axes_start[1] - (i + .5) / this.bins_number * Math.abs(this.axes_start[1] - this.axes_end[1]);
     		if (i != 0) {
     			d_ctx.beginPath();
-    			d_ctx.strokeStyle = "blue";
+    			d_ctx.strokeStyle = this.curve_color;
     			d_ctx.lineWidth = this.outline_width;
     			var lambda_12 = 0.2;
     			var lambda_22 = 0.9;
@@ -182,7 +229,7 @@ class Histogram{
     		var coord_x = this.counter[i] / this.max_particles * Math.abs(this.axes_start[0] - this.axes_end[0]) + this.axes_start[0];
     		var coord_y = this.axes_start[1] - (i + .5) / this.bins_number * Math.abs(this.axes_start[1] - this.axes_end[1]);
     		d_ctx.beginPath();
-    		d_ctx.fillStyle = "blue";
+    		d_ctx.fillStyle = this.curve_color;
     		d_ctx.arc(coord_x, coord_y, this.outer_radius, 0, 2 * Math.PI);
     		d_ctx.fill();
     		d_ctx.beginPath();
@@ -195,16 +242,17 @@ class Histogram{
     		var radius = Math.abs(this.axes_start[0] - this.axes_end[0]) / this.bins_number / 4;
     		var coord_x = this.counter[i] / this.max_particles * Math.abs(this.axes_start[0] - this.axes_end[0]) + this.axes_start[0] - 2 * radius;
     		var coord_y = this.axes_start[1] - (i + .5) / this.bins_number * Math.abs(this.axes_start[1] - this.axes_end[1]);
-    		var lambda = this.counter[i] / this.max_particles;
-    		var color = 0;
-    		for (var j = 0; j < 2; j++) {
-    			color *= 256;
-    			color += this.start_color[j] + lambda * (this.end_color[j] - this.start_color[j]);
-    		}
+    		var lambda = this.counter[i]/ this.max_particles;
+    		// var color = 0;
+    		// for (var j = 0; j < 2; j++) {
+    		// 	color *= 256;
+    		// 	color += this.start_color[j] + lambda * (this.end_color[j] - this.start_color[j]);
+    		// }
     		// console.log(Math.trunc(color));
     		d_ctx.beginPath();
-    		d_ctx.fillStyle = getGradientColor(this.start_color, this.end_color, Math.log(lambda + 1));
-    		d_ctx.arc(coord_x - this.hat_margin, coord_y, radius, -Math.PI / 2 - 0.015, Math.PI/2 + 0.015);
+    		// d_ctx.fillStyle = getGradientColor(this.start_color, this.end_color, Math.log(lambda + 1));
+    		d_ctx.fillStyle = getColor(lambda);
+        d_ctx.arc(coord_x - this.hat_margin, coord_y, radius, -Math.PI / 2 - 0.015, Math.PI/2 + 0.015);
     		d_ctx.fill();
     		d_ctx.fillRect(this.axes_start[0], coord_y - radius, coord_x - this.axes_start[0] - this.hat_margin, 2 * radius);
 
@@ -213,17 +261,24 @@ class Histogram{
 
     	//draw white fields
     	d_ctx.fillStyle = "white";
-    	d_ctx.fillRect(0, 0, this.axes_start[0], this.draw_area_size[1]);
-    	d_ctx.fillRect(this.axes_start[0], this.axes_start[1], this.draw_area_size[0], this.draw_area_size[1]);
+    	d_ctx.fillRect(0, 0, this.axes_start[0], this.draw_area_size[1] - gradient_height);
+    	d_ctx.fillRect(this.axes_start[0], this.axes_start[1], this.draw_area_size[0], this.draw_area_size[1] - this.axes_start[1] - gradient_height);
     	
     	//draw text
-    	d_ctx.fillStyle = this.text_color;
+    	d_ctx.fillStyle = this.numbers_color;
     	d_ctx.font = '24px Montserrat-Medium';
     	d_ctx.textAlign = 'right';
     	d_ctx.fillText(0, this.axes_start[0] - this.margin_left / 6, this.axes_start[1] + 2 * this.margin_bottom / 3);
     	d_ctx.fillText(this.max_particles.toString(), this.axes_end[0], this.axes_start[1]  + 2 * this.margin_bottom / 3);
-		d_ctx.fillText(this.limit_right.toFixed(0), this.axes_start[0] - this.margin_left / 6, this.axes_end[1] + 2 * this.margin_top / 3);
-		
+		  d_ctx.fillText(this.limit_right.toFixed(0), this.axes_start[0] - this.margin_left / 6, this.axes_end[1] + 2 * this.margin_top / 3);
+		  d_ctx.textAlign = 'center';
+      d_ctx.font = '18px Montserrat-Light';
+      d_ctx.fillStyle = this.text_color;
+      d_ctx.fillText('number of particles', (this.axes_end[0] + this.axes_start[0]) / 2, this.axes_start[1]  + 2 * this.margin_bottom / 3);
+      d_ctx.rotate(-Math.PI / 2);
+
+		  d_ctx.fillText('time between collisions, s', -(this.axes_start[1] + this.axes_end[1]) / 2 , 2 * this.margin_left / 3);
+		  d_ctx.setTransform(1, 0, 0, 1, 0, 0);
 		// draw Y
 		d_ctx.strokeStyle = "black";
 	    d_ctx.fillStyle = "black";

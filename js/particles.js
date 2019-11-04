@@ -9,7 +9,7 @@ var width = canvas.width,
   height = canvas.height;
 
 
-hist = new Histogram(10, 0, 4, [d_width, d_height], 20);
+hist = new Histogram(10, 0, 5, [d_width, d_height], 20, true);
 
  
 time_plot = new TimePlot(0, 5, [tc_width, tc_height]);
@@ -375,8 +375,8 @@ function draw() {
 
     ctx.fillStyle = particles.list[i].color();
     size =  particles.list[i].isBoundParticle ?  kBoundParticleSize : particleSize;
-    
-    data_hist.push(nowTime - particles.list[i].lastTimeCollision);
+    data_hist.push(particles.list[i].diffTimeCollsion);
+    // data_hist.push(nowTime - particles.list[i].lastTimeCollision);
     if (nowTime - particles.list[i].lastTimeCollision < 0.001) {
       data_time.push(particles.list[i].lastTimeCollision);
     }

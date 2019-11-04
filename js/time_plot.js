@@ -32,29 +32,32 @@ class TimePlot{
 		this.limit_left = limit_left;
 		this.limit_right = limit_right;
 		this.draw_area_size = draw_area_size;
-    	this.margin_bottom = 30;
-    	this.margin_top = 30;
-    	this.margin_left = 30;
-    	this.margin_right = 30;
-    	this.axes_start = [this.margin_left, draw_area_size[1] - this.margin_bottom];
-    	this.axes_end = [this.draw_area_size[0] - this.margin_right, this.margin_top];
-    	this.counters = []
-    	this.time_line_width = 1;
-    	this.travel_line_width = .7;
-    	this.arrow_size = 10;
+    this.margin_bottom = 30;
+    this.margin_top = 30;
+    this.margin_left = 30;
+    this.margin_right = 30;
+    this.axes_start = [this.margin_left, draw_area_size[1] - this.margin_bottom];
+    this.axes_end = [this.draw_area_size[0] - this.margin_right, this.margin_top];
+    this.counters = [];
+    this.time_line_width = 1;
+    this.travel_line_width = 1.5;
+    this.arrow_size = 10;
 		this.arrow_shift_x = 15;
 		this.arrow_shift_y = 15;
 		this.prev_time = new Date().getTime() / 1000;	
 		this.line_height = 30;
 		this.travel_line_color = '#f18db5';
-		this.text_color = '#41daab';
+		this.numbers_color = '#05EEA8';
+		this.text_color = '#000000';
 		this.ticks_number = 6;
 		this.ticks_height = 10;
 		this.tick_width = 2;
+		this.axis_title = "elapsed time after collision, s";
+		this.title = 'Collision timeline';
 	}
 	draw(data){
 		tc_ctx.fillStyle = "white";
-    	tc_ctx.fillRect(this.axes_start[0] - 10, this.axes_start[0], this.draw_area_size[0] - this.axes_start[0] , this.axes_start[1] - this.axes_end[1]);
+      tc_ctx.fillRect(0, 0, this.draw_area_size[0], this.draw_area_size[1]);
 		var new_time = new Date().getTime() / 1000;
 		var diff_time = new_time - this.prev_time;
 		var delTo = 0;
@@ -70,44 +73,51 @@ class TimePlot{
 			this.counters.push(new_time - data[i]);
 		}
 		this.prev_time = new_time;
-		tc_ctx.fillStyle = this.text_color;
-		tc_ctx.strokeStyle = "blue";
-    	tc_ctx.font = '24px Montserrat-Medium';
-    	tc_ctx.textAlign = 'right';
-    	tc_ctx.fillText(0, Math.trunc(this.axes_start[0] - this.margin_left / 12), Math.trunc(this.axes_start[1] + 2 * this.margin_bottom / 3));
-    	tc_ctx.fillText(this.limit_right.toString(), Math.trunc(this.axes_end[0]), Math.trunc(this.axes_start[1]  + 2 * this.margin_bottom / 3));
-		
-		
-		// draw timeline
-		tc_ctx.strokeStyle = "#000000";
-	    tc_ctx.fillStyle = "black";
-	    tc_ctx.lineWidth = this.time_line_width * 2;
-	    tc_ctx.beginPath()
-	    tc_ctx.moveTo(this.axes_start[0] - this.margin_left / 3, this.axes_start[1]);
-	    tc_ctx.lineTo(this.axes_end[0] + this.arrow_shift_x, this.axes_start[1]);
-	    tc_ctx.stroke();
-	    tc_ctx.lineWidth = this.time_line_width * 1;
-	    tc_ctx.beginPath();
-	    tc_ctx.moveTo(this.axes_end[0] + this.arrow_shift_x + 1, this.axes_start[1]);
-	    tc_ctx.lineTo(this.axes_end[0] + this.arrow_shift_x - this.arrow_size * Math.cos(Math.PI / 6), this.axes_start[1] + this.arrow_size * Math.sin(Math.PI / 6));
-	    tc_ctx.lineTo(this.axes_end[0] + this.arrow_shift_x - this.arrow_size * Math.cos(Math.PI / 6), this.axes_start[1] - this.arrow_size * Math.sin(Math.PI / 6));
-	    tc_ctx.fill();
+		tc_ctx.fillStyle = this.numbers_color;
+		tc_ctx.strokeStyle = this.strokeText;
+		tc_ctx.strokeWidth = 0.01;
+    tc_ctx.font = '25px Montserrat-Medium';
+    tc_ctx.textAlign = 'right';
+    tc_ctx.fillText(this.limit_left.toString(), this.axes_start[0], (this.axes_start[1] + this.margin_bottom));
+    tc_ctx.fillText(this.limit_right.toString(), this.axes_end[0], this.axes_start[1] + this.margin_bottom);
+    tc_ctx.fillStyle = this.text_color;
+    tc_ctx.textAlign = 'center';
+    tc_ctx.font = '20px Montserrat-Medium';
+    tc_ctx.fillText(this.axis_title, (this.axes_start[0] + this.axes_end[0]) / 2, this.axes_start[1] + 4 * this.line_height / 5);
+    tc_ctx.font = '25px Montserrat-Medium';
+    tc_ctx.fillText(this.title, ((this.axes_start[0] + this.axes_end[0]) / 2), this.axes_start[1] - 1.5 * this.line_height);
 
-	    tc_ctx.strokeStyle = this.travel_line_color;
-	    tc_ctx.fillStyle = "black";
-	    tc_ctx.lineWidth = this.travel_line_width;
-	    for (var i = 0; i < this.counters.length; ++i) {
-	    	if (this.counters[i] < this.limit_right) {
-		    	tc_ctx.beginPath()
-		    	tc_ctx.moveTo(this.axes_start[0] + this.counters[i] / this.limit_right * (this.axes_end[0] - this.axes_start[0]), this.axes_start[1]);
-		    	tc_ctx.lineTo(this.axes_start[0] + this.counters[i] / this.limit_right * (this.axes_end[0] - this.axes_start[0]), this.axes_start[1] - this.line_height);
-		    	tc_ctx.stroke();
-		    	// console.log(this.axes_start[0] + this.counters[i] / this.limit_right * (this.axes_end[0] - this.axes_start[0]), this.axes_start[1]);
-	    	}
-		}
+
+		// draw timeline
+    tc_ctx.strokeStyle = "#000000";
+    tc_ctx.fillStyle = "black";
+    tc_ctx.lineWidth = this.time_line_width * 2;
+    tc_ctx.beginPath()
+    tc_ctx.moveTo(this.axes_start[0] - this.margin_left / 3, this.axes_start[1]);
+    tc_ctx.lineTo(this.axes_end[0] + this.arrow_shift_x, this.axes_start[1]);
+    tc_ctx.stroke();
+    tc_ctx.lineWidth = this.time_line_width * 1;
+    tc_ctx.beginPath();
+    tc_ctx.moveTo(this.axes_end[0] + this.arrow_shift_x + 1, this.axes_start[1]);
+    tc_ctx.lineTo(this.axes_end[0] + this.arrow_shift_x - this.arrow_size * Math.cos(Math.PI / 6), this.axes_start[1] + this.arrow_size * Math.sin(Math.PI / 6));
+    tc_ctx.lineTo(this.axes_end[0] + this.arrow_shift_x - this.arrow_size * Math.cos(Math.PI / 6), this.axes_start[1] - this.arrow_size * Math.sin(Math.PI / 6));
+    tc_ctx.fill();
+
+    tc_ctx.strokeStyle = this.travel_line_color;
+    tc_ctx.fillStyle = "black";
+    tc_ctx.lineWidth = this.travel_line_width;
+    for (var i = 0; i < this.counters.length; ++i) {
+      if (this.counters[i] < this.limit_right) {
+        tc_ctx.beginPath()
+        tc_ctx.moveTo(this.axes_start[0] + this.counters[i] / this.limit_right * (this.axes_end[0] - this.axes_start[0]), this.axes_start[1]);
+        tc_ctx.lineTo(this.axes_start[0] + this.counters[i] / this.limit_right * (this.axes_end[0] - this.axes_start[0]), this.axes_start[1] - this.line_height);
+        tc_ctx.stroke();
+        // console.log(this.axes_start[0] + this.counters[i] / this.limit_right * (this.axes_end[0] - this.axes_start[0]), this.axes_start[1]);
+      }
+    }
 		// xticks
 
-		
+
 		for (var i = 0; i <= this.ticks_number; ++i) {
 			tc_ctx.beginPath();
 			tc_ctx.strokeStyle = 'black';
