@@ -55,6 +55,11 @@ class TimePlot{
 		this.axis_title = "elapsed time after collision, s";
 		this.title = 'Collision timeline';
 	}
+
+	get_right_limit(){
+	  return this.limit_left;
+  }
+
 	draw(data){
 		tc_ctx.fillStyle = "white";
       tc_ctx.fillRect(0, 0, this.draw_area_size[0], this.draw_area_size[1]);
@@ -67,12 +72,8 @@ class TimePlot{
 				delTo = i;
 			}
 		}
-		this.counters.splice(0, delTo);
+		this.counters  = data;
 
-		for (var i = 0; i < data.length; ++i) {
-			this.counters.push(new_time - data[i]);
-		}
-		this.prev_time = new_time;
 		tc_ctx.fillStyle = this.numbers_color;
 		tc_ctx.strokeStyle = this.strokeText;
 		tc_ctx.strokeWidth = 0.01;
@@ -82,7 +83,7 @@ class TimePlot{
     tc_ctx.fillText(this.limit_right.toString(), this.axes_end[0], this.axes_start[1] + this.margin_bottom);
     tc_ctx.fillStyle = this.text_color;
     tc_ctx.textAlign = 'center';
-    tc_ctx.font = '20px Montserrat-Medium';
+    tc_ctx.font = '18px Montserrat-Medium';
     tc_ctx.fillText(this.axis_title, (this.axes_start[0] + this.axes_end[0]) / 2, this.axes_start[1] + 4 * this.line_height / 5);
     tc_ctx.font = '25px Montserrat-Medium';
     tc_ctx.fillText(this.title, ((this.axes_start[0] + this.axes_end[0]) / 2), this.axes_start[1] - 1.5 * this.line_height);

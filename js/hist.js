@@ -40,8 +40,8 @@ var gradient_width = d_width, gradient_height = coeff * d_height;
 
 d_ctx.fillStyle = gradient;
 d_ctx.fillRect(gradient_x, gradient_y, gradient_width, gradient_height);
-console.log(gradient_x, gradient_y, gradient_width, gradient_height);
-console.log(d_ctx.getImageData(gradient_x, gradient_y, 1, 1).data);
+// console.log(gradient_x, gradient_y, gradient_width, gradient_height);
+// console.log(d_ctx.getImageData(gradient_x, gradient_y, 1, 1).data);
 
 function rgbToHex(r, g, b){
   if (r > 255 || g > 255 || b > 255)
@@ -53,7 +53,7 @@ getColor = function(lambda) {
   // console.log(gradient_x, gradient_x + lambda * gradient_width);
   alpha = Math.min(0.999, Math.max(lambda, 0.001));
   p = d_ctx.getImageData(gradient_x + alpha * gradient_width, gradient_y + gradient_height / 2, 1, 1).data;
-  console.log(p);
+  // console.log(p);
   var hex = "#" + ("000000" + rgbToHex(p['0'], p['1'], p['2'])).slice(-6);
   return hex;
 }
@@ -132,6 +132,9 @@ class Histogram{
 		this.thresh = 30;
 		this.grid_on = grid_on;
 		this.curve_color = 'rgb(0,0,247)';
+		this.title = 'Particle collision histogram';
+		this.title_x = 'number of particles';
+		this.title_y = 'time between collisions, s';
 	}
 	setMaxParticles(max_particles) {
 		this.max_particles = max_particles;
@@ -274,13 +277,15 @@ class Histogram{
 		  d_ctx.textAlign = 'center';
       d_ctx.font = '18px Montserrat-Light';
       d_ctx.fillStyle = this.text_color;
-      d_ctx.fillText('number of particles', (this.axes_end[0] + this.axes_start[0]) / 2, this.axes_start[1]  + 2 * this.margin_bottom / 3);
+      d_ctx.fillText(this.title_x, (this.axes_end[0] + this.axes_start[0]) / 2, this.axes_start[1]  + 2 * this.margin_bottom / 3);
       d_ctx.rotate(-Math.PI / 2);
-
-		  d_ctx.fillText('time between collisions, s', -(this.axes_start[1] + this.axes_end[1]) / 2 , 2 * this.margin_left / 3);
+		  d_ctx.fillText(this.title_y, -(this.axes_start[1] + this.axes_end[1]) / 2 , 2 * this.margin_left / 3);
 		  d_ctx.setTransform(1, 0, 0, 1, 0, 0);
+     d_ctx.font = '25px Montserrat-Medium';
+      d_ctx.fillText(this.title, (this.axes_start[0] + this.axes_end[0]) / 2, 1.75 * this.grid_size);
+
 		// draw Y
-		d_ctx.strokeStyle = "black";
+		  d_ctx.strokeStyle = "black";
 	    d_ctx.fillStyle = "black";
 	    d_ctx.lineWidth = this.outline_width * 2;
 	    d_ctx.beginPath()
@@ -309,9 +314,6 @@ class Histogram{
 	    d_ctx.lineTo(this.axes_end[0] + this.arrow_shift_x - this.arrow_size * Math.cos(Math.PI / 6), this.axes_start[1] - this.arrow_size * Math.sin(Math.PI / 6));
 	    d_ctx.fill();
 	}
-
-
-	
 };
 
 // var hist = new Histogram(10, 0, 50, [d_width, d_height], 10);

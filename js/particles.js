@@ -10,9 +10,10 @@ var width = canvas.width,
 
 
 hist = new Histogram(10, 0, 5, [d_width, d_height], 20, true);
-
- 
 time_plot = new TimePlot(0, 5, [tc_width, tc_height]);
+data_time = [];
+curr_time = new Date().getTime()/1000;
+data_difftime = [];
 
 function line_intersection(line1, line2) {
   function area (a, b, c) {
@@ -242,6 +243,7 @@ function bounds_interection(particle, clip_points) {
               particle.velocity.reflection(line.normal);
               if(choosenIndexies.includes(i)){
                 const current_time = new Date().getTime()/1000;
+                data_time.push(current_time);
                 particle.diffTimeCollsion = current_time - particle.lastTimeCollision;
                 particle.lastTimeCollision = current_time;
               }
@@ -365,21 +367,33 @@ function draw() {
 
   ctx.fillStyle = 'rgb(0,125,255)';
   data_hist = [];
-  data_time = [];
+  curr_time = new Date().getTime()/1000;
+  var delTo = 0;
+  for (var i = 0; i < data_time.length; ++i) {
+    if (curr_time - data_time[i] >= time_plot.get_right_limit() - 0.05) {
+      delTo = i;
+      break;
+    }
+  }
+  data_time.splice(0, delTo);
+  data_difftime = data_time.slice();
+  for (var i = 0; i < data_difftime.length; ++i) {
+    data_difftime[i] = curr_time - data_difftime[i];
+  }
 
   // Запускаем цикл, который отображает частицы
   for (var i = 0; i < particles.list.length; i++) {
 
     var position = particles.list[i].position;
-    var nowTime = new Date().getTime() / 1000;
 
     ctx.fillStyle = particles.list[i].color();
     size =  particles.list[i].isBoundParticle ?  kBoundParticleSize : particleSize;
     data_hist.push(particles.list[i].diffTimeCollsion);
+
     // data_hist.push(nowTime - particles.list[i].lastTimeCollision);
-    if (nowTime - particles.list[i].lastTimeCollision < 0.001) {
-      data_time.push(particles.list[i].lastTimeCollision);
-    }
+    // if (nowTime - particles.list[i].lastTimeCollision < 0.0001 / Math.log2(30 * velocity + 2)) {
+    //   data_time.push(particles.list[i].lastTimeCollision);
+    // }
     // Рисуем квадрат определенных размеров с заданными координатами
     ctx.beginPath();
     ctx.arc(position.x, position.y,size, 0, Math.PI * 2);
@@ -387,10 +401,12 @@ function draw() {
     ctx.fill();
   }
   draw_lines();
-  
+
+
+
   hist.setMaxParticles(particles.list.length);
   hist.draw(data_hist);
-  time_plot.draw(data_time);
+  time_plot.draw(data_difftime);
 }
 
 
