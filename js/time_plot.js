@@ -7,6 +7,12 @@ time_collision_canvas.height = document.querySelector("#time_collision_canvas").
 var tc_height = time_collision_canvas.height,
 	tc_width = time_collision_canvas.width
 
+var tc_axis = document.getElementById('time_collision_axis'),
+    tc_title = document.getElementById('time_collision_title'),
+    tc_left_limit = document.getElementById('time_collision_limit_left'),
+    tc_right_limit = document.getElementById('time_collision_limit_right');
+
+
 function binarySearch(array, pred) {
     var lo = -1, hi = array.length;
     while (1 + lo < hi) {
@@ -74,19 +80,24 @@ class TimePlot{
 		}
 		this.counters  = data;
 
-		tc_ctx.fillStyle = this.numbers_color;
-		tc_ctx.strokeStyle = this.strokeText;
-		tc_ctx.strokeWidth = 0.01;
-    tc_ctx.font = '25px Montserrat-Medium';
-    tc_ctx.textAlign = 'right';
-    tc_ctx.fillText(this.limit_left.toString(), this.axes_start[0], (this.axes_start[1] + this.margin_bottom));
-    tc_ctx.fillText(this.limit_right.toString(), this.axes_end[0], this.axes_start[1] + this.margin_bottom);
-    tc_ctx.fillStyle = this.text_color;
-    tc_ctx.textAlign = 'center';
-    tc_ctx.font = '18px Montserrat-Medium';
-    tc_ctx.fillText(this.axis_title, (this.axes_start[0] + this.axes_end[0]) / 2, this.axes_start[1] + 4 * this.line_height / 5);
-    tc_ctx.font = '25px Montserrat-Medium';
-    tc_ctx.fillText(this.title, ((this.axes_start[0] + this.axes_end[0]) / 2), this.axes_start[1] - 1.5 * this.line_height);
+    tc_axis.innerHTML = this.axis_title;
+    tc_title.innerHTML = this.title;
+    tc_left_limit.innerHTML = this.limit_left.toString();
+    tc_right_limit.innerHTML = this.limit_right.toString();
+
+		// tc_ctx.fillStyle = this.numbers_color;
+		// tc_ctx.strokeStyle = this.strokeText;
+		// tc_ctx.strokeWidth = 0.01;
+    // tc_ctx.font = '25px Montserrat-Medium';
+    // tc_ctx.textAlign = 'right';
+    // tc_ctx.fillText(this.limit_left.toString(), this.axes_start[0], (this.axes_start[1] + this.margin_bottom));
+    // tc_ctx.fillText(this.limit_right.toString(), this.axes_end[0], this.axes_start[1] + this.margin_bottom);
+    // tc_ctx.fillStyle = this.text_color;
+    // tc_ctx.textAlign = 'center';
+    // tc_ctx.font = '18px Montserrat-Medium';
+    // tc_ctx.fillText(this.axis_title, (this.axes_start[0] + this.axes_end[0]) / 2, this.axes_start[1] + 4 * this.line_height / 5);
+    // tc_ctx.font = '25px Montserrat-Medium';
+    // tc_ctx.fillText(this.title, ((this.axes_start[0] + this.axes_end[0]) / 2), this.axes_start[1] - 1.5 * this.line_height);
 
 
 		// draw timeline
