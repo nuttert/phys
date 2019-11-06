@@ -51,7 +51,8 @@ function rgbToHex(r, g, b){
 getColor = function(lambda) {
   // console.log(gradient_x, gradient_x + lambda * gradient_width);
   alpha = Math.min(0.999, Math.max(lambda, 0.001));
-  p = g_ctx.getImageData(alpha * g_width, g_height / 2, 1, 1).data;
+  console.log(Math.trunc(alpha * g_width), Math.trunc(g_height / 2), 1, 1);
+  p = g_ctx.getImageData(Math.trunc(alpha * g_width), Math.trunc(g_height / 2), 1, 1).data;
   // console.log(p);
   var hex = "#" + ("000000" + rgbToHex(p['0'], p['1'], p['2'])).slice(-6);
   return hex;
@@ -103,9 +104,9 @@ class Histogram{
 		this.counter = [];
     this.draw_area_size = draw_area_size;
     this.margin_bottom = draw_area_size[1] * 0.05;
-    this.margin_top = 0;
+    this.margin_top = draw_area_size[0] * 0.05;
     this.margin_left = draw_area_size[0] * 0.05;
-    this.margin_right = 0;
+    this.margin_right = draw_area_size[0] * 0.05;
     this.axes_start = [this.margin_left, draw_area_size[1] - this.margin_bottom];
     this.axes_end = [this.draw_area_size[0] - this.margin_right, this.margin_top];
     this.grid_size = 10;
@@ -116,9 +117,9 @@ class Histogram{
 		this.outline_width = 1;
 		this.grid_size_x = 25;
 		this.grid_size_y = 25;
-		this.arrow_size = 10;
-		this.arrow_shift_x = 15;
-		this.arrow_shift_y = 15;
+		this.arrow_size = draw_area_size[0] * 0.02;
+    this.arrow_shift_x = draw_area_size[0] * 0.03;
+    this.arrow_shift_y = draw_area_size[0] * 0.03;
 		this.grid_shift_x = 10;
 		this.grid_shift_y = 10;
 		this.inner_radius = 3;
@@ -156,6 +157,9 @@ class Histogram{
 			var toBin = Math.trunc((data[i] - this.limit_left) / (this.limit_right - this.limit_left) * this.bins_number);
 			this.counter[toBin]++;
 		}
+
+    this.max_particles = Math.max(1, Math.trunc(this.counter[0]));
+
 		d_ctx.fillStyle = "white";
 		d_ctx.fillRect(0, 0, this.draw_area_size[0], this.draw_area_size[1]);
 

@@ -10,7 +10,7 @@ var width = canvas.width,
 
 
 stat_max_paticles = 1000;
-collison_limit_right = 500;
+collison_limit_right = 600;
 time_limit_right = 10;
 bins_number = 20;
 use_grid = true;
@@ -91,7 +91,7 @@ class Particle {
     this.lastFriend = new ObjectHandler();
     this.lastBound = new ObjectHandler();
     this.lastTimeCollision = 0;
-    this.diffTimeCollsion = 100;
+    this.diffTimeCollsion = 0;
     this.size = size;
     this.isBoundParticle = isBoundParticle;
 
