@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Phys</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <style>
+  @import url('https://fonts.googleapis.com/css?family=Inconsolata&display=swap');
+  </style>
+</head>
+
+<body>
+    <div id="config_area">
+
+      	<nav>
+            <ul class="menu center_flex">
+              <li class="draw_button_li">
+                <div id="draw_button" class="btn center_flex">
+                    <span>Draw</span></button>
+              </li>
+              <li class="config_button_li">
+                <div id="config_button" class="btn">
+                    <span>particle config</span></button></button>
+              </li>
+              <li id="bounds_config_li">
+                <div class="btn" id="bounds_config_button" >
+                    <span>bounds config</span> </button>
+              </li>
+              <li class="clear_button_li">
+                <div id="clear_button" class="btn">
+                    <span>Clear</span> </button>
+              </li>
+              <li id="set_particle_li" class="bounds_config_class">
+                  <div class="btn" id="set_particle_button" >
+                      <span >set particle</span> 
+                  </div>
+                </li>
+              <li class="range_bound_particle_size_li ranges_li config_bound_ranges">
+                <span style="font-size:2vmin">Size 15</span> </button>
+                <input type="range" id="range_bound_particle_size" class="ranges" oninput="change__bound_size()" min="1", max="40" value="15">
+            </li>
+            
+     
+              <li class="range_velocity_li ranges_li config_part_ranges">
+                  <span style="font-size:2vmin">Velocity 30</span> </button>
+                  <input type="range" id="range_velocity" class="ranges" oninput="change_velocity()" min="0", max="400" value="30">
+              </li>
+              <li class="range_amount_li ranges_li config_part_ranges">
+                  <span style="font-size:2vmin">Amount 20</span> </button>
+                  <input type="range" id="range_amount" class="ranges" oninput="change_amount()" min="1", max="100" value="20">
+              </li>
+              <li class="range_size_li ranges_li config_part_ranges">
+                  <span style="font-size:2vmin">Size 10</span> </button>
+                  <input type="range" id="range_size" class="ranges" oninput="change_size()" min="1", max="20" value="10">
+              </li>
+            </ul>
+          </nav>
+          
+          <div id="back_for_config" class="bounds_config_class">
+              <div id="highlighting1" class="highlighting"></div>
+              <div id="polygon_li1" class="bounds_config_class">
+                      <svg  viewBox="-65 2 280 135" preserveAspectRatio="none">
+                          <polygon points="70,5 90,41 136,48 103,80 111,126 70,105 29,126 36,80 5,48 48,41"
+                                   fill="#fff" stroke="#000" stroke-width="5" />
+                      </svg>
+                  </div>
+                
+              <div id="polygon_li2" class="bounds_config_class">
+                      <svg viewBox="-75 0 280 135" preserveAspectRatio="none">
+                          <polygon points=" 30 10, 10 30, 40 60, 10 90, 30 110, 60 80, 90 110, 110 90, 80 60, 110 30, 90 10, 60 40"
+                         
+                                   fill="#fff" stroke="#000" stroke-width="5" />
+                      </svg>
+                </div>
+                <div id="highlighting2" class="highlighting"></div>
+          </div>
+
+
+
+    </div>
+    
+  <div id="work_area">
+    <canvas id="work_canvas">
+    </canvas>
+    <div class="left_arrow arrow design_animation_class"><img src="../data/arrow2.png"></div>
+    <div class="right_arrow arrow design_animation_class"><img src="../data/arrow2.png"></div>
+
+    <div class="left_poligon polygon design_animation_class"><img src="../data/polygon.png">
+      <div class="left_ball ball"></div>
+    </div>
+    <div class="right_poligon polygon design_animation_class"><img src="../data/polygon.png">
+      <div class="right_ball ball"></div>
+    </div>
+
+  </div>
+  <div id="distribution_area">
+    
+    <canvas id="time_collision_canvas" class="time_collision"></canvas>
+    <span id="time_collision_axis" class="time_collision"></span>
+    <span id="time_collision_title" class="time_collision"></span>
+    <span id="time_collision_limit_left" class="time_collision"></span>
+    <span id="time_collision_limit_right" class="time_collision"></span>
+    <span id="statistics" align="center"></span>
+    <canvas id="distribution_canvas" class="distribution_statistic"></canvas>
+    <span id="distribution_area_title" class="distribution_statistic"></span>
+    <span id="distribution_area_axis_x_title" class="distribution_statistic">
+      <span></span>
+    </span>
+    <span id="distribution_area_axis_y_title" class="distribution_statistic">
+      <span></span>
+    </span>
+    <span id="distribution_area_axis_x_limit" class="distribution_statistic"></span>
+    <span id="distribution_area_axis_y_limit" class="distribution_statistic"></span>
+    <span id="distribution_area_axis_start" class="distribution_statistic"></span>
+    <canvas id="gradient_line" class="distribution_statistic"></canvas>
+    <div class="bar distribution_area_common blur"></div>
+    <div class="arrow distribution_area_left_arrow time_collision"><img src="../data/arrow2.png"></div>
+    <div class="arrow distribution_area_right_arrow distribution_statistic"><img src="../data/arrow2.png"></div>
+    <h1 id="console"></h1>
+    <h1 id="mean" class="btn distribution_statistic">mean: 0.000</h1>
+    <h1 id="std" class="btn distribution_statistic">std: 0.000</h1>
+  </div>
+</body>
+<script src="../js/lib/type_it.js"></script>
+<script src="../js/type_consol.js"></script>
+<script src="../js/time_plot.js"></script>
+<script src="../js/hist.js"></script>
+<script src="../js/bounds.js"></script>
+<script src="../js/statistics.js"></script>
+<script src="../js/particles.js"></script>
+<script src="../js/design_animations.js"></script>
+</html>
