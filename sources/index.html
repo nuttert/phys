@@ -96,21 +96,32 @@
 
   </div>
   <div id="distribution_area">
-    <h1 id="console"></h1>
-    <canvas id="time_collision_canvas"></canvas>
-    <span id="time_collision_axis"></span>
-    <span id="time_collision_title"></span>
-    <span id="time_collision_limit_left"></span>
-    <span id="time_collision_limit_right"></span>
+    
+    <canvas id="time_collision_canvas" class="time_collision"></canvas>
+    <span id="time_collision_axis" class="time_collision"></span>
+    <span id="time_collision_title" class="time_collision"></span>
+    <span id="time_collision_limit_left" class="time_collision"></span>
+    <span id="time_collision_limit_right" class="time_collision"></span>
     <span id="statistics" align="center"></span>
-    <canvas id="distribution_canvas"></canvas>
-    <span id="distribution_area_title"></span>
-    <span id="distribution_area_axis_x_title"></span>
-    <span id="distribution_area_axis_y_title"></span>
-    <span id="distribution_area_axis_x_limit"></span>
-    <span id="distribution_area_axis_y_limit"></span>
-    <span id="distribution_area_axis_start"></span>
-    <canvas id="gradient_line"></canvas>
+    <canvas id="distribution_canvas" class="distribution_statistic"></canvas>
+    <span id="distribution_area_title" class="distribution_statistic"></span>
+    <span id="distribution_area_axis_x_title" class="distribution_statistic">
+      <span></span>
+    </span>
+    <span id="distribution_area_axis_y_title" class="distribution_statistic">
+      <span></span>
+    </span>
+    <span id="distribution_area_axis_x_limit" class="distribution_statistic"></span>
+    <span id="distribution_area_axis_y_limit" class="distribution_statistic"></span>
+    <span id="distribution_area_axis_start" class="distribution_statistic"></span>
+    <canvas id="gradient_line" class="distribution_statistic"></canvas>
+    <div class="bar distribution_area_common blur"></div>
+    <div class="arrow distribution_area_left_arrow time_collision"><img src="../data/arrow2.png"></div>
+    <div class="arrow distribution_area_right_arrow distribution_statistic"><img src="../data/arrow2.png"></div>
+    <h1 id="console"></h1>
+    <h1 id="mean" class="btn distribution_statistic">mean: 0.000</h1>
+    <h1 id="std" class="btn distribution_statistic">std: 0.000</h1>
+    <h1 id="pois_stat" class="btn distribution_statistic">sub-poissonian</h1>
   </div>
 </body>
 <script src="../js/lib/type_it.js"></script>

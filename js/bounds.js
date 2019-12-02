@@ -56,7 +56,7 @@ function restart(){
   bound_patricle_color = 'rgb(100,0,100)';
   particles = null;
   lines = [];
-
+  
   document.querySelector("#draw_button").style.opacity = '1';
   span = document.querySelector("#set_particle_button > span");
   dif_text(span, "set particle");
@@ -355,6 +355,14 @@ hide_button($('.config_part_ranges'));
 
 });
 
+document.querySelector(".distribution_area_right_arrow").addEventListener("mousedown", function(e){ 
+  hide_object($('.distribution_statistic'),0);
+  vis_object($('.time_collision'),0);
+});
+document.querySelector(".distribution_area_left_arrow").addEventListener("mousedown", function(e){ 
+  hide_object($('.time_collision'),0);
+  vis_object($('.distribution_statistic'),0);
+});
 
 
 

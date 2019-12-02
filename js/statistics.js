@@ -1,10 +1,13 @@
-var stat_p = document.getElementById("statistics");
+
+ mean = document.getElementById("mean");
+ std = document.getElementById("std");
+ pois_stat = document.getElementById("pois_stat");
+ 
 class Statstics {
   constructor() {
     this.fontColor = "#000000";
     this.mean = 0;
     this.std = 0;
-    this.stat = 'sub-poissonian';
   }
 
   draw(data) {
@@ -27,7 +30,16 @@ class Statstics {
       }
       this.std = Math.sqrt(this.std / data.length);
     }
-    stat_p.style.color = this.fontColor;
-    stat_p.innerHTML = 'mean: ' + this.mean.toFixed(3) + ' | std: ' + this.std.toFixed(3) + ' | statistics: ' + this.stat;
+    // stat_p.style.color = this.fontColor;
+    mean.innerHTML =  'mean: '+this.mean.toFixed(3);
+    std.innerHTML =   'std: ' + this.std.toFixed(3);
+    if (this.mean < this.std * this.std) {
+      pois_stat.innerHTML = 'sub-poissonian';
+    } else {
+      pois_stat.innerHTML = 'super-poissonian';
+    }
+    //  | statistics: ' + this.stat;
   }
 }
+
+

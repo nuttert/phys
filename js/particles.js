@@ -10,10 +10,11 @@ var width = canvas.width,
 
 
 stat_max_paticles = 1000;
-collison_limit_right = 500;
+collison_limit_right = 600;
 time_limit_right = 10;
 bins_number = 20;
 use_grid = true;
+polygon_area = 0.0;
 hist = new Histogram(bins_number, 0, time_limit_right, [d_width, d_height], collison_limit_right, use_grid);
 time_plot = new TimePlot(0, 5, [tc_width, tc_height]);
 stats = new Statstics();
@@ -91,7 +92,7 @@ class Particle {
     this.lastFriend = new ObjectHandler();
     this.lastBound = new ObjectHandler();
     this.lastTimeCollision = 0;
-    this.diffTimeCollsion = 100;
+    this.diffTimeCollsion = 0;
     this.size = size;
     this.isBoundParticle = isBoundParticle;
 
@@ -209,6 +210,8 @@ function set_lines(clip_points){
         point2 = clip_points[next_index];
         lines.push(new Line(point1,point2));
     }
+    
+    polygon_area = calc_area(clip_points);
     return lines;
 }
 
@@ -365,7 +368,9 @@ function addBoundParticle(){
 
 
 function start(){
-  
+vis_object($('#distribution_area> .distribution_statistic'), 0);
+vis_object($('#distribution_area> .distribution_area_common'), 0);
+hide_object($('#console'));
 function update() {
   addNewParticles();
   if(kBoundParticle)
@@ -423,7 +428,7 @@ function draw() {
 
 
   // hist.setMaxParticles(particles.list.length - kBoundParticleSet);
-  hist.setMaxParticles(collison_limit_right);
+  // hist.setMaxParticles(collison_limit_right);
   hist.draw(data_hist);
   time_plot.draw(data_difftime);
   stats.draw(data_hist);
@@ -644,3 +649,15 @@ document.querySelector("#highlighting2").addEventListener("mousedown", function(
   ctx.closePath();
   start();
 });
+
+function calc_area(points){
+  area = 0;
+  for (var i = 0; i < points.length; i++) {
+    area += points[i].x * points[(i + 1) % points.length].y;
+  }
+  for (var i = 0; i < points.length; i++) {
+    area -= points[(i + 1) % points.length].x * points[i].y;
+  }
+  area = 0.5 * Math.abs(area);
+  return area;
+}

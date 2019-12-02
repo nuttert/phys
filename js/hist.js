@@ -1,9 +1,9 @@
 var distribution_canvas = document.querySelector("#distribution_canvas");
 var d_ctx = distribution_canvas.getContext("2d");
 
-var d_title = document.getElementById("distribution_area_title");
-var d_axis_x_title = document.getElementById("distribution_area_axis_x_title");
-var d_axis_y_title = document.getElementById("distribution_area_axis_y_title");
+// var d_title = document.getElementById("distribution_area_title");
+var d_axis_x_title = document.querySelector("#distribution_area_axis_x_title > span");
+var d_axis_y_title = document.querySelector("#distribution_area_axis_y_title > span");
 var d_axis_x_limit = document.getElementById("distribution_area_axis_x_limit");
 var d_axis_y_limit = document.getElementById("distribution_area_axis_y_limit");
 var d_axis_start = document.getElementById("distribution_area_axis_start");
@@ -51,7 +51,8 @@ function rgbToHex(r, g, b){
 getColor = function(lambda) {
   // console.log(gradient_x, gradient_x + lambda * gradient_width);
   alpha = Math.min(0.999, Math.max(lambda, 0.001));
-  p = g_ctx.getImageData(alpha * g_width, g_height / 2, 1, 1).data;
+  // console.log(Math.trunc(alpha * g_width), Math.trunc(g_height / 2), 1, 1);
+  p = g_ctx.getImageData(Math.trunc(alpha * g_width), Math.trunc(g_height / 2), 1, 1).data;
   // console.log(p);
   var hex = "#" + ("000000" + rgbToHex(p['0'], p['1'], p['2'])).slice(-6);
   return hex;
@@ -103,9 +104,9 @@ class Histogram{
 		this.counter = [];
     this.draw_area_size = draw_area_size;
     this.margin_bottom = draw_area_size[1] * 0.05;
-    this.margin_top = 0;
+    this.margin_top = draw_area_size[0] * 0.05;
     this.margin_left = draw_area_size[0] * 0.05;
-    this.margin_right = 0;
+    this.margin_right = draw_area_size[0] * 0.05;
     this.axes_start = [this.margin_left, draw_area_size[1] - this.margin_bottom];
     this.axes_end = [this.draw_area_size[0] - this.margin_right, this.margin_top];
     this.grid_size = 10;
@@ -116,9 +117,9 @@ class Histogram{
 		this.outline_width = 1;
 		this.grid_size_x = 25;
 		this.grid_size_y = 25;
-		this.arrow_size = 10;
-		this.arrow_shift_x = 15;
-		this.arrow_shift_y = 15;
+		this.arrow_size = draw_area_size[0] * 0.02;
+    this.arrow_shift_x = draw_area_size[0] * 0.03;
+    this.arrow_shift_y = draw_area_size[0] * 0.03;
 		this.grid_shift_x = 10;
 		this.grid_shift_y = 10;
 		this.inner_radius = 3;
@@ -156,12 +157,18 @@ class Histogram{
 			var toBin = Math.trunc((data[i] - this.limit_left) / (this.limit_right - this.limit_left) * this.bins_number);
 			this.counter[toBin]++;
 		}
+    this.max_particles = Math.max(1, Math.trunc(this.counter[0]));
+    for (var i = 1; i < this.bins_number; i++) {
+      this.max_particles = Math.max(this.max_particles, Math.trunc(this.counter[i]));
+    } 
+    this.max_particles = Math.floor((this.max_particles + 49) / 50) * 50;
+
 		d_ctx.fillStyle = "white";
 		d_ctx.fillRect(0, 0, this.draw_area_size[0], this.draw_area_size[1]);
 
     	// draw grid
       if (this.grid_on) {
-        for (var i = 1; i < this.xticks; i++) {
+        for (var i = 1; i <= this.xticks; i++) {
           d_ctx.lineWidth = this.outline_width / 2;
           d_ctx.strokeStyle = "#acacac";
           d_ctx.fillStyle = "#acacac";
@@ -259,7 +266,7 @@ class Histogram{
       d_axis_y_limit.innerHTML = this.limit_right.toFixed(0);
       d_axis_x_title.innerHTML = this.title_x;
       d_axis_y_title.innerHTML = this.title_y;
-      d_title.innerHTML = this.title;
+      // d_title.innerHTML = this.title;
     	// d_ctx.fillStyle = this.numbers_color;
     	// d_ctx.font = '24px Montserrat-Medium';
     	// d_ctx.textAlign = 'right';
@@ -305,6 +312,9 @@ class Histogram{
 	    d_ctx.lineTo(this.axes_end[0] + this.arrow_shift_x - this.arrow_size * Math.cos(Math.PI / 6), this.axes_start[1] + this.arrow_size * Math.sin(Math.PI / 6));
 	    d_ctx.lineTo(this.axes_end[0] + this.arrow_shift_x - this.arrow_size * Math.cos(Math.PI / 6), this.axes_start[1] - this.arrow_size * Math.sin(Math.PI / 6));
 	    d_ctx.fill();
+      d_ctx.moveTo(Math.abs(this.axes_start[0] - this.axes_end[0]) + this.axes_start[0], this.axes_start[1] + this.arrow_size * Math.cos(Math.PI / 6))
+      d_ctx.lineTo(Math.abs(this.axes_start[0] - this.axes_end[0]) + this.axes_start[0], this.axes_start[1] - this.arrow_size * Math.cos(Math.PI / 6))
+      d_ctx.stroke();
 	}
 };
 
