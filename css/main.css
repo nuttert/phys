@@ -556,17 +556,30 @@ svg{
 #distribution_area > #mean{
   position: absolute;
   top: 15%;
-  margin-left: 5%;
+  margin-left: 55%;
   height:5%;
   width:40%;
   left:0;
   right:0;
-  margin:auto;
   font-size: 2vmin;
   background-color: #ee05a9;;
   padding-top:2%;
   visibility: hidden;
-} 
+}
+
+#distribution_area > #tmean{
+  position: absolute;
+  top: 15%;
+  margin-left: 10%;
+  height:5%;
+  width:40%;
+  left:0;
+  right:0;
+  font-size: 2vmin;
+  background-color: #ee05a9;
+  padding-top:2%;
+  visibility: hidden;
+}
 
 #distribution_area > #std{
   position: absolute;

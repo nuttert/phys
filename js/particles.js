@@ -15,6 +15,8 @@ time_limit_right = 10;
 bins_number = 20;
 use_grid = true;
 polygon_area = 0.0;
+line_perimetr = 0.0;
+lambda = 0.0;
 hist = new Histogram(bins_number, 0, time_limit_right, [d_width, d_height], collison_limit_right, use_grid);
 time_plot = new TimePlot(0, 5, [tc_width, tc_height]);
 stats = new Statstics();
@@ -212,6 +214,7 @@ function set_lines(clip_points){
     }
     
     polygon_area = calc_area(clip_points);
+    line_perimetr = calc_perimetr(clip_points);
     return lines;
 }
 
@@ -425,7 +428,8 @@ function draw() {
   }
   draw_lines();
 
-
+  line_perimetr = calc_perimetr(clip_points);
+  lambda = line_perimetr * velocity / (Math.PI * (polygon_area + 1e-5));
 
   // hist.setMaxParticles(particles.list.length - kBoundParticleSet);
   // hist.setMaxParticles(collison_limit_right);
@@ -651,7 +655,7 @@ document.querySelector("#highlighting2").addEventListener("mousedown", function(
 });
 
 function calc_area(points){
-  area = 0;
+  var area = 0;
   for (var i = 0; i < points.length; i++) {
     area += points[i].x * points[(i + 1) % points.length].y;
   }
@@ -660,4 +664,23 @@ function calc_area(points){
   }
   area = 0.5 * Math.abs(area);
   return area;
+}
+
+function calc_perimetr(points) {
+  var p = 0;
+  if (points.length == 1) {
+    return 0;
+  } else if (points.length == 2) {
+    if (choosenIndexies.includes(0)) {
+      return Math.sqrt((points[0].x - points[1].x) * (points[0].x - points[1].x) + (points[0].y - points[1].y) * (points[0].y - points[1].y));
+    } else {
+      return 0;
+    }
+  }
+  for (var i = 0; i < points.length; i++) {
+    if (choosenIndexies.includes(i)) {
+      p += Math.sqrt(Math.pow(points[i].x - points[(i + 1) % points.length].x, 2) + Math.pow(points[i].y - points[(i + 1) % points.length].y, 2));
+    }
+  }
+  return p;
 }
