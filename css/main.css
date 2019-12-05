@@ -91,6 +91,8 @@ body {
   visibility: hidden;
 }
 
+
+
 #distribution_canvas{
   width: 90%;
   bottom: 1%;
@@ -199,7 +201,8 @@ body {
   width: 70%;
   height: 4%;
   text-align: center;
-  background-color: aqua;
+  background-color: #05e6ee;
+  color: white;
   padding-top:2%;
 }
 
@@ -217,24 +220,30 @@ body {
   width: 55%;
   height: 4%;
   text-align: center;
+  color: white;
+  padding-top: 1.7%;
   background-color: #eb10b4;
-  padding-top:2%;
 }
 
 #time_collision_limit_left{
   bottom:50%;
-  position: absolute;
+  font-size: 2.5vmin;
   color: #000000;
-  left: 2%;
+  position: absolute;
+  left: 4%;
+
+  visability:hidden;
   text-align: center;
-  visibility: hidden;
+  /*margin: auto;*/
+
 }
 
 #time_collision_limit_right{
   bottom:50%;
   position: absolute;
   color: #000000;
-  right: 5%;
+  right: 4%;
+  font-size: 2.5vmin;
   text-align: center;
   visibility: hidden;
 }
