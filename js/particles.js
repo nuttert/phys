@@ -230,7 +230,7 @@ function set_lines(clip_points){
     
     polygon_area = calc_area(clip_points);
     line_perimetr = calc_perimetr(clip_points);
-    console.log(line_perimetr);
+
     return lines;
 }
 

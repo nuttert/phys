@@ -622,6 +622,19 @@ svg{
   visibility: hidden;
 }
 
+#distribution_area > #pois_stat{
+  position: absolute;
+  top: 29%;
+  left:0;
+  right:0;
+  margin:auto;
+  height:5%;
+  width:40%;
+  font-size: 2vmin;
+  background-color: #e6d03e;
+  padding-top:2%;
+  visibility: hidden;
+}
 
 #distribution_area > #h_tmean{
   position: absolute;

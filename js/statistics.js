@@ -33,7 +33,6 @@ class Statstics {
       this.std = Math.sqrt(this.std / data.length);
     }
     if (line_perimetr == 0 || polygon_area == 0 || velocity == 0) {
-      console.log(line_perimetr,polygon_area,velocity);
       this.tmean = 0;
     } else {
       this.tmean =  1 / (line_perimetr * velocity / (Math.PI + polygon_area));
