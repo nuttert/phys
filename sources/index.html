@@ -63,18 +63,30 @@
               <div id="polygon_li1" class="bounds_config_class">
                       <svg  viewBox="-65 2 280 135" preserveAspectRatio="none">
                           <polygon points="70,5 90,41 136,48 103,80 111,126 70,105 29,126 36,80 5,48 48,41"
-                                   fill="#fff" stroke="#000" stroke-width="5" />
+                                   fill="#fff" stroke="#ee05a9" stroke-width="5" />
                       </svg>
                   </div>
-                
+
+                  <div id="polygon_li3" class="bounds_config_class">
+                    <svg viewBox="15 40 300 230" preserveAspectRatio="none">
+                        <polygon points="80.0 80.0 ,240.0 80.0 ,240.0 160.0 ,170.0 160.0 ,210.0 220.0 ,110.0 220.0 ,150.0 160.0 ,80.0 160.0"
+                       
+                                fill="#fff" stroke="#ee05a9" stroke-width="5" />
+                    </svg>
+              </div>
+              <div id="highlighting3" class="highlighting"></div>
+
+
+
               <div id="polygon_li2" class="bounds_config_class">
                       <svg viewBox="-75 0 280 135" preserveAspectRatio="none">
                           <polygon points=" 30 10, 10 30, 40 60, 10 90, 30 110, 60 80, 90 110, 110 90, 80 60, 110 30, 90 10, 60 40"
                          
-                                   fill="#fff" stroke="#000" stroke-width="5" />
+                                   fill="#fff" stroke="#ee05a9" stroke-width="5" />
                       </svg>
                 </div>
-                <div id="highlighting2" class="highlighting"></div>
+              <div id="highlighting2" class="highlighting"></div>
+          
           </div>
 
 
@@ -95,11 +107,42 @@
     </div>
 
   </div>
-
   <div id="distribution_area">
+    
+    <canvas id="time_collision_canvas" class="time_collision"></canvas>
+    <span id="time_collision_axis" class="time_collision"></span>
+    <span id="time_collision_title" class="time_collision"></span>
+    <span id="time_collision_limit_left" class="time_collision"></span>
+    <span id="time_collision_limit_right" class="time_collision"></span>
+    <span id="statistics" align="center"></span>
+    <canvas id="distribution_canvas" class="distribution_statistic"></canvas>
+    <span id="distribution_area_title" class="distribution_statistic"></span>
+    <span id="distribution_area_axis_x_title" class="distribution_statistic">
+      <span></span>
+    </span>
+    <span id="distribution_area_axis_y_title" class="distribution_statistic">
+      <span></span>
+    </span>
+    <span id="distribution_area_axis_x_limit" class="distribution_statistic"></span>
+    <span id="distribution_area_axis_y_limit" class="distribution_statistic"></span>
+    <span id="distribution_area_axis_start" class="distribution_statistic"></span>
+    <canvas id="gradient_line" class="distribution_statistic"></canvas>
+    <div class="bar distribution_area_common blur"></div>
+    <div class="arrow distribution_area_left_arrow time_collision"><img src="../data/arrow2.png"></div>
+    <div class="arrow distribution_area_right_arrow distribution_statistic"><img src="../data/arrow2.png"></div>
     <h1 id="console"></h1>
-    <canvas id="time_collision_canvas"></canvas>
-    <canvas id="distribution_canvas"></canvas>
+
+
+    <h1 id="tmean" class="btn distribution_statistic">0.000</h1>
+    <h1 id="mean" class="btn distribution_statistic">0.000</h1>
+    <h1 id="std" class="btn distribution_statistic">0.000</h1>
+
+    <h1 id="h_tmean" class="btn distribution_statistic">theory mean</h1>
+    <h1 id="h_mean" class="btn distribution_statistic">mean</h1>
+    <h1 id="h_std" class="btn distribution_statistic">std</h1>
+
+    <h1 id="pois_stat" class="btn distribution_statistic">sub-poissonian</h1>
+
   </div>
 </body>
 <script src="../js/lib/type_it.js"></script>
@@ -107,6 +150,7 @@
 <script src="../js/time_plot.js"></script>
 <script src="../js/hist.js"></script>
 <script src="../js/bounds.js"></script>
+<script src="../js/statistics.js"></script>
 <script src="../js/particles.js"></script>
 <script src="../js/design_animations.js"></script>
 </html>

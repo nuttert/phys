@@ -54,6 +54,15 @@
   });
 </script>
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
 <body>
   <div class="background">
       <canvas id=background_canvas>
@@ -99,7 +108,7 @@
     </div>
     
     <div id="enter_button" class="btn center_flex">
-      <a href="sources/index.html"></a>
+      <a href="sources/choose_mode.html"></a>
 
   
           <span>Start</span>
@@ -124,43 +133,62 @@
 
       <div id="field_Description1" class="field_Description">
           <p>
-              
-\[
-\begin{split} 
-               \bbox[yellow]
-{
-Пуассоновский\ процесс,
-}
-\text{случайный процесс, описывающий моменты наступления} \ 0\ <\ t_1\ <...<\ t_n\ <...<...\\
-\text{каких-либо случайных событий,в котором число событий, происходящих в течение}\\
-\text{любого фиксированного интервала времени, имеет распределение Пуассона и независимы}\\
-\text{числа событий, происходящих в непересекающиеся промежутки времени.}
-\end{split} 
-\]
+            \(\bbox[yellow]{Пуассоновский\ процесс}\) - 
+            случайный процесс, описывающий моменты наступления \(\ 0\ <\ t_1\ <...<\ t_n\ <...\)
+            каких-либо случайных событий, в котором число событий, происходящих в течение
+            любого фиксированного интервала времени, имеет распределение Пуассона и независимы.
+          </p>
+          <br>
+          <p>
+            <b id="section">Математический бильярд</b>
+          </p>
+          <p>
+            Бильярд — динамическая система, отвечающая свободному движению
+            материальной точки (бильярдного шара) внутри области площадью \(\Omega\) с
+            кусочно-гладкой границей. При достижении границы частица упруго отражается от нее.
+          </p>
+          <br>
+          <p>
+            Если в бильярде есть рассеивающая поверхность, то в нем устанавливается хаотическое движение.
+            Если скорость постоянная \(v\), то распределение в фазовом пространстве
+            для двух координат и направления скорости равномерное
+          \[
+            w(x, y, \phi) = \frac{1}{2\pi\Omega},
+          \]
 
-            \[\mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix}
-          \mathbf{i} & \mathbf{j} & \mathbf{k} \\
-          \frac{\partial X}{\partial u} & \frac{\partial Y}{\partial u} & 0 \\
-          \frac{\partial X}{\partial v} & \frac{\partial Y}{\partial v} & 0
-          \end{vmatrix} \]
-          \[\mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix}
-          \mathbf{i} & \mathbf{j} & \mathbf{k} \\
-          \frac{\partial X}{\partial u} & \frac{\partial Y}{\partial u} & 0 \\
-          \frac{\partial X}{\partial v} & \frac{\partial Y}{\partial v} & 0
-          \end{vmatrix} \]
-          \[\mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix}
-          \mathbf{i} & \mathbf{j} & \mathbf{k} \\
-          \frac{\partial X}{\partial u} & \frac{\partial Y}{\partial u} & 0 \\
-          \frac{\partial X}{\partial v} & \frac{\partial Y}{\partial v} & 0
-          \end{vmatrix} \]</p>
+          где \(\Omega\) - площадь бильярда.
+          </p>
+          <br>
+          <p>
+            Вероятность столкновения с участком границы длины \(L\) в единицу времени
+            \[p(L) = \int\limits_{-\frac{\pi}{2}}^{\frac{\pi}{2}}d\phi \int\limits_{L} dl w(x, y, \phi) v \cos{\phi} = \frac{Lv}{\pi\Omega}\]
+          </p>
+          <br>
+          <p>
+            Время пробега между соударениями \(p^{-1}\). Длина свободного пробега
+            \[\lambda = v p^{-1}(P) = \frac{\pi\Omega}{P}\]
+          </p>
+          <br>
+
+          <p>
+            Распределение вероятностей для углов падения не зависит от формы границы
+            \[w(\phi) = \frac{1}{2}\cos{\phi} \]
+          </p>
         </div>
         
       <div id="field_Description2" class="field_Description">
-          <p>\[\mathbf{V}_1 \times \mathbf{V}_2 = \begin{vmatrix}
-          \mathbf{i} & \mathbf{j} & \mathbf{k} \\
-          \frac{\partial X}{\partial u} & \frac{\partial Y}{\partial u} & 0 \\
-          \frac{\partial X}{\partial v} & \frac{\partial Y}{\partial v} & 0
-          \end{vmatrix} \]</p>
+          <p>
+            <b id="section">Импульсный процесс столкновений со стенкой</b>
+          </p>
+          <p>
+            Столкновение частицы со стенкой можно представить как импульсный случайный процесс с положительными \(\delta\) - импульсами \(\eta(t) = \sum \limits_{p}f_0(t-t_p)\), проходящими в момент времени
+            \(t_p\) и имеющими амплитуду \(f_0\), независимыми одинаково распределёнными интервалами между импульсами
+            \(\vartheta_p = t_p - t_{p-1}\).
+          </p>
+          <br>
+          <p>
+            Основные характеристики: среднее время между столкновением со стенкой \(m_1 = T = \lambda / v = \langle \vartheta \rangle\) и дисперсия \(\sigma_{\vartheta}^{2}\). Причём, \(T\) всегда определяется площадью и длиной стенки. А дисперсия \(\sigma_{\vartheta}^{2}\) может сильно зависеть от формы бильярда и выбора стенки. Меняя конфигурацию бильярда, можно получать суб-пуассоновскую (квазипериодическую) статистику импульсов, когда  \(\sigma_{\vartheta}^{2} < T\), или супер-пуассоновскую когда  \(\sigma_{\vartheta}^{2} > T\), соответственно.
+          </p>
         </div>
 
         <div class="close_button btn"></div>
@@ -177,7 +205,7 @@
    </div>
   </div>
 
-  <div id="cmc_background" class="enter_background">
+    <div id="cmc_background" class="enter_background">
       <div class="cmc enter_background_img"> </div>
       <div class="description"></div>
   </div>

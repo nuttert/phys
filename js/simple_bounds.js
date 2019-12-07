@@ -24,12 +24,12 @@ var maxParticles = 20;
 const emissionRate = 1; // количество частиц, излучаемых за кадр
 var particleSize = 10;
 var particleColor = "#123";
-var velocity = 30;
+var velocity = 100;
 var particles = null;
 var lines = [];
 var kBoundParticle = false;
 var kBoundParticleSet = false;
-var kBoundParticleSize = 15;
+var kBoundParticleSize = 30;
 var boundParticle = null;
 var bound_patricle_color = 'rgb(100,0,100)';
 var center = null;
@@ -318,46 +318,6 @@ document.querySelector("#clear_button").addEventListener("mousedown", function(e
 });
 
 
-document.querySelector("#config_button").addEventListener("mousedown", function(e){ 
-  span = document.querySelector("#config_button > span");
-
-if(!config_button_was_pressed){
-  config_button_was_pressed = true;
-
-  hide_button($('.draw_button_li'));
-  hide_button($('.clear_button_li'));
-  hide_button($('#bounds_config_li'));
-
-   $('.config_button_li').css("position","absolute");
-   $('.menu').css("justify-content","center");
-   dif_text(span, "close");
-   $('.config_button_li').animate({top: '0%'}, 200, function(){});
-
-   vis_button($('.config_part_ranges'));
-  //  vis_button($('#bounds_config_li'));
-
-  //  static_position($('.ranges_li'));
-  return;
-}
-
-
-config_button_was_pressed = false;
- $('.menu').css("justify-content","center");
-dif_text(span, "particle config");
-$('.config_button_li').animate({top: '40%'}, 300, function(){
-   $('.config_button_li').css("position","static");
-});
-
-
-vis_button($('.draw_button_li'));
-vis_button($('.clear_button_li'));
-vis_button($('#bounds_config_li'));
-
-hide_button($('.config_part_ranges'));
-// absolute_position($('.ranges_li'));
-
-
-});
 
 document.querySelector(".distribution_area_right_arrow").addEventListener("mousedown", function(e){ 
   hide_object($('.distribution_statistic'),0);
@@ -367,53 +327,6 @@ document.querySelector(".distribution_area_left_arrow").addEventListener("moused
   hide_object($('.time_collision'),0);
   vis_object($('.distribution_statistic'),0);
 });
-
-
-
-document.querySelector("#bounds_config_button").addEventListener("mousedown", function(e){ 
-  span = document.querySelector("#bounds_config_button > span");
-
-if(!config_bounds_button_was_pressed){
-  config_bounds_button_was_pressed = true;
-
-  hide_button($('.draw_button_li'));
-  hide_button($('.clear_button_li'));
-  hide_button($('.config_button_li'));
-
-   $('#bounds_config_li').css("position","absolute");
-   $('.menu').css("justify-content","center");
-   dif_text(span, "close");
-   $('#bounds_config_li').animate({top: '0%'}, 200, function(){});
-
-   vis_button($('#set_particle_li'));
-   vis_button($('.config_bound_ranges'));
-   vis_button($('.bounds_config_class'),time=300,static=false);
-  //  vis_button($('#back_for_config'));
-  //  static_position($('.ranges_li'));
-  return;
-}
-
-config_bounds_button_was_pressed = false;
- $('.menu').css("justify-content","center");
-dif_text(span, "bounds config");
-$('#bounds_config_li').animate({top: '40%'}, 300, function(){
-   $('#bounds_config_li').css("position","static");
-});
-
-
-vis_button($('.draw_button_li'));
-vis_button($('.clear_button_li'));
-vis_button($('.config_button_li'));
-
-hide_button($('#set_particle_li'));
-hide_button($('.config_bound_ranges'));
-hide_button($('.bounds_config_class'));
-// hide_button($('#back_for_config'));
-// absolute_position($('.ranges_li'));
-
-
-});
-
 
 
 
