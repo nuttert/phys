@@ -78,7 +78,7 @@ body{
 	color: #fff;
 
 	font-weight: 50;
-	font-size: 2vmin;
+	font-size: 3vmin;
   text-decoration: none;
   text-align: center;
   justify-content: center;
@@ -175,7 +175,7 @@ body{
   left: 10%;
   top: 50%;
 
-  font-size: 3vmin;
+  font-size: 2vmin;
 }
 #right_description{
   position: absolute;

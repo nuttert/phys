@@ -113,7 +113,7 @@ body {
 
 #distribution_area_title{
   top:29%;
-  font-size: 3vmin;
+  font-size: 2vmin;
   color: #000000;
   position: absolute;
   left: 0;
@@ -268,7 +268,7 @@ body {
 	color: #fff;
 	/* opacity: 0.7; */
 	font-weight: 50;
-	font-size: 2vmin;
+	font-size: 3vmin;
   text-decoration: none;
   display: inline-block;
   /* position: relative; */
@@ -525,7 +525,7 @@ svg{
  margin:auto;
 
  border-radius: 20px;
- background: rgba(230, 208, 62, 0.3);
+ background: rgb(230, 208, 62);
  filter: blur(0.5px);
  bottom:2%;
  overflow-x: hidden;
@@ -570,26 +570,26 @@ svg{
   position: absolute;
   margin: 10%;
 }
-#distribution_area > #mean{
+#distribution_area > #std{
   position: absolute;
   top: 22%;
   right:5%;
   margin:auto;
   height:5%;
   width:40%;
-  font-size: 2vmin;
+  font-size: 3vmin;
   background-color: #05e6ee;
   padding-top:2%;
   visibility: hidden;
 }
-#distribution_area > #h_mean{
+#distribution_area > #h_std{
   position: absolute;
   top: 22%;
   left:10%;
   margin:auto;
   height:5%;
   width:40%;
-  font-size: 2vmin;
+  font-size: 3vmin;
   background-color: #05e6ee;
   padding-top:2%;
   visibility: hidden;
@@ -610,33 +610,21 @@ svg{
   visibility: hidden;
 } */
 
-#distribution_area > #tmean{
+#distribution_area > #mean{
   position: absolute;
   top: 15%;
   height:5%;
   width:40%;
   right:5%;
-  font-size: 2vmin;
+  font-size: 3vmin;
   background-color: #ee05a9;
   padding-top:2%;
   visibility: hidden;
 }
 
-#distribution_area > #pois_stat{
-  position: absolute;
-  top: 29%;
-  left:0;
-  right:0;
-  margin:auto;
-  height:5%;
-  width:40%;
-  font-size: 2vmin;
-  background-color: #e6d03e;
-  padding-top:2%;
-  visibility: hidden;
-}
 
-#distribution_area > #h_tmean{
+
+#distribution_area > #h_mean{
   position: absolute;
   top: 15%;
   margin-left: 10%;
@@ -644,56 +632,23 @@ svg{
   width:40%;
   left:0;
   right:0;
-  font-size: 2vmin;
+  font-size: 3vmin;
   background-color: #ee05a9;
   padding-top:2%;
   visibility: hidden;
 }
-#distribution_area > #tmean > #value_t_mean{
-  position: absolute;
-  top: 5%;;
-  color: white;
-  font-size: 2vmin;
-  left:0;
-  right:0;
-  margin:auto;
-}
 
-#distribution_area > #std{
-  position: absolute;
-  top: 29%;
-  right:5%;
-  margin:auto;
-  height:5%;
-  width:40%;
-  font-size: 2vmin;
-  background-color: #05eea8;
-  padding-top:2%;
-  visibility: hidden;
-}
-#distribution_area > #h_std{
-  position: absolute;
-  top: 29%;
-  left:10%;
-  margin:auto;
-  height:5%;
-  width:40%;
-  font-size: 2vmin;
-  background-color: #05eea8;
-  padding-top:2%;
-  visibility: hidden;
-}
 
 #distribution_area > #pois_stat{
   position: absolute;
-  top: 35%;
+  top: 30%;
   left:0;
   right:0;
   margin:auto;
   height:5%;
   width:40%;
   font-size: 2vmin;
-  background-color: #e6d03e;
+  background-color: #18da89;
   padding-top:2%;
   visibility: hidden;
 }

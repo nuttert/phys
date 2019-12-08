@@ -588,12 +588,12 @@ document.querySelector("#set_particle_button").addEventListener("mousedown", fun
 kBoundParticle = true;
 kBoundParticleSet = false;
 
-  dif_text(span, "unset particle");
+  dif_text(span, "unset scatterer");
 return;
   }
   
 
-  dif_text(span, "set particle");
+  dif_text(span, "set scatterer");
   kBoundParticle = false;
   kBoundParticleSet = false;
   particles.list.splice(particles.list.indexOf(boundParticle),1);

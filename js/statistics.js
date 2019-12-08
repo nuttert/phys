@@ -1,7 +1,7 @@
 
  mean = document.getElementById("mean");
  std = document.getElementById("std");
- tmean = document.getElementById("tmean");
+//  tmean = document.getElementById("tmean");
  pois_stat = document.getElementById("pois_stat");
  
 class Statstics {
@@ -9,7 +9,7 @@ class Statstics {
     this.fontColor = "#000000";
     this.mean = 0;
     this.std = 0;
-    this.tmean = 0;
+    // this.tmean = 0;
   }
 
   draw(data) {
@@ -33,15 +33,15 @@ class Statstics {
       this.std = Math.sqrt(this.std / data.length);
     }
     if (line_perimetr == 0 || polygon_area == 0 || velocity == 0) {
-      this.tmean = 0;
+      // this.tmean = 0;
     } else {
-      this.tmean =  1 / (line_perimetr * velocity / (Math.PI + polygon_area));
+      // this.tmean =  1 / (line_perimetr * velocity / (Math.PI + polygon_area));
     }
 
     // stat_p.style.color = this.fontColor;
     mean.innerHTML =  this.mean.toFixed(3);
     std.innerHTML =   this.std.toFixed(3);
-    tmean.innerHTML = this.tmean.toFixed(3);
+    // tmean.innerHTML = this.tmean.toFixed(3);
     if (this.mean < this.std * this.std) {
       pois_stat.innerHTML = 'sub-poissonian';
     } else {

@@ -59,7 +59,7 @@ function restart(){
   
   document.querySelector("#draw_button").style.opacity = '1';
   span = document.querySelector("#set_particle_button > span");
-  dif_text(span, "set particle");
+  dif_text(span, "set scatterer");
 }
 
 function dif_text(span, text){

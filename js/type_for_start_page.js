@@ -4,7 +4,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #05e6eebd; font-size: 3vmin;">Vladislav Markov</text>');
+    .tiType('<text style="color: #05e6eebd; font-size: 2vmin;">Vladislav Markov</text>');
 }
   function typeNameAnya() {
   $('#Anya .text h1').typeIt({
@@ -12,7 +12,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #ee05a9; font-size: 3vmin;">Anna Balakova</text>');
+    .tiType('<text style="color: #ee05a9; font-size: 2vmin;">Anna Balakova</text>');
 }
   function typeNamePasha() {
   $('#Pasha .text h1').typeIt({
@@ -20,7 +20,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #05eea8; font-size: 3vmin;">Pavel Shvets</text>');
+    .tiType('<text style="color: #05eea8; font-size: 2vmin;">Pavel Shvets</text>');
 }
   function typeNameChich() {
   $('#Chich .text h1').typeIt({
@@ -28,7 +28,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #430b15; font-size: 3vmin;">Chichigina O.A.</text>');
+    .tiType('<text style="color: #430b15; font-size: 2vmin;">Chichigina O.A.</text>');
 }
 
   function typeLeftDescription() {
@@ -53,7 +53,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #fff; font-size: 3vmin;">Billiard Modeling</text>');
+    .tiType('<text style="color: #fff; font-size: 2vmin;">Billiard Modeling</text>');
 }
 
   function typeMSU() {
@@ -62,7 +62,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #000; font-size: 3vmin;">Moscow State University</text>');
+    .tiType('<text style="color: #000; font-size: 2vmin;">Moscow State University</text>');
 }
   function typeCMC() {
   $('#cmc_background > .description').typeIt({
@@ -70,7 +70,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #000; font-size: 3vmin;">Faculty of Computational Mathematics and Cybernetics</text>');
+    .tiType('<text style="color: #000; font-size: 2vmin;">Faculty of Computational Mathematics and Cybernetics</text>');
 }
 
   function typePHYS() {
@@ -79,6 +79,6 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #000; font-size: 3vmin;">Faculty of Physics</text>');
+    .tiType('<text style="color: #000; font-size: 2vmin;">Faculty of Physics</text>');
 }
 
