@@ -63,7 +63,7 @@ class TimePlot{
 	}
 
 	get_right_limit(){
-	  return this.limit_left;
+	  return this.limit_right;
   }
 
 	draw(data){

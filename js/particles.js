@@ -93,7 +93,7 @@ class Particle {
     this.acceleration = acceleration || new Vector(0, 0);
     this.lastFriend = new ObjectHandler();
     this.lastBound = new ObjectHandler();
-    this.lastTimeCollision = 0;
+    this.lastTimeCollision = new Date().getTime() / 1000;
     this.diffTimeCollsion = 0;
     this.size = size;
     this.isBoundParticle = isBoundParticle;
@@ -431,11 +431,12 @@ function draw() {
 
   ctx.fillStyle = 'rgb(0,125,255)';
 
-  curr_time = new Date().getTime()/1000;
+  const curr_time = new Date().getTime() / 1000;
   var delTo = 0;
-  for (var i = 0; i < data_time.length; ++i) {
-    if (curr_time - data_time[i] >= time_plot.get_right_limit() - 0.05) {
+  for (var i = data_time.length - 1; i >= 0; --i) {
+    if (curr_time - data_time[i] < time_plot.get_right_limit() + 0.05) {
       delTo = i;
+    } else {
       break;
     }
   }

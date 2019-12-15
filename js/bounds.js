@@ -264,7 +264,7 @@ document.querySelector("#draw_button").addEventListener("mousedown", function(e)
   draw_button_was_pressed = true;
   for(var index = 0;index < clip_points.length;index++){
     var current_index = index,
-    next_index = index ==  clip_points.length -1 ? 0:index + 1;
+    next_index = index ==  clip_points.length -1 ? 0: index + 1;
 
     var point1 = clip_points[current_index],
         point2 = clip_points[next_index];

@@ -148,7 +148,13 @@ class Histogram{
 	}
 
 	draw(data) {
-
+	  var max_time = 0;
+    for (var i = 0; i < data.length; ++i) {
+      max_time = Math.max(max_time, data[i]);
+    }
+    max_time = Math.max(2, 2 * Math.ceil(max_time / 2));
+    console.log();
+    this.setLimitRight(max_time);
 		//draw pipe line: grid, rects, whitespace below axes, text, axes
 		this.xticks = Math.trunc(Math.abs(this.axes_start[0] - this.axes_end[0]) / this.grid_size_x);
 		this.yticks = Math.trunc(Math.abs(this.axes_start[1] - this.axes_end[1]) / this.grid_size_y);
