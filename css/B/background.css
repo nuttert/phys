@@ -402,7 +402,7 @@ body{
   background-size: contain; 
   background-repeat: no-repeat;
   background-position: center;
-  bottom:0;
+  height:100vh;
   top:0%;
 }
 
@@ -411,7 +411,7 @@ body{
   background-size: contain; 
   background-repeat: no-repeat;
   background-position: center;
-  bottom:0;
+  height:100vh;
   top:0%;
 }
 
@@ -420,7 +420,7 @@ body{
   background-size: contain; 
   background-repeat: no-repeat;
   background-position: center;
-  bottom:0;
+  height:100vh;
   top:0%;
 }
 
