@@ -231,6 +231,46 @@ function draw_lines(){
 }
 
 
+document.querySelector("#work_area").ondragstart = function() {
+  return false;
+};
+
+document.querySelector("#work_area").onmousedown = function (e) {
+
+    // 3, перемещать по экрану
+    document.querySelector("#work_area").onmousemove = function(e) {
+      mouse.x = e.pageX - work_area.offsetLeft;
+      mouse.y = e.pageY - work_area.offsetTop;
+      if (boundParticle) {
+        bound_x = boundParticle.position.x;
+        bound_y = boundParticle.position.y;
+        var intersection = false;
+        console.log(mouse.x,mouse.y);
+        if (Math.pow(mouse.x - bound_x, 2) + Math.pow(mouse.y - bound_y, 2) <= Math.pow(kBoundParticleSize, 2)) {
+          for (var i = 0; i < lines.length; i++) {
+            var line = lines[i];
+            intersection = circle_with_line_intersection(mouse, kBoundParticleSize, line);
+            if (intersection) break;
+          }
+          if (intersection){
+            return;
+          }
+          console.log(mouse.x,mouse.y);
+          boundParticle.position.x = mouse.x;
+          boundParticle.position.y = mouse.y;
+        }
+      }
+    };
+    
+  
+    // 4. отследить окончание переноса
+    document.querySelector("#work_area").onmouseup = function() {
+      document.querySelector("#work_area").onmousemove = null;
+      document.querySelector("#work_area").onmouseup = null;
+    }
+
+};
+
 document.querySelector("#work_area").addEventListener("mousedown", function(e){ 
   if(draw_button_was_pressed) return;
   if(!stop_design_animation){

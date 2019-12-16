@@ -349,13 +349,6 @@ function particles_interection(particle_number, particles){
        next_particle.move();
         if(isBounds){
                   bound_patricle_color = get_random_color();
-                 const current_time = new Date().getTime()/1000;
-                 if (current_time - particle.lastTimeCollision > 0.01) {
-                   data_time.push(current_time);
-                   non_bound_part.diffTimeCollsion = current_time - non_bound_part.lastTimeCollision;
-                   non_bound_part.lastTimeCollision = current_time;
-                   data_hist.push(non_bound_part.diffTimeCollsion);
-                 }
         }
         
        return;
