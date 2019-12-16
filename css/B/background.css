@@ -207,7 +207,7 @@ body{
   /* height: 100%; */
   width: 100%;
   top:0;
-  bottom:-3%;
+  bottom:0%;
   left:0;
   background: #fff;
   filter: blur(0.5px);
