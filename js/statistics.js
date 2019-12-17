@@ -38,7 +38,7 @@ class Statstics {
 
     // stat_p.style.color = this.fontColor;
     mean.innerHTML =  this.mean.toFixed(3);
-    std.innerHTML =   this.variance.toFixed(3);
+    std.innerHTML =   this.std.toFixed(3);
     // tmean.innerHTML = this.tmean.toFixed(3);
     if (this.mean > this.variance) {
       pois_stat.innerHTML = 'sub-poissonian';

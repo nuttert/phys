@@ -8,7 +8,7 @@ $('#console').typeIt({
   .tiType('<text style="color: #05eea8;">Lets</text>')
   .tiPause(400)
   .tiDelete(2)
-  .tiType('<text style="color: #05eea8;">ts </text>')
+  .tiType('<text style="color: #05eea8;">t\'s </text>')
   .tiType('<text style="color: #05eea8">get</text>')
   .tiType('<text style="color: #000"> started!</text>')
 

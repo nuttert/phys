@@ -59,7 +59,7 @@
   function typeMSU() {
   $('#msu_background > .description').typeIt({
     speed: 50,
-    autoStart: true,
+    autoStart: false,
     html: true
   })
     .tiType('<text style="color: #000; font-size: 2vmax;">Moscow State University</text>');
@@ -67,7 +67,7 @@
   function typeCMC() {
   $('#cmc_background > .description').typeIt({
     speed: 30,
-    autoStart: true,
+    autoStart: false,
     html: true
   })
     .tiType('<text style="color: #000; font-size: 2vmax;">Faculty of Computational Mathematics and Cybernetics</text>');
@@ -76,7 +76,7 @@
   function typePHYS() {
   $('#phys_background > .description').typeIt({
     speed: 30,
-    autoStart: true,
+    autoStart: false,
     html: true
   })
     .tiType('<text style="color: #000; font-size: 2vmax;">Faculty of Physics</text>');

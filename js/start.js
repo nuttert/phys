@@ -28,9 +28,9 @@ setTimeout(() => {
 
       typeLeftDescription();
       rightDescription();
-       }, 1500);
-   }, 1500);
-}, 1500);
+       }, 0);
+   }, 0);
+}, 0);
 
 function hide_object(object, time=300){
     object.animate({opacity: 0}, time, function(){
