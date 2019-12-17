@@ -4,7 +4,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #05e6eebd; font-size: 2.5vmin;">Vladislav Markov</text>');
+    .tiType('<text style="color: #05e6eebd; font-size: 1.4vmax;">Vladislav Markov</text>');
 }
   function typeNameAnya() {
   $('#Anya .text h1').typeIt({
@@ -12,7 +12,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #ee05a9; font-size: 2.5vmin;">Anna Balakova</text>');
+    .tiType('<text style="color: #ee05a9; font-size: 1.4vmax;">Anna Balakova</text>');
 }
   function typeNamePasha() {
   $('#Pasha .text h1').typeIt({
@@ -20,7 +20,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #05eea8; font-size: 2.5vmin;">Pavel Shvets</text>');
+    .tiType('<text style="color: #05eea8; font-size: 1.4vmax;">Pavel Shvets</text>');
 }
   function typeNameChich() {
   $('#Chich .text h1').typeIt({
@@ -28,7 +28,7 @@
     autoStart: false,
     html: true
   })
-    .tiType('<text style="color: #430b15; font-size: 2.5vmin;">Chichigina O.A.</text>');
+    .tiType('<text style="color: #430b15; font-size: 1.4vmax;">Chichigina O.A.</text>');
 }
 
   function typeLeftDescription() {

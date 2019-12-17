@@ -1,3 +1,4 @@
+@media screen and (min-width: 1000px) and (min-height: 800px){
 *{
 	padding: 0;
 	margin:0;
@@ -58,7 +59,7 @@ body {
 	text-decoration: none;
 	text-transform: uppercase;
 	text-align: center;
-  font-size: 2.2vmin;
+  font-size: 1.12vmax;
   position: relative;
 }
 
@@ -106,13 +107,13 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  font-size: 2.5vmin;
+  font-size: 1.4vmax;
   margin: auto;
 }
 
 #distribution_area_title{
   top:29%;
-  font-size: 2vmin;
+  font-size: 1.12vmax;
   color: #000000;
   position: absolute;
   left: 0;
@@ -124,7 +125,7 @@ body {
 #distribution_area_axis_x_limit{
   /* top: 97.0%; */
   bottom: 1.1%;
-  font-size: 2.5vmin;
+  font-size: 1.4vmax;
   color: #000000;
   position: absolute;
   left: 84%;
@@ -138,7 +139,7 @@ body {
   text-align: center;
   display: table;
   top: 36.5%;
-  font-size: 2.5vmin;
+  font-size: 1.4vmax;
   color: #000000;
   position: absolute;
   /*left: 0%;*/
@@ -149,7 +150,7 @@ body {
 
 #distribution_area_axis_start{
   bottom: 1.5%;
-  font-size: 2.5vmin;
+  font-size: 1.4vmax;
   color: #000000;
   position: absolute; 
   left: 3%;
@@ -160,7 +161,7 @@ body {
 
 #distribution_area_axis_x_title{
   bottom: 1%;
-  font-size: 2vmin;
+  font-size: 1.12vmax;
   color: #000000;
   position: absolute;
   left: 0;
@@ -176,7 +177,7 @@ body {
 
 #distribution_area_axis_y_title{
   top: 65.0%;
-  font-size: 2vmin;
+  font-size: 1.12vmax;
   color: #000000;
   position: absolute;
   left: -23.25%;
@@ -203,7 +204,7 @@ body {
   width: 70%;
   height: 4%;
   text-align: center;
-  font-size: 2vmin;
+  font-size: 1.12vmax;
   background-color: #05e6ee;
   color: white;
   padding-top:2%;
@@ -216,7 +217,7 @@ body {
   left: 0;
   right: 0;
   margin: auto;
-  font-size: 2vmin;
+  font-size: 1.12vmax;
   text-align: center;
   visibility: hidden;
   border-radius: 40.56px;
@@ -230,7 +231,7 @@ body {
 
 #time_collision_limit_left{
   bottom:50%;
-  font-size: 2.5vmin;
+  font-size: 1.4vmax;
   color: #000000;
   position: absolute;
   left: 4%;
@@ -246,7 +247,7 @@ body {
   position: absolute;
   color: #000000;
   right: 4%;
-  font-size: 2.5vmin;
+  font-size: 1.4vmax;
   text-align: center;
   visibility: hidden;
 }
@@ -655,7 +656,7 @@ svg{
   margin:auto;
   height:5%;
   width:40%;
-  font-size: 2vmin;
+  font-size: 1.12vmax;
   background-color: #18da89;
   padding-top:2.5%;
   color: black;
@@ -832,5 +833,43 @@ svg{
   }
   to{
     top: 40%;
+  }
+}
+}
+
+
+@media (max-width: 1000px), (max-height: 800px){
+  body > *{
+    display: none;
+  }
+
+
+  body:before{
+    content: "";
+    color:white;
+    text-align: center;
+    vertical-align: middle;
+    margin:auto;
+    left:0;
+    right:0;
+
+    height:100%;
+    width:100%;
+    position: absolute;
+    background: black;
+
+  }
+
+  body:after{
+    content: "NOT APPROPRIATE DISPLAY";
+    position: absolute;
+    color:white;
+    top:50%;
+
+    left:0;
+    right:0;
+    margin:auto;
+    text-align: center;
+    font-size: 5vmax;
   }
 }

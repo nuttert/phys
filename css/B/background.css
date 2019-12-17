@@ -1,3 +1,8 @@
+@media screen and (min-width: 1000px) and (min-height: 800px){
+  /* styles for browsers larger than 960px; */
+
+
+
 *{
 	padding: 0;
 	margin:0;
@@ -370,7 +375,7 @@ body{
 /* .description_section > .close_button > span{
 	text-decoration: none;
   display: inline-block;
-  font-size: 2vmin;
+  font-size: 1.12vmax;
   text-transform: uppercase;
   text-align: center;
   padding-top: 40%;
@@ -469,5 +474,43 @@ body{
   100% {
     -webkit-transform: scale(0.5, 0.5);
     transform: scale(0.5, 0.5);
+  }
+}
+}
+
+
+@media (max-width: 1000px), (max-height: 800px){
+  body > *{
+    display: none;
+  }
+
+
+  body:before{
+    content: "";
+    color:white;
+    text-align: center;
+    vertical-align: middle;
+    margin:auto;
+    left:0;
+    right:0;
+
+    height:100%;
+    width:100%;
+    position: absolute;
+    background: black;
+
+  }
+
+  body:after{
+    content: "NOT APPROPRIATE DISPLAY";
+    position: absolute;
+    color:white;
+    top:50%;
+
+    left:0;
+    right:0;
+    margin:auto;
+    text-align: center;
+    font-size: 5vmax;
   }
 }

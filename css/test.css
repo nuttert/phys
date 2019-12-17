@@ -1,3 +1,4 @@
+@media screen and (min-width: 1000px) and (min-height: 800px){
 #distribution_area{
   width: 50%;
   height:100vh;
@@ -13,4 +14,41 @@
   left:0;
   /*transform : rotate('90deg');*/
   position: absolute;
+}
+}
+
+@media (max-width: 1000px), (max-height: 800px){
+  body > *{
+    display: none;
+  }
+
+
+  body:before{
+    content: "";
+    color:white;
+    text-align: center;
+    vertical-align: middle;
+    margin:auto;
+    left:0;
+    right:0;
+
+    height:100%;
+    width:100%;
+    position: absolute;
+    background: black;
+
+  }
+
+  body:after{
+    content: "NOT APPROPRIATE DISPLAY";
+    position: absolute;
+    color:white;
+    top:50%;
+
+    left:0;
+    right:0;
+    margin:auto;
+    text-align: center;
+    font-size: 5vmax;
+  }
 }
