@@ -1,5 +1,5 @@
 // var descriptionButtonWasPressed = false;
-
+hide_object($("#right_description"));
 typeMSU();
 var page_number = 1;
 var isDescription = false;
@@ -13,14 +13,16 @@ function hide_object(object, time=300){
 
 setTimeout(() => {
    hide_object($("#msu_background"));
+   hide_object($("#msu_background > .description"));
         typePHYS();
-  
 
    setTimeout(() => {
       hide_object($("#phys_background"));
+      hide_object($("#phys_background > .description"));
        typeCMC();
      setTimeout(() => {
        hide_object($("#cmc_background"));
+       hide_object($("#cmc_background > .description"));
       typeNameChich();
       typeNameVlad();
       typeNameAnya();
@@ -64,8 +66,8 @@ document.querySelector("#doc_button").addEventListener("mousedown", function(e){
    vis_object_with_animation(  $('#field_Description3'));
    page_number = 3;
    isDescription = false;
-   vis_object_with_animation($('.description_section > .next_button'));
-   hide_object($('.description_section > .prev_button'));
+   hide_object($('.description_section > .next_button'),0);
+   hide_object($('.description_section > .prev_button'),0);
    hide_object($('.description_section > #field_Description1'),0);
    // hide_object($('.background:not(.description_view,close_button)'));
 });
@@ -85,8 +87,10 @@ document.querySelector(".description_section > .next_button").addEventListener("
 
    page_number++;
    vis_object_with_animation($('.description_section > #field_Description'+page_number.toString()));
-   if(isDescription && page_number == 2)
-   hide_object($('.description_section > .next_button'),0);
+   if(isDescription){
+      hide_object($('.description_section > .next_button'),0);
+   }
+ 
    // hide_object($('.background:not(.description_view,close_button)'));
 });
 

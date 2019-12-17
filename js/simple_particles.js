@@ -489,6 +489,24 @@ function draw() {
     ctx.closePath();
     ctx.fill();
   }
+  
+  for (var i = 0; i < boundParticles.length; i++) {
+
+    var position = boundParticles[i].position;
+
+    ctx.fillStyle = boundParticles[i].color();
+    size = 3;
+    // data_hist.push(particles.list[i].diffTimeCollsion);
+    // data_hist.push(nowTime - particles.list[i].lastTimeCollision);
+    // if (nowTime - particles.list[i].lastTimeCollision < 0.0001 / Math.log2(30 * velocity + 2)) {
+    //   data_time.push(particles.list[i].lastTimeCollision);
+    // }
+    // Рисуем квадрат определенных размеров с заданными координатами
+    ctx.beginPath();
+    ctx.arc(position.x, position.y,size, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fill();
+  }
   draw_lines();
 
   line_perimetr = calc_perimetr(clip_points);
