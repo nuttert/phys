@@ -27,6 +27,7 @@ var particleColor = "#123";
 var velocity = 100;
 var particles = null;
 var lines = [];
+var boundParticles = [];
 var kBoundParticle = false;
 var kBoundParticleSet = false;
 var kBoundParticleSize = 30;
@@ -236,30 +237,41 @@ document.querySelector("#work_area").ondragstart = function() {
 
 document.querySelector("#work_area").onmousedown = function (e) {
 
-    // 3, перемещать по экрану
-    document.querySelector("#work_area").onmousemove = function(e) {
-      mouse.x = e.pageX - work_area.offsetLeft;
-      mouse.y = e.pageY - work_area.offsetTop;
-      if (boundParticle) {
-        bound_x = boundParticle.position.x;
-        bound_y = boundParticle.position.y;
-        var intersection = false;
-        console.log(mouse.x,mouse.y);
-        if (Math.pow(mouse.x - bound_x, 2) + Math.pow(mouse.y - bound_y, 2) <= Math.pow(kBoundParticleSize, 2)) {
-          for (var i = 0; i < lines.length; i++) {
-            var line = lines[i];
-            intersection = circle_with_line_intersection(mouse, kBoundParticleSize, line);
-            if (intersection) break;
-          }
-          if (intersection){
-            return;
-          }
-          console.log(mouse.x,mouse.y);
-          boundParticle.position.x = mouse.x;
-          boundParticle.position.y = mouse.y;
+  // 3, перемещать по экрану
+  document.querySelector("#work_area").onmousemove = function(e) {
+    mouse.x = e.pageX - work_area.offsetLeft;
+    mouse.y = e.pageY - work_area.offsetTop;
+    if (boundParticle) {
+      bound_x = boundParticle.position.x;
+      bound_y = boundParticle.position.y;
+      var intersection = false;
+      console.log(mouse.x,mouse.y);
+      if (Math.pow(mouse.x - bound_x, 2) + Math.pow(mouse.y - bound_y, 2) <= Math.pow(kBoundParticleSize, 2)) {
+        for (var i = 0; i < lines.length; i++) {
+          var line = lines[i];
+          intersection = circle_with_line_intersection(mouse, kBoundParticleSize, line);
+          if (intersection) break;
         }
+
+        for (var i = 0; i < boundParticles.length;  i++) {
+          var bound = boundParticles[i];
+          if(Math.pow(bound.position.x-mouse.x,2)+Math.pow(bound.position.y-mouse.y,2) 
+            <= Math.pow(kBoundParticleSize,2)){
+              intersection = true;
+              break;
+            }
+          }
+
+        if (intersection){
+          return;
+        }
+        console.log(mouse.x,mouse.y);
+        boundParticle.position.x = mouse.x;
+        boundParticle.position.y = mouse.y;
       }
-    };
+
+    }
+  };
     
   
     // 4. отследить окончание переноса

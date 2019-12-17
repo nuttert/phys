@@ -27,6 +27,7 @@ var particleColor = "#123";
 var velocity = 30;
 var particles = null;
 var lines = [];
+var boundParticles = [];
 var kBoundParticle = false;
 var kBoundParticleSet = false;
 var kBoundParticleSize = 15;
@@ -252,6 +253,16 @@ document.querySelector("#work_area").onmousedown = function (e) {
             intersection = circle_with_line_intersection(mouse, kBoundParticleSize, line);
             if (intersection) break;
           }
+
+          for (var i = 0; i < boundParticles.length;  i++) {
+            var bound = boundParticles[i];
+            if(Math.pow(bound.position.x-mouse.x,2)+Math.pow(bound.position.y-mouse.y,2) 
+              <= Math.pow(kBoundParticleSize,2)){
+                intersection = true;
+                break;
+              }
+            }
+
           if (intersection){
             return;
           }
@@ -259,6 +270,7 @@ document.querySelector("#work_area").onmousedown = function (e) {
           boundParticle.position.x = mouse.x;
           boundParticle.position.y = mouse.y;
         }
+
       }
     };
     

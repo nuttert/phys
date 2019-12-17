@@ -191,7 +191,7 @@ class Line{
        this.point1 = point1;
        this.point2 = point2;
        this.C = -(point1.x*point2.y-point2.x*point1.y);
-       this.coaff = this.normal.y?-this.normal.x/this.normal.y:0;
+       this.coaff = this.normal.y?this.normal.x/this.normal.y:Infinity;
        this.angle = Math.atan(this.coaff);
        this.sin = Math.sin(this.angle);
        this.cos = Math.cos(this.angle);
@@ -226,11 +226,16 @@ function set_lines(clip_points){
     var point1 = clip_points[current_index],
         point2 = clip_points[next_index];
         lines.push(new Line(point1,point2));
+        
+        var position = new Vector(point1.x,point1.y);
+        var velocity = new Vector(0,0);
+        boundParticle = new Particle(position, velocity, 0, color='#000',size=kBoundParticleSize,isBoundParticle=true);
+        boundParticles.push(boundParticle);
     }
     
     polygon_area = calc_area(clip_points);
     line_perimetr = calc_perimetr(clip_points);
-    console.log(line_perimetr);
+
     return lines;
 }
 
@@ -255,10 +260,12 @@ function circle_with_line_intersection(center, radius, line){
 
 
 
-        var r_x = radius*Math.abs(line.getCos());
-        var r_y = radius*Math.abs(line.getSin());
-        r_x = r_x < 0.01 ? 0.01:r_x;
-        r_y = r_y < 0.01 ? 0.01:r_y;
+        var r_x = radius*line.getCos();
+        var r_y = radius*line.getSin();
+
+        r_x = 1;
+        r_y = 1;
+
 
         // if(line.getA() == 0){
         //   console.log(x,y);
@@ -290,6 +297,28 @@ function circle_with_line_intersection(center, radius, line){
 
 
 function bounds_interection(particle, clip_points) {
+  for (var i = 0; i < boundParticles.length;  i++) {
+    var bound = boundParticles[i];
+    if(Math.pow(bound.position.x-particle.position.x,2)+Math.pow(bound.position.y-particle.position.y,2) 
+      <= Math.pow(particleSize,2)){
+        let j = Math.trunc(i/2);
+        let line = lines[j];
+
+        particle.velocity.redirection();
+        if(choosenIndexies.includes(i)) {
+          const current_time = new Date().getTime() / 1000;
+          if (current_time - particle.lastTimeCollision > 0.01) {
+            data_time.push(current_time);
+            particle.diffTimeCollsion = current_time - particle.lastTimeCollision;
+            data_hist.push(particle.diffTimeCollsion);
+            particle.lastTimeCollision = current_time;
+          }
+        }
+        return;
+      }
+
+
+  }
     for (var i = 0; i < lines.length;  i++) {
           var line = lines[i];
           var intersection = circle_with_line_intersection(particle.position, particleSize, line);
