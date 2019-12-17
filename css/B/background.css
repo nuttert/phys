@@ -130,6 +130,36 @@ body{
   box-shadow: 0px 5px 132.24px 10px rgba(238, 5, 169, 1);
 }
 
+#doc_button > span{
+	text-decoration: none;
+  display: inline-block;
+  font-size: 3vmin;
+}
+
+#doc_button:hover{
+	box-shadow: 0px 5px 132.24px 19.76px aqua;
+}  
+
+#doc_button > a{
+  top:0;
+  right:0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+#doc_button{
+
+  width: 20%;
+  height: 8%;
+  left:0;
+  right:0;
+  margin:auto;
+  margin-top:2%;
+  background-color:rgba(238, 5, 169, 1);
+  position: relative;
+  box-shadow: 0px 5px 132.24px 10px rgba(238, 5, 169, 1);
+}
+
 #description_button > span{
 	text-decoration: none;
   display: inline-block;
@@ -223,18 +253,18 @@ body{
 }
 
 .enter_background > .description{
-  position: relative;
+  position: absolute;
   width: 50%;
   height: 10%;
   left:0;
   right:0;
-  top: 10%;
+  bottom: 3%;
   margin: auto;
   text-align: center;
-  font-size: 3vmin;
+  font-size: 2vmax;
 }
 
-#description_view{
+.description_view{
   visibility: hidden;
   position: absolute;
   width:100%;
@@ -248,7 +278,7 @@ body{
 }
 
 
-#description_view > .blur{
+.description_view > .blur{
   position: absolute;
   bottom: 0;
   left: 0;
@@ -257,7 +287,7 @@ body{
   width: 100%;
 }
 
-#description_view > #description{
+.description_view > .description_section{
   position: absolute;
   bottom: 0;
   left: 0;
@@ -271,7 +301,7 @@ body{
 
 
 
-#description > .close_button{
+.description_section > .close_button{
   width: 5vmin;
   height: 5vmin;
   border-radius: 100%;
@@ -286,7 +316,7 @@ body{
   color:black;
 }
 
-#description > .next_button{
+.description_section > .next_button{
   width: 13vmin;
   height: 13vmin;
   border-radius: 100%;
@@ -299,7 +329,7 @@ body{
   color:black;
 }
 
-#description > .prev_button{
+.description_section > .prev_button{
   width: 13vmin;
   height: 13vmin;
   border-radius: 100%;
@@ -334,10 +364,10 @@ body{
 	position: absolute;
 	animation: arrow-animation 2s normal infinite;
 }
-#description > .prev_button{
+.description_section > .prev_button{
   transform: rotate(90deg);
 }
-/* #description > .close_button > span{
+/* .description_section > .close_button > span{
 	text-decoration: none;
   display: inline-block;
   font-size: 2vmin;
@@ -347,17 +377,17 @@ body{
   background: none;
 } */
 
-#description > .close_button:hover{
+.description_section > .close_button:hover{
 	box-shadow: 0px 5px 132.24px 19.76px aqua;
 }  
-#description > .next_button:hover{
+.description_section > .next_button:hover{
 	box-shadow: 0px 5px 132.24px 19.76px rgba(238, 5, 169, 1);
 }  
-#description > .prev_button:hover{
+.description_section > .prev_button:hover{
 	box-shadow: 0px 5px 132.24px 19.76px rgba(238, 5, 169, 1);
 }  
 /* 
-#description > .close_button > a{
+.description_section > .close_button > a{
   top:0;
   right:0;
   width: 100%;
@@ -366,7 +396,7 @@ body{
   background: none;
 } */
 
-#description > .field_Description{
+.description_section > .field_Description{
   top:5%;
   right:0;
   left:0;
@@ -379,17 +409,17 @@ body{
 }
 
 
-#description{
+.description_section{
   overflow-y: visible;
   border-color:aqua;
   border-style: solid;
 }
-#description::-webkit-scrollbar {
+.description_section::-webkit-scrollbar {
   width: 0px;  /* Remove scrollbar space */
   background: transparent;  /* Optional: just make scrollbar invisible */
 }
 /* Optional: show position indicator in red */
-#description::-webkit-scrollbar-thumb {
+.description_section::-webkit-scrollbar-thumb {
   background: #FF0000;
 }
 

@@ -59,26 +59,26 @@
   function typeMSU() {
   $('#msu_background > .description').typeIt({
     speed: 50,
-    autoStart: false,
+    autoStart: true,
     html: true
   })
-    .tiType('<text style="color: #000; font-size: 3vmin;">Moscow State University</text>');
+    .tiType('<text style="color: #000; font-size: 2vmax;">Moscow State University</text>');
 }
   function typeCMC() {
   $('#cmc_background > .description').typeIt({
     speed: 30,
-    autoStart: false,
+    autoStart: true,
     html: true
   })
-    .tiType('<text style="color: #000; font-size: 3vmin;">Faculty of Computational Mathematics and Cybernetics</text>');
+    .tiType('<text style="color: #000; font-size: 2vmax;">Faculty of Computational Mathematics and Cybernetics</text>');
 }
 
   function typePHYS() {
   $('#phys_background > .description').typeIt({
     speed: 30,
-    autoStart: false,
+    autoStart: true,
     html: true
   })
-    .tiType('<text style="color: #000; font-size: 3vmin;">Faculty of Physics</text>');
+    .tiType('<text style="color: #000; font-size: 2vmax;">Faculty of Physics</text>');
 }
 
