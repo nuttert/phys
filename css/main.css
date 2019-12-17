@@ -80,6 +80,7 @@ body {
   position: absolute;
 }
 
+
 #time_collision_canvas{
   width: 100%;
   bottom:50%;
@@ -577,9 +578,10 @@ svg{
   margin:auto;
   height:5%;
   width:40%;
-  font-size: 3vmin;
+  font-size: 2.5vmin;
   background-color: #05e6ee;
   padding-top:2%;
+  color: rgb(104, 100, 100);
   visibility: hidden;
 }
 #distribution_area > #h_std{
@@ -589,9 +591,10 @@ svg{
   margin:auto;
   height:5%;
   width:40%;
-  font-size: 3vmin;
+  font-size: 2.5vmin;
   background-color: #05e6ee;
   padding-top:2%;
+  color: rgb(104, 100, 100);
   visibility: hidden;
 }
 
@@ -616,9 +619,10 @@ svg{
   height:5%;
   width:40%;
   right:5%;
-  font-size: 3vmin;
+  font-size: 2.5vmin;
   background-color: #ee05a9;
   padding-top:2%;
+  color: rgb(104, 100, 100);
   visibility: hidden;
 }
 
@@ -632,9 +636,10 @@ svg{
   width:40%;
   left:0;
   right:0;
-  font-size: 3vmin;
+  font-size: 2.5vmin;
   background-color: #ee05a9;
   padding-top:2%;
+  color: rgb(104, 100, 100);
   visibility: hidden;
 }
 
@@ -647,9 +652,10 @@ svg{
   margin:auto;
   height:5%;
   width:40%;
-  font-size: 2vmin;
+  font-size: 1.5vmin;
   background-color: #18da89;
   padding-top:2%;
+  color: rgb(104, 100, 100);
   visibility: hidden;
 }
 
