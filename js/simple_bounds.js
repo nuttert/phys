@@ -49,6 +49,7 @@ function restart() {
   mouse = new Vector(0, 0);
   clip_points = [];
   bounds_funcs = [];
+  boundParticles = [];
   emitters = [];
   data_hist.splice(0, data_hist.length);
   particleColor = "#123";
@@ -60,7 +61,7 @@ function restart() {
 
   document.querySelector("#draw_button").style.opacity = '1';
   span = document.querySelector("#set_particle_button > span");
-  dif_text(span, "set scatterer");
+  dif_text(span, "place scatterer");
 }
 
 function dif_text(span, text) {

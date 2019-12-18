@@ -93,7 +93,7 @@ class Particle {
     this.acceleration = acceleration || new Vector(0, 0);
     this.lastFriend = new ObjectHandler();
     this.lastBound = new ObjectHandler();
-    this.lastTimeCollision = new Date().getTime() / 1000;
+    this.lastTimeCollision = -1;
     this.diffTimeCollsion = 0;
     this.size = size;
     this.isBoundParticle = isBoundParticle;
@@ -307,7 +307,9 @@ function bounds_interection(particle, clip_points) {
         particle.velocity.redirection();
         if(choosenIndexies.includes(i)) {
           const current_time = new Date().getTime() / 1000;
-          if (current_time - particle.lastTimeCollision > 0.01) {
+          if (particle.lastTimeCollision == -1) {
+            particle.lastTimeCollision = new Date().getTime()/1000;
+          } else if (current_time - particle.lastTimeCollision > 0.01) {
             data_time.push(current_time);
             particle.diffTimeCollsion = current_time - particle.lastTimeCollision;
             data_hist.push(particle.diffTimeCollsion);
@@ -327,7 +329,9 @@ function bounds_interection(particle, clip_points) {
               particle.velocity.reflection(line.normal);
               if(choosenIndexies.includes(i)) {
                 const current_time = new Date().getTime() / 1000;
-                if (current_time - particle.lastTimeCollision > 0.01) {
+                if (particle.lastTimeCollision == -1) {
+                  particle.lastTimeCollision = new Date().getTime()/1000;
+                } else if (current_time - particle.lastTimeCollision > 0.01) {
                   data_time.push(current_time);
                   particle.diffTimeCollsion = current_time - particle.lastTimeCollision;
                   data_hist.push(particle.diffTimeCollsion);
