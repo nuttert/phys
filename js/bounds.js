@@ -370,6 +370,11 @@ document.querySelector("#clear_button").addEventListener("mousedown", function(e
   }
 });
 
+document.querySelector("#clear_gr_button").addEventListener("mousedown", function(e){ 
+data_hist = [];
+data_time = [];
+});
+
 
 document.querySelector("#config_button").addEventListener("mousedown", function(e){ 
   span = document.querySelector("#config_button > span");
