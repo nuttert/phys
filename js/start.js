@@ -66,7 +66,6 @@ document.querySelector("#doc_button").addEventListener("mousedown", function(e){
    vis_object_with_animation(  $('#field_Description3'));
    page_number = 3;
    isDescription = false;
-   hide_object($('.description_section > .next_button'),0);
    hide_object($('.description_section > .prev_button'),0);
    hide_object($('.description_section > #field_Description1'),0);
    // hide_object($('.background:not(.description_view,close_button)'));
