@@ -371,8 +371,11 @@ document.querySelector("#clear_button").addEventListener("mousedown", function(e
 });
 
 document.querySelector("#clear_gr_button").addEventListener("mousedown", function(e){ 
-data_hist = [];
-data_time = [];
+  data_hist = [];
+  data_time = [];
+  for (var i = 0; i < particles.list.length; i++) {
+    particles.list[i].lastTimeCollision = -1;
+  }
 });
 
 
